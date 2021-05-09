@@ -62,3 +62,9 @@ crashlytics-build.properties
 
 UserSettings/
 .vsconfig
+Logs/AssetImportWorker5.log
+Logs/AssetImportWorker4.log
+Logs/AssetImportWorker3.log
+Logs/AssetImportWorker2.log
+Logs/AssetImportWorker1.log
+Logs/AssetImportWorker0.log
