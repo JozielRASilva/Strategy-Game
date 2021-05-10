@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class NPCRunner : MonoBehaviour
+public class NPCNavMeshExample : MonoBehaviour
 {
 
     public SOAttributes attributes;
     public float timeToRun = 2;
     public float Distance = 1;
+
+    public TargetController targetController;
+
+    public NavMeshController navMeshController;
 
     BehaviourTree behaviourTree;
 
@@ -25,13 +29,10 @@ public class NPCRunner : MonoBehaviour
         if(!attributes) return;
 
         BTSequence collect = new BTSequence();
-        collect.SetNode(new BTSee(attributes.enemy, Distance));
-        collect.SetNode(new BTFugirInimigo(attributes.enemy, attributes.speed, attributes.distance));
+        collect.SetNode(new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, attributes.distance));
 
         behaviourTree.Build(collect);
 
-
-        GetComponent<MeshRenderer>().material.color = attributes.color;
     }
 
 }

@@ -45,21 +45,9 @@ public class Health : MonoBehaviour
 
     }
 
-
-
     public void Die()
     {
         Destroy(gameObject);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == tagToTakeDamage)
-        {
-            TakeDamage(1);
-            Destroy(other.gameObject);
-        }
-    }
-
 
 }

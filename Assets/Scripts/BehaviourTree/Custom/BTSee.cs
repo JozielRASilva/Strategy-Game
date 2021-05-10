@@ -27,7 +27,6 @@ public class BTSee : BTNode
             {
                 status = Status.SUCCESS;
             }
-
         }
 
         if (status.Equals(Status.RUNNING))

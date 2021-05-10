@@ -3,24 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class NavMeshController : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    private NavMeshAgent agent;
 
-    public Transform target;
-    public float minDistance = 0.5f;
+    private Transform _currentTarget;
+
+    private bool CanMove;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     private void Update()
     {
-        SetTarget();
+        SetDestinationToTarget();
     }
 
-    public void SetTarget()
+    public void SetDestinationToTarget()
     {
-        if (target)
-            agent.SetDestination(target.position);
+        if (_currentTarget)
+            agent.SetDestination(_currentTarget.position);
+    }
 
+    private bool CanMoveToDestination()
+    {
+        if (_currentTarget && CanMove) return true;
+        return false;
+    }
 
+    public void SetTarget(Transform transform, float speed)
+    {
+        _currentTarget = transform;
+
+        agent.speed = speed;
+
+        CanMove = true;
+    }
+
+    public void StartMove()
+    {
+        CanMove = true;
+    }
+
+    public void StopMove()
+    {
+        CanMove = false;
     }
 
 }
+
