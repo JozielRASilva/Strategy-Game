@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0.32268268, g: 0.5, b: 0.21933961, a: 1}
   speed: 2
   target: Coin
-  distance: 1
+  distance: 2
   distanceToCollect: 1
   enemy: NPC
   rangeToCheckEnemy: 6

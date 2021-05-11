@@ -25462,6 +25462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ca4134ede14504bbfb7d52c237089b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSpeed: xSpeed
+  animator: {fileID: 0}
 --- !u!195 &2145978380
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25581,6 +25583,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3675497964422395938, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 8456985766783214557}
     - target: {fileID: 3675497964422395941, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: target
       value: 
@@ -25637,5 +25643,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Base_Character
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3552173414071119586, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+--- !u!95 &8456985766783214557 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2159469292386398815, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 8456985766783214556}
+  m_PrefabAsset: {fileID: 0}

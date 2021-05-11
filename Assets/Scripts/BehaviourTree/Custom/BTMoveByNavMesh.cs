@@ -39,12 +39,14 @@ public class BTMoveByNavMesh : BTNode
 
             if (Vector3.Distance(npc.position, target.position) < distance) break;
 
-            NavMeshController.SetTarget(target, speed);
+
+            NavMeshController.SetTarget(target, speed, distance);
 
             yield return null;
 
         }
 
+        NavMeshController.StopMove();
 
         if (status.Equals(Status.RUNNING))
             status = Status.SUCCESS;
