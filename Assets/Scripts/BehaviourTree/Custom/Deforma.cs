@@ -29,20 +29,21 @@ public class Deforma : MonoBehaviour
         Vector3 velocidade = rigid.velocity;
 
         float magnitude = velocidade.magnitude;
-        float valor = 0.2f;
 
-        if (magnitude > 0)
+        float valorAtual = mesh.material.GetFloat("_Elasticidade");
+
+        if (magnitude == 0)
         {
-            valor = Mathf.Abs(magnitude);
-            if (valor > 9) valor = 9;
+            valorAtual += 0.2f;
         }
-        else if (magnitude < 0)
+        else if (magnitude != 0)
         {
-            valor = -Mathf.Abs(magnitude);
-            if (valor < - 4) valor = -4;
+            valorAtual -= 0.5f;
         }
 
-        mesh.material.SetFloat("_Elasticidade", valor);
+        Mathf.Clamp(valorAtual, 4, 9);
+
+        mesh.material.SetFloat("_Elasticidade", valorAtual);
 
     }
 
