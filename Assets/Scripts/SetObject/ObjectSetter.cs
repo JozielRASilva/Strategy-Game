@@ -17,6 +17,9 @@ public class ObjectSetter : MonoBehaviour
 
     public Vector3 rotateValue;
 
+    public RectTransform rectTransform;
+    public Vector3 rotation = new Vector3(0,0,0);
+
     private void Update()
     {
 
@@ -28,9 +31,11 @@ public class ObjectSetter : MonoBehaviour
         current.gameObject.SetActive(true);
         current?.ShowPreview(point + positionOffset);
 
-
         current?.Rotate(rotateValue * Input.GetAxis("Horizontal"));
 
+        rectTransform.transform.position = point + positionOffset;
+        rectTransform.LookAt(Camera.main.transform);
+        rectTransform.eulerAngles = new Vector3(90 + rotation.x, rectTransform.eulerAngles.y + rotation.y, rectTransform.eulerAngles.z + rotation.z);
 
     }
 
