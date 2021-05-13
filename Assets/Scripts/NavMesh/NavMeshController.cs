@@ -36,6 +36,7 @@ public class NavMeshController : MonoBehaviour
 
     private void SetAnimationValues()
     {
+        if(animator)
         animator.SetFloat(xSpeed, agent.velocity.magnitude);
 
     }
