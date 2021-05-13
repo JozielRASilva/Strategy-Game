@@ -31,18 +31,27 @@ public class Zombie : MonoBehaviour
             navMesh = gameObject.AddComponent<NavMeshController>();
         }
 
-        if (!target)
+        if (!target)                                                                                                                                                                                                                                                                                                                                                                       
         {
             target = gameObject.AddComponent<TargetController>();
         }
+
+        BTSequence sequence_1 = new BTSequence();
+        sequence_1.SetNode(new BTSeeSoldier());
+        sequence_1.SetNode(new BTCallHorde());
 
         BTSequence patrol = new BTSequence();
         patrol.SetNode(new BTCheckWaypoint(1, target));
         patrol.SetNode(new BTRealignWaypoint(waypoints, target));
 
+        BTParallelSelector parallel = new BTParallelSelector();
+        //parallel.SetNode(new BTSeeSoldier());
+        parallel.SetNode(sequence_1);
+        parallel.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+
         BTSelector selector = new BTSelector();
         selector.SetNode(patrol);
-        selector.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+        selector.SetNode(parallel);
 
         behaviourTree.Build(selector);
     }
