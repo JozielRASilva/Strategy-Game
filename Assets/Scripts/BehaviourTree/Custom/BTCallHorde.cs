@@ -9,11 +9,6 @@ public class BTCallHorde : BTNode
 
     private float i;
 
-    /*public BTCallHorde(bool _calling)
-    {
-        calling = _calling;
-    }*/
-
     public override IEnumerator Run(BehaviourTree bt)
     {
         
