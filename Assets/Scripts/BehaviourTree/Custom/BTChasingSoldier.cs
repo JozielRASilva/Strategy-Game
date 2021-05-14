@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTChasingSoldier : MonoBehaviour
+public class BTChasingSoldier : BTNode
 {
-    // Start is called before the first frame update
-    void Start()
+    TargetController target;
+
+    Transform soldierPosition;
+
+    public BTChasingSoldier (TargetController _target, Transform _soldierPosition)
     {
-        
+        target = _target;
+        soldierPosition = _soldierPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override IEnumerator Run(BehaviourTree bt)
     {
-        
+        status = Status.FAILURE;
+
+
+        target.SetTarget(soldierPosition);
+
+
+        status = Status.SUCCESS;
+
+
+        yield break;
     }
 }
