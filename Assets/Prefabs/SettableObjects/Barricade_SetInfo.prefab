@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5410147256319052176}
   - component: {fileID: 5410147256319052178}
-  - component: {fileID: 5410147256319052177}
+  - component: {fileID: 1791842902}
   m_Layer: 6
   m_Name: Barricade_SetInfo
   m_TagString: Untagged
@@ -46,7 +46,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 2.5}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &5410147256319052177
+--- !u!114 &1791842902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,19 +55,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5410147256319052181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a11151f7f24b44ca0354c9156a0089, type: 3}
+  m_Script: {fileID: 11500000, guid: afede869ecd2e92439bd043cae069fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   preview: {fileID: 5410147256478426627}
   WhereCanNotSet:
     serializedVersion: 2
     m_Bits: 9
-  TagsToIgnore: []
-  underOffset: {x: 0, y: 0, z: 0}
+  underOffset: {x: 0, y: 0.02, z: 0}
   collisionFactor: 0.2
   WhereCanSetOver:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 8
   canSetMaterial: {fileID: 2100000, guid: 3cf327b8e2d0ba7449177d622e3503cb, type: 2}
   canNotSetMaterial: {fileID: 2100000, guid: aa16b9766b1f24e489353221f7a1fca8, type: 2}
 --- !u!1 &5410147256478426627

@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class SettableObject : MonoBehaviour
+public class SettableObjectPreview : MonoBehaviour
 {
 
     public GameObject preview;
 
     [Title("Over Position")]
     public LayerMask WhereCanNotSet;
-    public List<string> TagsToIgnore = new List<string>();
-
 
     [Title("Bottom Ground")]
     public Vector3 underOffset;
     public float collisionFactor = 0.2f;
     public LayerMask WhereCanSetOver;
 
-    public BoxCollider boxCollider;
-    public MeshRenderer mesh;
-
     [Title("Material")]
     public Material canSetMaterial;
     public Material canNotSetMaterial;
+
+    [Title("Options to Set")]
+    public bool canRotate;
+
+    private BoxCollider boxCollider;
+    private MeshRenderer mesh;
 
     private void Awake()
     {
@@ -55,8 +56,6 @@ public class SettableObject : MonoBehaviour
     {
         transform.position = position;
 
-        // Change rotation
-
         if (!canNotSetMaterial || !mesh || !canSetMaterial) return;
         if (CanSet())
         {
@@ -70,9 +69,8 @@ public class SettableObject : MonoBehaviour
 
     public void Rotate(Vector3 value)
     {
-    
-        transform.Rotate(value.x * Time.deltaTime, value.y * Time.deltaTime, value.z * Time.deltaTime, Space.Self);
-    
+        if (canRotate)
+            transform.Rotate(value.x * Time.deltaTime, value.y * Time.deltaTime, value.z * Time.deltaTime, Space.Self);
     }
 
     public bool CheckCollision(LayerMask mask)
@@ -108,6 +106,17 @@ public class SettableObject : MonoBehaviour
     private void OnValidate()
     {
         if (!boxCollider) boxCollider = GetComponent<BoxCollider>();
+    }
+
+
+    public void EnableObject()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void DisableObject()
+    {
+        gameObject.SetActive(false);
     }
 
 }
