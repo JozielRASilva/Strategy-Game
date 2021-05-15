@@ -8,6 +8,7 @@ TagManager:
   - NPC
   - Projectile
   - Soldier
+  - CallCounter
   layers:
   - Default
   - TransparentFX

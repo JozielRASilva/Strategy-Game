@@ -16,6 +16,10 @@ public class Zombie : MonoBehaviour
 
     public GameObject hitboxes;
 
+    public GameObject callCounter;
+
+    public bool calling;
+
     void Start()
     {
         SetBehaviour();
@@ -51,8 +55,13 @@ public class Zombie : MonoBehaviour
 
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(new BTSeeSoldier(target, 10));
-        sequence_1.SetNode(new BTCallHorde());
+        sequence_1.SetNode(new BTCallHorde(calling, callCounter));
         sequence_1.SetNode(sequence_);
+
+        BTSequence sequence_2 = new BTSequence();
+        sequence_2.SetNode(new BTWasCalled(target, calling));
+        sequence_2.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+
 
         BTSequence patrol = new BTSequence();
         patrol.SetNode(new BTCheckWaypoint(1, target));
