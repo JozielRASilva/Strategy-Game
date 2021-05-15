@@ -14,7 +14,8 @@ public class RaycastMouse : MonoBehaviour
             _camera = Camera.main;
     }
 
-    public Vector3 GetPosition(LayerMask mask){
+    public Vector3 GetPosition(LayerMask mask)
+    {
 
         RaycastHit hit;
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -22,11 +23,25 @@ public class RaycastMouse : MonoBehaviour
         {
             Vector3 objectHit = hit.point;
 
-            return objectHit;           
+            return objectHit;
 
         }
 
         return Vector2.zero;
+    }
+
+    public bool ValidPosition(LayerMask mask)
+    {
+
+        RaycastHit hit;
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+        {
+            return true;
+
+        }
+
+        return false;
     }
 
 }
