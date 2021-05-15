@@ -1,28 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(RaycastMouse))]
 public class ObjectSetterIndicator : MonoBehaviour
 {
 
-    public SettableObjectInfo settable;
-
+    [Title("Set Conditions")]
     public LayerMask WhereCanSet;
 
+    [Title("Object Info")]
     public Vector3 positionOffset = new Vector3(0, 0.2f, 0);
+    public SettableObjectInfo settable;
 
-    public Vector3 rotateValue;
 
+    [Title("Rotation Feedback")]
     public RectTransform rectTransform;
     public Vector3 rotation = new Vector3(0, 0, 0);
+    public Vector3 rotateValue;
 
+
+    [Title("Enable")]
     public bool startActivated = true;
 
     private bool activated = true;
 
     private RaycastMouse raycastMouse;
     private SettableObjectPreview current;
+
+
+    [Title("Events")]
+    public UnityEvent OnSet;
+    public UnityEvent OnCanNotSet;
+    public UnityEvent OnStopSet;
 
     private void Awake()
     {
@@ -48,6 +60,34 @@ public class ObjectSetterIndicator : MonoBehaviour
 
         ShowCanvasFeedback(point);
 
+        SetObject();
+
+    }
+
+
+    public void SetObject()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (current.CanSet())
+            {
+                ObjectSetterManager.Instance.AddObjectToSet(current.transform, settable);
+
+                OnSet?.Invoke();
+
+                StopIndicateObjectToSet();
+            }
+            else
+            {
+                OnCanNotSet?.Invoke();
+            }
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            OnStopSet?.Invoke();
+
+            StopIndicateObjectToSet();
+        }
     }
 
     private void SetterActions()
@@ -87,9 +127,13 @@ public class ObjectSetterIndicator : MonoBehaviour
     private void PreviewObjectPosition(Vector3 point)
     {
 
-        if (!current) current = Instantiate(settable.ObjectPreviewChecker); // Change to pool
+        if (!ObjectSetterManager.Instance) return;
 
-        current.gameObject.SetActive(true);
+        if (!current) current = ObjectSetterManager.Instance?.GetPreviewObject(settable);
+
+        if (!current) return;
+
+        current?.gameObject?.SetActive(true);
         current?.ShowPreview(point + positionOffset);
 
     }
@@ -119,5 +163,9 @@ public class ObjectSetterIndicator : MonoBehaviour
         activated = false;
 
         current?.DisableObject();
+
+        current = null;
+
+        HideCanvasFeedback();
     }
 }

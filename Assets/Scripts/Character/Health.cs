@@ -6,8 +6,6 @@ using Sirenix.OdinInspector;
 public class Health : MonoBehaviour
 {
 
-    public string tagToTakeDamage = "Projectile";
-
     public int maxLife = 5;
     private int _currentLife;
 

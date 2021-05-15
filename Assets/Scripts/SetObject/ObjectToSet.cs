@@ -11,18 +11,19 @@ public class ObjectToSet
     public Vector3 rotation;
 
     [Title("Private values")]
-    [SerializeField]
-    private SettableObjectInfo ObjectInfo;
+    
+    public SettableObjectInfo ObjectInfo;
     [SerializeField]
     private GameObject whoWillSet;
     [SerializeField]
     private bool alreadySelected;
 
-    public ObjectToSet(Transform transform)
+    public ObjectToSet(Transform transform, SettableObjectInfo info)
     {
 
         position = transform.position;
         rotation = transform.eulerAngles;
+        ObjectInfo = info;
     }
 
     public bool CanGet()

@@ -7,6 +7,7 @@ public class SettableObjectPreview : MonoBehaviour
 {
 
     public GameObject preview;
+    public GameObject spaceBloker;
 
     [Title("Over Position")]
     public LayerMask WhereCanNotSet;
@@ -19,6 +20,7 @@ public class SettableObjectPreview : MonoBehaviour
     [Title("Material")]
     public Material canSetMaterial;
     public Material canNotSetMaterial;
+    public Material selectedMaterial;
 
     [Title("Options to Set")]
     public bool canRotate;
@@ -54,6 +56,8 @@ public class SettableObjectPreview : MonoBehaviour
 
     public void ShowPreview(Vector3 position)
     {
+        if (spaceBloker) spaceBloker.SetActive(false);
+
         transform.position = position;
 
         if (!canNotSetMaterial || !mesh || !canSetMaterial) return;
@@ -67,11 +71,31 @@ public class SettableObjectPreview : MonoBehaviour
         }
     }
 
+    public void ShowSelected(Vector3 position, Vector3 rotation)
+    {
+        if (spaceBloker) spaceBloker.SetActive(true);
+
+        transform.position = position;
+        FillRotation(rotation);
+
+        if (!selectedMaterial || !mesh) return;
+
+        mesh.material = selectedMaterial;
+
+    }
+
     public void Rotate(Vector3 value)
     {
         if (canRotate)
             transform.Rotate(value.x * Time.deltaTime, value.y * Time.deltaTime, value.z * Time.deltaTime, Space.Self);
     }
+
+    public void FillRotation(Vector3 value)
+    {
+        if (canRotate)
+            transform.eulerAngles = value;
+    }
+
 
     public bool CheckCollision(LayerMask mask)
     {
@@ -116,7 +140,7 @@ public class SettableObjectPreview : MonoBehaviour
 
     public void DisableObject()
     {
-        gameObject.SetActive(false);
+        PoolManager.ReleaseObject(this.gameObject);
     }
 
 }

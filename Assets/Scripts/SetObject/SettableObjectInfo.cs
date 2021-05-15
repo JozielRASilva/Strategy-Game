@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "ObjectInfo", menuName = "ObjectInfo", order = 1)]
 public class SettableObjectInfo : ScriptableObject
 {
 
-    public string ObjectName = "SttableObject";
+    public string ObjectName = "SettableObject";
 
     public string instanceID;
 
