@@ -7,15 +7,17 @@ public class Moedas : MonoBehaviour
 {
     public Text moedaTxt;
     public int moeda;
-    public int valorMoeda;
+    public int valorMoeda = 1;
+
+    public static Moedas moedas;
 
     void Start()
     {
+        moedas = this;
         moeda = 0;
-        valorMoeda = 1;
     }
 
-    void AddMoeda() 
+     public void AddMoeda() 
     {
         moeda += valorMoeda;
         moedaTxt.text = "Moedas: " + moeda.ToString();

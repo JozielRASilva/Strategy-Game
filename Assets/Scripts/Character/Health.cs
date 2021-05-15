@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
 
     public int maxLife = 5;
-    private int _currentLife;
 
+    [Title("Damage")]
     public float invincibilityTime = 0.2f;
+
+    [Title("Death")]
+    public UnityEvent OnDie;
+
+    private int _currentLife;
     private float invincibilityTimeStamp;
+
 
     [OnInspectorGUI]
     private void Nodes()
@@ -45,6 +52,7 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
+        OnDie?.Invoke();
         Destroy(gameObject);
     }
 
