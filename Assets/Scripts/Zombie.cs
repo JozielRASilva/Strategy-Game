@@ -14,9 +14,7 @@ public class Zombie : MonoBehaviour
     private NavMeshController navMesh;
     public TargetController target;
 
-    //public Transform soldierPosition;
-
-    //public TargetController targetSoldier;
+    public GameObject hitboxes;
 
     void Start()
     {
@@ -48,6 +46,7 @@ public class Zombie : MonoBehaviour
 
         BTSequence sequence_ = new BTSequence();
         sequence_.SetNode(parallel_1);
+        sequence_.SetNode(new BTZombieAttack(hitboxes, 1));
 
 
         BTSequence sequence_1 = new BTSequence();
