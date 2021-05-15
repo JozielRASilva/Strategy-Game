@@ -14,7 +14,9 @@ public class Zombie : MonoBehaviour
     private NavMeshController navMesh;
     public TargetController target;
 
-    public Transform soldierPosition;
+    //public Transform soldierPosition;
+
+    //public TargetController targetSoldier;
 
     void Start()
     {
@@ -38,19 +40,20 @@ public class Zombie : MonoBehaviour
             target = gameObject.AddComponent<TargetController>();
         }
 
+
         BTParallelSelector parallel_1 = new BTParallelSelector();
-        parallel_1.SetNode(new BTChasingSoldier(target, soldierPosition));
+        parallel_1.SetNode(new BTChasingSoldier(target, 2, 15));
+        parallel_1.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+
 
         BTSequence sequence_ = new BTSequence();
         sequence_.SetNode(parallel_1);
 
+
         BTSequence sequence_1 = new BTSequence();
-        sequence_1.SetNode(new BTSeeSoldier(soldierPosition));
+        sequence_1.SetNode(new BTSeeSoldier(target, 10));
         sequence_1.SetNode(new BTCallHorde());
         sequence_1.SetNode(sequence_);
-
-
-    
 
         BTSequence patrol = new BTSequence();
         patrol.SetNode(new BTCheckWaypoint(1, target));

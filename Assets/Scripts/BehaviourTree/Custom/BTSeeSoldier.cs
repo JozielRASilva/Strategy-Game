@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class BTSeeSoldier : BTNode
 {
-    private Transform soldierPosition;
+    private TargetController targetSoldier;
+
+    private float distanceView;
 
 
-    public BTSeeSoldier (Transform _soldierPosition)
+    public BTSeeSoldier (TargetController _targetSoldier, float _distanceView)
     {
-        soldierPosition = _soldierPosition;
+        targetSoldier = _targetSoldier;
+        distanceView = _distanceView;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -20,9 +23,9 @@ public class BTSeeSoldier : BTNode
         foreach (GameObject soldier in soldiers)
         {
             if (bt.gameObject == soldier) continue;
-            if (Vector3.Distance(bt.transform.position, soldier.transform.position) < 5)
+            if (Vector3.Distance(bt.transform.position, soldier.transform.position) < distanceView)
             {
-                soldierPosition = soldier.transform;
+                targetSoldier.SetTarget(soldier.transform);
 
                 status = Status.SUCCESS;
                 break;
