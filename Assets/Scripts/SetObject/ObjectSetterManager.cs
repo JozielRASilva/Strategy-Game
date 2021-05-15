@@ -51,12 +51,50 @@ public class ObjectSetterManager : MonoBehaviour
 
     }
 
+    public void SetObject(int id)
+    {
+        if (objectsToSet.Count <= id) return;
+
+        SetObject(objectsToSet[id].objectToSet);
+
+    }
+
+    public void SetObject(ObjectToSet info)
+    {
+        ManageObject manageObject = objectsToSet.Find(o => o.objectToSet.Equals(info));
+
+        if (manageObject == null) return;
+
+        ObjectToSet objectTo = manageObject.objectToSet;
+
+        PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet, objectTo.position, Quaternion.Euler(objectTo.rotation));
+
+        objectsToSet.Remove(manageObject);
+    }
+
+    public void GetObjectCheck(GameObject whoSelect)
+    {
+        ObjectToSet value = GetObjectToSet(whoSelect);
+
+        if (value != null) Debug.Log($"Can select {whoSelect.name}");
+        else Debug.Log($"Can not select {whoSelect.name}");
+    }
+
     public ObjectToSet GetObjectToSet(GameObject whoSelect)
     {
+        bool alreadySelect = objectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
+
+        if (alreadySelect)
+            return objectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).objectToSet;
+
+
         foreach (var objectTo in objectsToSet)
         {
             if (objectTo.objectToSet.CanGet())
             {
+
+
+
                 objectTo.objectToSet.Select(whoSelect);
 
                 return objectTo.objectToSet;

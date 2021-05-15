@@ -11,7 +11,6 @@ public class DamageOnTouch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if (UnityExtensions.Contains(Damageable, other.gameObject.layer))
         {
 

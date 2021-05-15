@@ -11,7 +11,7 @@ public class ObjectToSet
     public Vector3 rotation;
 
     [Title("Private values")]
-    
+
     public SettableObjectInfo ObjectInfo;
     [SerializeField]
     private GameObject whoWillSet;
@@ -26,12 +26,15 @@ public class ObjectToSet
         ObjectInfo = info;
     }
 
-    public bool CanGet()
+    public bool CanGet(GameObject gameObject = null)
     {
         if (!whoWillSet) return true;
 
         if (whoWillSet.activeSelf)
         {
+            if (gameObject)
+                if (gameObject.Equals(whoWillSet)) return true;
+
             if (!alreadySelected) return true;
         }
 
@@ -44,9 +47,19 @@ public class ObjectToSet
         alreadySelected = true;
     }
 
+    public bool AlreadySelect(GameObject whoSelected)
+    {
+        if(!whoWillSet) return false;
+        if (whoWillSet.Equals(whoSelected))
+            return true;
+        else
+            return false;
+
+    }
+
     public bool InvalidSelection()
     {
-        if(!alreadySelected) return false;
+        if (!alreadySelected) return false;
 
         if (!whoWillSet) return true;
         if (!whoWillSet.activeSelf) return true;
