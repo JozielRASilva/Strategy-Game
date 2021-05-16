@@ -4,76 +4,30 @@ using UnityEngine;
 
 public class BTCallHorde : BTNode
 {
-
+    private GameObject callCounter;
     private bool calling;
 
-    private GameObject callCounter;
+    private float timeCalling;
 
-    private float i;
-
-    public BTCallHorde (bool _calling, GameObject _callCounter)
+    public BTCallHorde (GameObject _callCounter, bool _calling, float _timeCalling)
     {
-        calling = _calling;
         callCounter = _callCounter;
+        calling = _calling;
+        timeCalling = _timeCalling;
     }
 
 
     public override IEnumerator Run(BehaviourTree bt)
     {
-        
-        /*for (int i = 0; i <= 8; i++)
-        {
-            calling = true;
-
-            callCounter.SetActive(true);
-
-            status = Status.SUCCESS;
-
-            Print("CHAMANDO");
-            Debug.Log(i);
-
-            if (i > 5)
-            {
-                calling = false;
-                callCounter.SetActive(false);
-                i = 0;
-                Print("ZEROU");
-            }
-        }*/
-
-
-        /*if (i < 8)
-        {
-            Call();
-
-        }
-
-        i += 1f;
-
-        if (i == 8)
-        {
-            i = 0;
-            calling = false;
-            callCounter.SetActive(false);
-        }*/
-
-
-
-        yield break;
-    }
-
-
-    void Call()
-    {
+        callCounter.SetActive(true);
         calling = true;
 
-        callCounter.SetActive(true);
+        yield return new WaitForSeconds(timeCalling);
 
-        //GameObject.FindGameObjectsWithTag("Call").
+        callCounter.SetActive(false);
 
         status = Status.SUCCESS;
 
-        Print("CHAMANDO");
+        yield break;
     }
-
 }

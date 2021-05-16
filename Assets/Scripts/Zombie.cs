@@ -42,20 +42,19 @@ public class Zombie : MonoBehaviour
             target = gameObject.AddComponent<TargetController>();
         }
 
-
         BTParallelSelector parallel_1 = new BTParallelSelector();
-        parallel_1.SetNode(new BTChasingSoldier(target, 2, 15));
         parallel_1.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+        parallel_1.SetNode(new BTChasingSoldier(target, 2, 15));
 
 
         BTSequence sequence_ = new BTSequence();
         sequence_.SetNode(parallel_1);
-        sequence_.SetNode(new BTZombieAttack(hitboxes, 1));
+        sequence_.SetNode(new BTZombieAttack(hitboxes, 0.5f));
 
 
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(new BTSeeSoldier(target, 10));
-        sequence_1.SetNode(new BTCallHorde(calling, callCounter));
+        sequence_1.SetNode(new BTCallHorde(callCounter, calling, 2));
         sequence_1.SetNode(sequence_);
 
         BTSequence sequence_2 = new BTSequence();
@@ -68,14 +67,20 @@ public class Zombie : MonoBehaviour
         patrol.SetNode(new BTRealignWaypoint(waypoints, target));
 
         BTParallelSelector parallel = new BTParallelSelector();
-        parallel.SetNode(sequence_1);
+        parallel.SetNode(new BTSeeSoldier(target, 10));
+        parallel.SetNode(new BTWasCalled(target, calling));
         parallel.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
 
         BTSelector selector = new BTSelector();
         selector.SetNode(patrol);
         selector.SetNode(parallel);
 
-        behaviourTree.Build(selector);
+        BTSelector selector_1 = new BTSelector();
+        selector_1.SetNode(sequence_1);
+        selector_1.SetNode(sequence_2);
+        selector_1.SetNode(selector);
+
+        behaviourTree.Build(selector_1);
     }
 
 

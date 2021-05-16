@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class BTWasCalled : BTNode
 {
-    bool calling;
-    TargetController target;
+    private TargetController target;
+    private bool calling;
 
     public BTWasCalled (TargetController _target, bool _calling)
     {
         target = _target;
         calling = _calling;
-
     }
 
 
@@ -19,24 +18,45 @@ public class BTWasCalled : BTNode
     {
         status = Status.FAILURE;
 
-        if (calling)
+        if (target)
         {
-           //GameObject[] zombie = GameObject.FindGameObjectsWithTag("CallCounter");
 
-            GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
-            foreach (GameObject call in calls)
+        }
+        GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
+        int i = 0;
+
+        Debug.Log("entrou");
+        foreach (GameObject call in calls)
+        {
+            if (bt.gameObject == call) continue;
+
+            if (target)
             {
-                if (bt.gameObject == call) continue;
-                
-                    target.SetTarget(call.transform);
+                target.SetTarget(call.transform);
+                i++;
 
-                    status = Status.SUCCESS;
-                    break;
+                if (i == 8)
+                {
+                    target.SetTarget(null);
+                    i = 0;
+                }
+
+                status = Status.SUCCESS;
+                yield break;
             }
 
-            status = Status.SUCCESS;
+            //target.SetTarget(call.transform);
+            //i++;
+
+            //if (i == 8)
+            //{
+            //    target.SetTarget(null);
+            //}
+
+            //status = Status.SUCCESS;
+            //yield break;
         }
-        
+
         yield break;
     }
 }
