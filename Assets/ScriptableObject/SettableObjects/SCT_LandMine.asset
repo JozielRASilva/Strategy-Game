@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectName: LandMine
   instanceID: 27674
-  ObjectToSet: {fileID: 1708270624216670517, guid: 65eb223cbaa9f6f4fa39877a1dfd62b3, type: 3}
-  ObjectPreviewChecker: {fileID: 1791842902, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+  ObjectToSet: {fileID: 6510189293519771403, guid: cdad9ccacf6060e41986525b0033697c, type: 3}
+  ObjectPreviewChecker: {fileID: 3536823957461686963, guid: 2ba08a4ae10796b46993687ff3677978, type: 3}

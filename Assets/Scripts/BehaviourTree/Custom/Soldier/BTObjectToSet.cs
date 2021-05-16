@@ -24,7 +24,6 @@ public class BTObjectToSet : BTNode
             status = Status.SUCCESS;
         }
 
-
         yield break;
     }
 

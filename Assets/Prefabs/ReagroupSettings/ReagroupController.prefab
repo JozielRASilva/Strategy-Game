@@ -143,7 +143,7 @@ MonoBehaviour:
   WhereCanSet:
     serializedVersion: 2
     m_Bits: 8
-  startActivated: 1
+  startActivated: 0
   hideWithInvalid: 1
   rectTransform: {fileID: 371031414877317260}
   rotation: {x: 0, y: 0, z: 0}

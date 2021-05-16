@@ -69,6 +69,8 @@ public class ObjectSetterManager : MonoBehaviour
 
         PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet, objectTo.position, Quaternion.Euler(objectTo.rotation));
 
+        manageObject.settableObjectPreview.DisableObject();
+
         objectsToSet.Remove(manageObject);
     }
 
@@ -93,13 +95,21 @@ public class ObjectSetterManager : MonoBehaviour
             if (objectTo.objectToSet.CanGet())
             {
 
-
-
                 objectTo.objectToSet.Select(whoSelect);
 
                 return objectTo.objectToSet;
             }
         }
+
+        return null;
+    }
+
+    public Transform GetObjectReference(GameObject whoSelect)
+    {
+        bool alreadySelect = objectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
+
+        if (alreadySelect)
+            return objectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).settableObjectPreview.transform;
 
         return null;
     }
