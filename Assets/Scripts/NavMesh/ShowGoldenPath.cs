@@ -18,8 +18,9 @@ public class ShowGoldenPath : MonoBehaviour
 
     void Update()
     {
-        // Update the way to the goal every second.
-        elapsed += Time.deltaTime;
+        if (!target) return;
+         // Update the way to the goal every second.
+         elapsed += Time.deltaTime;
         if (elapsed > 1.0f)
         {
             elapsed -= 1.0f;

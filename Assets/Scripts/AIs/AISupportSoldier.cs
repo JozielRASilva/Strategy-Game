@@ -31,13 +31,24 @@ public class AISupportSoldier : MonoBehaviour
         BTSequence root = new BTSequence();
 
         // SET OBJECT
+        BTNode branchSetObject = GetBranchSetObject();
+
+        // REAGROUP
+
+        // FOLLOW LEADER
+
+        root.SetNode(branchSetObject);
+
+        behaviourTree.Build(root);
+
+    }
+
+    #region SET OBJECT
+    public BTNode GetBranchSetObject()
+    {
         BTSequence sequence_setObject = new BTSequence();
 
         BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
-
-        BTInverter inverter = new BTInverter();
-        BTObjectSetted objectSetted = new BTObjectSetted();
-        inverter.SetNode(objectSetted);
 
         BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(targetController);
 
@@ -58,12 +69,12 @@ public class AISupportSoldier : MonoBehaviour
 
 
         sequence_setObject.SetNode(thereIsObjectToSet);
-        sequence_setObject.SetNode(inverter);
         sequence_setObject.SetNode(updateObjectToSet);
         sequence_setObject.SetNode(sequence_1);
 
-
-        behaviourTree.Build(root);
-
+        return sequence_setObject;
     }
+    #endregion
+
+
 }

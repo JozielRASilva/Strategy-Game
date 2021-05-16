@@ -381,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140221, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3675497964422395940, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributes: {fileID: 11400000, guid: 1877330f548454b4f89406c517399c8c, type: 2}
-  distanceToSet: 0.5
+  distanceToSet: 1
   delayToSet: 0
   targetController: {fileID: 605390253}
   navMeshController: {fileID: 605390254}
