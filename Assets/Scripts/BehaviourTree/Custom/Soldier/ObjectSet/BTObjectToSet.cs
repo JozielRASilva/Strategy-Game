@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTObjectSetted : BTNode
+public class BTObjectToSet : BTNode
 {
-    public BTObjectSetted()
+
+    public BTObjectToSet()
     {
 
     }
 
     public override IEnumerator Run(BehaviourTree bt)
     {
-
         status = Status.FAILURE;
 
         if (!ObjectSetterManager.Instance)
@@ -23,7 +23,8 @@ public class BTObjectSetted : BTNode
         {
             status = Status.SUCCESS;
         }
-
+      
         yield break;
     }
+
 }

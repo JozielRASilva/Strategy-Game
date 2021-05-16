@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371031414274319839}
   m_Layer: 0
-  m_Name: ReagroupPoint
+  m_Name: RegroupPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 371031414414457811}
   - component: {fileID: 371031414414457810}
   m_Layer: 0
-  m_Name: ReagroupController
+  m_Name: PFB_RegroupController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,10 +76,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c470e55bc2e098438ab39f9f1d3a5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReagroupPoint: {x: 0, y: 0, z: 0}
-  currentReagroupId: -1
-  TimeLimitToReagroup: 0
-  reagroupTime: 10
+  RegroupPoint: {x: 0, y: 0, z: 0}
+  currentRegroupId: -1
+  TimeLimitToRegroup: 0
+  regroupTime: 10
   TimeStamp: 0
   pointReference: {fileID: 371031414274319839}
 --- !u!1 &371031415611743128
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 371031415611743131}
   - component: {fileID: 371031415611743130}
   m_Layer: 0
-  m_Name: ReagroupIndicator
+  m_Name: RegroupIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

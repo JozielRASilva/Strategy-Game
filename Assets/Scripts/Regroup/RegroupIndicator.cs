@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class ReagroupIndicator : MonoBehaviour
+public class RegroupIndicator : MonoBehaviour
 {
     [Title("Set Conditions")]
     public LayerMask WhereCanSet;
@@ -68,7 +68,7 @@ public class ReagroupIndicator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ReagroupController.Instance.SetPoint(lastPoint);
+            RegroupController.Instance.SetPoint(lastPoint);
 
             OnSet?.Invoke();
 
