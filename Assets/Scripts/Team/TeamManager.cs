@@ -20,9 +20,17 @@ public class TeamManager : MonoBehaviour
         Instance = this;
     }
 
+    [Button("Validate")]
+    public void GetFunctionCall()
+    {
+        GetSquadFunction(null);
+    }
+
     public Squad.SquadFunction GetSquadFunction(SquadMember member)
     {
         OrganizeMemberOnSquads(member);
+
+        ValidateMembersOnSquads();
 
         foreach (var squad in squads)
         {
@@ -32,34 +40,87 @@ public class TeamManager : MonoBehaviour
         return Squad.SquadFunction.NONE;
     }
 
-    public void OrganizeMemberOnSquads(SquadMember member)
+    public void RemoveFromSquad(SquadMember member)
     {
 
-        // Squad com vaga?
-        Squad squadWithSpace = squads.Find(s => s.CanAddMember(Squad.SquadFunction.MEMBER, MembersForSquad, member));
-
-        if (squadWithSpace != null)
+        foreach (var squad in squads)
         {
-            // Adicionar como membro
-            squadWithSpace.AddMember(Squad.SquadFunction.MEMBER, member);
+            if (squad.ContainsMember(member))
+            {
+                squad.RemoveMember(member);
+                break;
+            }
+        }
+
+        ValidateMembersOnSquads();
+    }
+
+    private void OrganizeMemberOnSquads(SquadMember member)
+    {
+        bool hasSquad = squads.Exists(s => !s.GetFunction(member).Equals(Squad.SquadFunction.NONE));
+
+        if (hasSquad) return;
+
+        Squad squadWithSpace = squads.Find(s => s.CanAddMember(GetFunction(member), MembersForSquad, member));
+
+        Squad.SquadFunction function = GetFunction(member);
+
+        if (squadWithSpace != null && member)
+        {
+            squadWithSpace.AddMember(function, member);
             return;
         }
-        else
+        else if (member)
         {
-            // Criar squad se não houver um
             CreateSquad(member);
             return;
         }
+    }
+
+    public Squad.SquadFunction GetFunction(SquadMember member)
+    {
+        if (member.ExtraMember) return Squad.SquadFunction.EXTRA;
+        else return Squad.SquadFunction.MEMBER;
+    }
+
+    private void ValidateMembersOnSquads()
+    {
+        if (squads.Count == 0) return;
+
+        List<Squad> squadsOneLeader = new List<Squad>();
+
+        foreach (var squad in squads)
+        {
+            if (!squad.IsValid())
+            {
+                squad.UpdateLeader();
+            }
+
+            if (squad.Members.Count == 0 && squad.ExtraMembers.Count == 0)
+            {
+                squadsOneLeader.Add(squad);
+            }
+        }
 
 
+        bool existFreeSquad = squads.Exists(s => !s.Full(MembersForSquad) && !squadsOneLeader.Contains(s));
+
+        if (existFreeSquad)
+        {
+            squads.RemoveAll(s => squadsOneLeader.Contains(s));
+        }
 
 
-        // Validate Squads
+        // Delete squad
+        squads.RemoveAll(s => !s.Leader && s.Members.Count == 0);
 
     }
 
-    public void CreateSquad(SquadMember member)
+
+    private void CreateSquad(SquadMember member)
     {
+        if (member.ExtraMember) return;
+
         Squad squad = new Squad();
         squad.Leader = member;
 

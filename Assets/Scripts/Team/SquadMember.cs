@@ -15,7 +15,14 @@ public class SquadMember : MonoBehaviour
 
         Squad.SquadFunction function = GetSquadFunction();
 
-        Debug.Log($"{name}: {function.ToString()}");
+    }
+
+    [Button("Remove Function")]
+    public void RemoveFromSquad()
+    {
+        if (!TeamManager.Instance) return;
+
+        TeamManager.Instance.RemoveFromSquad(this);
 
     }
 

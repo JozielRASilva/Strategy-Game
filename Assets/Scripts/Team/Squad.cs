@@ -10,9 +10,9 @@ public class Squad
 {
     public SquadMember Leader;
 
-    public List<SquadMember> Members;
+    public List<SquadMember> Members = new List<SquadMember>();
 
-    public List<SquadMember> ExtraMembers;
+    public List<SquadMember> ExtraMembers = new List<SquadMember>();
 
     public enum SquadFunction { LEADER, MEMBER, EXTRA, NONE }
 
@@ -22,11 +22,31 @@ public class Squad
         else return false;
     }
 
+    public bool ContainsMembers()
+    {
+        if (!Leader && Members.Count == 0 && ExtraMembers.Count == 0) return false;
+        else return true;
+    }
+
+    public bool ContainsMember(SquadMember member)
+    {
+        if (Leader)
+            if (Leader.Equals(member))
+                return true;
+
+        if (Members.Contains(member)) return true;
+
+        if (ExtraMembers.Contains(member)) return true;
+
+        return false;
+    }
+
     public bool CanAddMember(SquadFunction function, int MembersForSquad, SquadMember newMember)
     {
 
-        if (Leader.Equals(newMember))
-            return false;
+        if (Leader)
+            if (Leader.Equals(newMember))
+                return false;
 
         if (Members.Contains(newMember)) return false;
 
@@ -35,6 +55,10 @@ public class Squad
         if (function.Equals(SquadFunction.MEMBER))
         {
             if (Members.Count >= MembersForSquad - 1) return false;
+        }
+        else if (function.Equals(SquadFunction.EXTRA))
+        {
+            if (!Leader) return false;
         }
 
         return true;
@@ -50,6 +74,25 @@ public class Squad
         {
             ExtraMembers.Add(newMember);
         }
+
+        Members.RemoveAll(m => m.Equals(null));
+
+        ExtraMembers.RemoveAll(m => m.Equals(null));
+
+    }
+
+    public void RemoveMember(SquadMember member)
+    {
+        if (Leader)
+            if (Leader.Equals(member))
+                Leader = null;
+
+        if (Members.Contains(member)) Members.Remove(member);
+
+        if (ExtraMembers.Contains(member)) ExtraMembers.Remove(member);
+
+
+        UpdateLeader();
     }
 
     public void UpdateLeader(List<SquadMember> others = null)
@@ -60,7 +103,11 @@ public class Squad
 
         foreach (var member in Members)
         {
-            if (member) selected = member;
+            if (member)
+            {
+                selected = member;
+                break;
+            }
         }
 
         if (selected) Members.Remove(selected);
@@ -70,7 +117,11 @@ public class Squad
             {
                 foreach (var other in others)
                 {
-                    if (other) selected = other;
+                    if (other)
+                    {
+                        selected = other;
+                        break;
+                    }
                 }
             }
 
@@ -80,13 +131,26 @@ public class Squad
 
     public SquadFunction GetFunction(SquadMember member)
     {
-        if (member.Equals(Leader)) return SquadFunction.LEADER;
+        if (member)
+            if (member.Equals(Leader)) return SquadFunction.LEADER;
 
-        if (Members.Contains(member)) return SquadFunction.MEMBER;
+        if (Members != null && member)
+            if (Members.Contains(member)) return SquadFunction.MEMBER;
 
-        if (Members.Contains(member)) return SquadFunction.EXTRA;
+        if (ExtraMembers != null && member)
+            if (ExtraMembers.Contains(member)) return SquadFunction.EXTRA;
 
         return SquadFunction.NONE;
+    }
+
+    public bool Full(int MembersForSquad)
+    {
+
+        if (!Leader) return false;
+
+        if (Members.Count < MembersForSquad - 1) return false;
+
+        return true;
     }
 
 }

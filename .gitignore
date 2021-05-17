@@ -69,3 +69,4 @@ Logs/AssetImportWorker2.log
 Logs/AssetImportWorker1.log
 Logs/AssetImportWorker0.log
 *.log
+UserSettings/EditorUserSettings.asset
