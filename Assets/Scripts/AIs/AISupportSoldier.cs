@@ -141,6 +141,31 @@ public class AISupportSoldier : MonoBehaviour
 
         #region Leader Branch
 
+        BTNode teamLeaderBranch = GetBranchTeamLeader();
+
+        #endregion
+
+        #region Member Branch
+        BTNode teamMemberBranch = GetBranchTeamMember();
+        #endregion
+
+
+        #region  Apply Node
+        sequence_team.SetNode(teamLeaderBranch);
+
+        sequence_team.SetNode(teamMemberBranch);
+
+        #endregion
+
+        return sequence_team;
+    }
+    #endregion
+
+
+    #region TEAM LEADER
+    public BTNode GetBranchTeamLeader()
+    {
+
         BTSequence sequence = new BTSequence();
 
         BTIsLeader isLeader = new BTIsLeader(squadMember);
@@ -160,9 +185,14 @@ public class AISupportSoldier : MonoBehaviour
         sequence.SetNode(thereIs);
         sequence.SetNode(parallelSelector_1);
 
-        #endregion
 
-        #region Member Branch
+        return sequence;
+
+    }
+    #endregion
+
+    public BTNode GetBranchTeamMember()
+    {
         BTSequence sequence_2 = new BTSequence();
 
         BTHasLeader hasLeader = new BTHasLeader(squadMember);
@@ -175,25 +205,18 @@ public class AISupportSoldier : MonoBehaviour
 
         sequence_2.SetNode(parallelSelector_2);
 
+        // Options get out
         BTSee see_2 = new BTSee(targetController, target, distanceToTarget, true);
+
+
         BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToLeader);
 
         parallelSelector_2.SetNode(see_2);
         parallelSelector_2.SetNode(moveLeader);
 
         sequence_2.SetNode(parallelSelector_2);
-        #endregion
 
-
-        #region  Apply Node
-        sequence_team.SetNode(sequence);
-
-        sequence_team.SetNode(sequence_2);
-
-        #endregion
-
-        return sequence_team;
+        return sequence_2;
     }
-    #endregion
 
 }

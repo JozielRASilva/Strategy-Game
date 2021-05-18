@@ -16,8 +16,25 @@ MonoBehaviour:
   distanceToSet: 1
   delayToSet: 0
   distanceToRegroup: 1
+  distanceToTarget: 5
+  distanceToLeader: 1
+  target: Zombie
   targetController: {fileID: 2707069501515527838}
   navMeshController: {fileID: 2707069501515527834}
+  squadMember: {fileID: 1304290663}
+--- !u!114 &1304290663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ef74ed9e278e14a9243a05e6910a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtraMember: 0
 --- !u!1001 &1625954164736593592
 PrefabInstance:
   m_ObjectHideFlags: 0

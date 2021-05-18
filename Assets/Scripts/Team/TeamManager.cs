@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 public class TeamManager : MonoBehaviour
 {
@@ -80,20 +81,58 @@ public class TeamManager : MonoBehaviour
 
         if (hasSquad) return;
 
-        Squad squadWithSpace = squads.Find(s => s.CanAddMember(CheckDefaultFunction(member), MembersForSquad, member));
+        List<Squad> squadsWithSpace = squads.FindAll(s => s.CanAddMember(CheckDefaultFunction(member), MembersForSquad, member)).ToList();
 
         Squad.SquadFunction function = CheckDefaultFunction(member);
 
-        if (squadWithSpace != null && member)
+
+        if (squadsWithSpace != null && member)
         {
-            squadWithSpace.AddMember(function, member);
-            return;
+            if (squadsWithSpace.Count != 0)
+            {
+
+                if (!function.Equals(Squad.SquadFunction.EXTRA))
+                {
+                    squadsWithSpace[0].AddMember(function, member);
+                }
+                else
+                {
+                    Squad selected = null;
+
+                    foreach (var squadWithSpace in squadsWithSpace)
+                    {
+                        if (selected != null)
+                        {
+                            if (squadWithSpace.ExtraMembers.Count < selected.ExtraMembers.Count)
+                            {
+                                selected = squadWithSpace;
+                            }
+
+                        }
+                        else
+                        {
+                            selected = squadWithSpace;
+                        }
+                    }
+
+                    if (selected != null)
+                    {
+                        selected.AddMember(function, member);
+                    }
+
+                }
+
+                return;
+            }
         }
-        else if (member)
+
+
+        if (member)
         {
             CreateSquad(member);
             return;
         }
+
     }
 
     public Squad.SquadFunction CheckDefaultFunction(SquadMember member)
