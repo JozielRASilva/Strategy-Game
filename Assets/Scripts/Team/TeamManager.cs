@@ -40,6 +40,24 @@ public class TeamManager : MonoBehaviour
         return Squad.SquadFunction.NONE;
     }
 
+
+    public SquadMember GetSquadLeader(SquadMember member)
+    {
+
+        foreach (var squad in squads)
+        {
+            if (squad.ContainsMember(member))
+            {
+                if (squad.Leader == member)
+                    return null;
+
+                return squad.Leader;
+            }
+        }
+
+        return null;
+    }
+
     public void RemoveFromSquad(SquadMember member)
     {
 
@@ -61,9 +79,9 @@ public class TeamManager : MonoBehaviour
 
         if (hasSquad) return;
 
-        Squad squadWithSpace = squads.Find(s => s.CanAddMember(GetFunction(member), MembersForSquad, member));
+        Squad squadWithSpace = squads.Find(s => s.CanAddMember(CheckDefaultFunction(member), MembersForSquad, member));
 
-        Squad.SquadFunction function = GetFunction(member);
+        Squad.SquadFunction function = CheckDefaultFunction(member);
 
         if (squadWithSpace != null && member)
         {
@@ -77,7 +95,7 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    public Squad.SquadFunction GetFunction(SquadMember member)
+    public Squad.SquadFunction CheckDefaultFunction(SquadMember member)
     {
         if (member.ExtraMember) return Squad.SquadFunction.EXTRA;
         else return Squad.SquadFunction.MEMBER;

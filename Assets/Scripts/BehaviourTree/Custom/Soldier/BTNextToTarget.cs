@@ -22,11 +22,15 @@ public class BTNextToTarget : BTNode
 
         status = Status.FAILURE;
 
-        float currentDistance = Vector3.Distance(bt.transform.position, targetController.GetTarget().position);
-
-        if (currentDistance < distance)
+        Transform target = targetController.GetTarget();
+        if (target)
         {
-            status = Status.SUCCESS;
+            float currentDistance = Vector3.Distance(bt.transform.position, target.position);
+
+            if (currentDistance < distance)
+            {
+                status = Status.SUCCESS;
+            }
         }
 
 

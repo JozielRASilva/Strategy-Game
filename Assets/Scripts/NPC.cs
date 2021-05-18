@@ -23,16 +23,16 @@ public class NPC : MonoBehaviour
         if(!attributes) return;
 
         BTSequence combat = new BTSequence();
-        combat.SetNode(new BTSee(attributes.enemy, attributes.rangeToCheckEnemy));
+        combat.SetNode(new BTSee(null,attributes.enemy, attributes.rangeToCheckEnemy));
         combat.SetNode(new BTCombat(attributes.enemy, attributes.coolDown, attributes.projectile));
         combat.SetNode(new BTDodge(attributes.dodgeThis, attributes.dodgeTimeRange));
 
         BTParallelSelector parallelSelector = new BTParallelSelector();
-        parallelSelector.SetNode(new BTSee(attributes.enemy, attributes.rangeToCheckEnemy));
+        parallelSelector.SetNode(new BTSee(null, attributes.enemy, attributes.rangeToCheckEnemy));
         parallelSelector.SetNode(new BTMoveTo(attributes.target, attributes.speed, attributes.distance));
 
         BTSequence collect = new BTSequence();
-        collect.SetNode(new BTThereIs(attributes.target));
+        collect.SetNode(new BTThereIs(null, attributes.target));
         collect.SetNode(parallelSelector);
         collect.SetNode(new BTCollect(attributes.target, attributes.distanceToCollect));
 

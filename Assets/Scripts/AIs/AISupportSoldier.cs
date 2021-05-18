@@ -12,11 +12,26 @@ public class AISupportSoldier : MonoBehaviour
 
     public float distanceToRegroup = 1;
 
+    public float distanceToTarget = 1;
+
+    public string target = "Zumbi";
+
     public TargetController targetController;
 
     public NavMeshController navMeshController;
 
-    BehaviourTree behaviourTree;
+    public SquadMember squadMember;
+
+    private BehaviourTree behaviourTree;
+
+    private void Awake()
+    {
+        targetController = GetComponent<TargetController>();
+
+        navMeshController = GetComponent<NavMeshController>();
+
+        squadMember = GetComponent<SquadMember>();
+    }
 
     void Start()
     {
@@ -39,9 +54,11 @@ public class AISupportSoldier : MonoBehaviour
         BTNode branchRegroup = GetBranchRegroup();
 
         // FOLLOW LEADER
+        BTNode branchTeam = GetBranchTeam();
 
         root.SetNode(branchSetObject);
         root.SetNode(branchRegroup);
+        root.SetNode(branchTeam);
 
         behaviourTree.Build(root);
 
@@ -83,7 +100,7 @@ public class AISupportSoldier : MonoBehaviour
     }
     #endregion
 
-#region REAGROUP
+    #region REAGROUP
     public BTNode GetBranchRegroup()
     {
         BTSequence sequence_regroup = new BTSequence();
@@ -111,6 +128,49 @@ public class AISupportSoldier : MonoBehaviour
         #endregion
 
         return sequence_regroup;
+    }
+    #endregion
+
+
+    #region TEAM
+    public BTNode GetBranchTeam()
+    {
+        BTSelector sequence_team = new BTSelector();
+
+        #region Leader Branch
+
+        BTSequence sequence = new BTSequence();
+
+        BTIsLeader isLeader = new BTIsLeader(squadMember);
+        BTThereIs thereIs = new BTThereIs(targetController, target);
+        BTParallelSelector parallelSelector_1 = new BTParallelSelector();
+
+        sequence.SetNode(isLeader);
+        sequence.SetNode(thereIs);
+        sequence.SetNode(parallelSelector_1);
+
+
+        BTSee see = new BTSee(targetController, target, distanceToTarget);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, attributes.distance);
+
+        //parallelSelector_1.SetNode(nextToTarget);
+        parallelSelector_1.SetNode(thereIs);
+        parallelSelector_1.SetNode(moveTo);
+
+
+        #endregion
+
+        #region Member Branch
+
+        #endregion
+
+
+        #region  Apply Node
+        sequence_team.SetNode(sequence);
+
+        #endregion
+
+        return sequence_team;
     }
     #endregion
 

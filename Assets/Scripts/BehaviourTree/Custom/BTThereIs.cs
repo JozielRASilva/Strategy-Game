@@ -5,10 +5,12 @@ public class BTThereIs : BTNode
 {
 
     public string target;
+    private TargetController targetController;
 
-    public BTThereIs(string _target)
+    public BTThereIs(TargetController _targetController, string _target)
     {
         target = _target;
+        targetController = _targetController;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -16,6 +18,13 @@ public class BTThereIs : BTNode
         status = Status.RUNNING;
         if (GameObject.FindGameObjectWithTag(target))
         {
+
+            Transform target = GetTarget(bt.transform);
+
+            if (target)
+            {
+                targetController.SetTarget(target);
+            }
 
             status = Status.SUCCESS;
 
@@ -28,5 +37,37 @@ public class BTThereIs : BTNode
         yield break;
     }
 
+
+    public Transform GetTarget(Transform current)
+    {
+        GameObject selected = null;
+
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(target);
+
+        float lastDistance = 0;
+
+        foreach (var _target in targets)
+        {
+            float distance = Vector3.Distance(current.position, _target.transform.position);
+            if (!selected)
+            {
+                selected = _target;
+                lastDistance = distance;
+            }
+            else
+            {
+                if (distance < lastDistance)
+                {
+                    selected = _target;
+                    lastDistance = distance;
+                }
+
+            }
+
+        }
+
+        if (selected) return selected.transform;
+        else return null;
+    }
 
 }
