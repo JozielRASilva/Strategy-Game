@@ -11,13 +11,21 @@ public class Health : MonoBehaviour
 
     [Title("Damage")]
     public float invincibilityTime = 0.2f;
+    public UnityEvent OnDamaged;
+
+    [Title("Heal")]
+    public UnityEvent OnHealed;
 
     [Title("Death")]
+
+    public bool HasDelayToDestroy = false;
+    [ShowIf("HasDelayToDestroy", true)]
+    public float delayToDestroy = 0.2f;
+
     public UnityEvent OnDie;
 
     private int _currentLife;
     private float invincibilityTimeStamp;
-
 
     [OnInspectorGUI]
     private void Nodes()
@@ -25,6 +33,17 @@ public class Health : MonoBehaviour
         GUILayout.Label($"Life: {_currentLife} / {maxLife}");
     }
 
+
+    [Title("Buttons Actions")]
+
+    [Button("Heal")]
+    public void BHeal() => AddLife(1);
+
+    [Button("Hit")]
+    public void BHit() => TakeDamage(1);
+
+    [Button("Kill")]
+    public void BKill() => TakeDamage(maxLife);
 
     private void Awake()
     {
@@ -41,6 +60,8 @@ public class Health : MonoBehaviour
             _currentLife -= value;
 
             invincibilityTimeStamp = Time.time + invincibilityTime;
+
+            OnDamaged?.Invoke();
         }
         else
         {
@@ -50,9 +71,39 @@ public class Health : MonoBehaviour
 
     }
 
+    public void AddLife(int value)
+    {
+        if (_currentLife + value < maxLife)
+        {
+            _currentLife += value;
+        }
+        else
+        {
+            _currentLife = maxLife;
+        }
+        OnHealed?.Invoke();
+    }
+
     public void Die()
     {
         OnDie?.Invoke();
+
+        if (HasDelayToDestroy)
+            StartCoroutine(DestroyCO());
+        else
+            Kill();
+    }
+
+
+    private IEnumerator DestroyCO()
+    {
+        yield return new WaitForSeconds(delayToDestroy);
+
+        Kill();
+    }
+
+    private void Kill()
+    {
         Destroy(gameObject);
     }
 
