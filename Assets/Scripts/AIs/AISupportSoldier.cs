@@ -14,6 +14,8 @@ public class AISupportSoldier : MonoBehaviour
 
     public float distanceToTarget = 1;
 
+    public float distanceToLeader = 1;
+
     public string target = "Zumbi";
 
     public TargetController targetController;
@@ -143,30 +145,50 @@ public class AISupportSoldier : MonoBehaviour
 
         BTIsLeader isLeader = new BTIsLeader(squadMember);
         BTThereIs thereIs = new BTThereIs(targetController, target);
+
+
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
+
+        BTSee see = new BTSee(targetController, target, distanceToTarget);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToTarget);
+
+        parallelSelector_1.SetNode(see);
+        parallelSelector_1.SetNode(moveTo);
+
 
         sequence.SetNode(isLeader);
         sequence.SetNode(thereIs);
         sequence.SetNode(parallelSelector_1);
 
-
-        BTSee see = new BTSee(targetController, target, distanceToTarget);
-        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, attributes.distance);
-
-        //parallelSelector_1.SetNode(nextToTarget);
-        parallelSelector_1.SetNode(thereIs);
-        parallelSelector_1.SetNode(moveTo);
-
-
         #endregion
 
         #region Member Branch
+        BTSequence sequence_2 = new BTSequence();
 
+        BTHasLeader hasLeader = new BTHasLeader(squadMember);
+        BTUpdateLeader updateLeader = new BTUpdateLeader(squadMember, targetController);
+        sequence_2.SetNode(hasLeader);
+        sequence_2.SetNode(updateLeader);
+
+
+        BTParallelSelector parallelSelector_2 = new BTParallelSelector();
+
+        sequence_2.SetNode(parallelSelector_2);
+
+        BTSee see_2 = new BTSee(targetController, target, distanceToTarget, true);
+        BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToLeader);
+
+        parallelSelector_2.SetNode(see_2);
+        parallelSelector_2.SetNode(moveLeader);
+
+        sequence_2.SetNode(parallelSelector_2);
         #endregion
 
 
         #region  Apply Node
         sequence_team.SetNode(sequence);
+
+        sequence_team.SetNode(sequence_2);
 
         #endregion
 

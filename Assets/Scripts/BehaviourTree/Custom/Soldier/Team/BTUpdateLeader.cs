@@ -11,6 +11,7 @@ public class BTUpdateLeader : BTNode
     public BTUpdateLeader(SquadMember _squadMember, TargetController _targetController)
     {
         squadMember = _squadMember;
+        targetController = _targetController;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -28,7 +29,7 @@ public class BTUpdateLeader : BTNode
 
             if (Leader)
             {
-                targetController.SetTarget(Leader.transform);
+                targetController?.SetTarget(Leader.transform);
                 status = Status.SUCCESS;
             }
         }

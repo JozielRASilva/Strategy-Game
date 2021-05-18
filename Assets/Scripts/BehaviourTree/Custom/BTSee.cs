@@ -8,11 +8,22 @@ public class BTSee : BTNode
     public string target;
     public float rangeToCheckEnemy = 5;
 
+    private bool cleanTarget = false;
+
     public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy)
     {
         target = _target;
         rangeToCheckEnemy = _rangeToCheckEnemy;
         targetController = _targetController;
+    }
+
+    public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
+    {
+        target = _target;
+        rangeToCheckEnemy = _rangeToCheckEnemy;
+        targetController = _targetController;
+
+        cleanTarget = _cleanTarget;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -37,10 +48,17 @@ public class BTSee : BTNode
 
         if (status.Equals(Status.SUCCESS))
         {
-            Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
 
-            if (selectedTarget)
-                targetController.SetTarget(selectedTarget);
+            if (!cleanTarget)
+            {
+                Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
+                if (selectedTarget)
+                    targetController.SetTarget(selectedTarget);
+            }
+            else
+            {
+                targetController.SetTarget(null);
+            }
         }
 
         if (status.Equals(Status.RUNNING))

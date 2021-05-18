@@ -34,7 +34,8 @@ public class TeamManager : MonoBehaviour
 
         foreach (var squad in squads)
         {
-            return squad.GetFunction(member);
+            if (squad.ContainsMember(member))
+                return squad.GetFunction(member);
         }
 
         return Squad.SquadFunction.NONE;
