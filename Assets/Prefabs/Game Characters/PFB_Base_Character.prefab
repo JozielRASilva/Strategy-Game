@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4770646658972850522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7017117458021716958}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7017117458021716958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4770646658972850522}
+  m_LocalRotation: {x: 0.63396096, y: -0.6708526, z: -0.29965407, w: -0.24136639}
+  m_LocalPosition: {x: -1.1186775, y: -0.2570412, z: -0.45507216}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2159469292395486231}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &5070140945433140221
 GameObject:
   m_ObjectHideFlags: 0
@@ -51,9 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575c6929549b08740b5dce17517ee67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagToTakeDamage: Projectile
   maxLife: 5
   invincibilityTime: 0.2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &5070140945433140212
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -260,5 +292,10 @@ Transform:
 --- !u!95 &2159469292386398815 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3223489947772980008, guid: 45933bd38551829408ff89af093c2294, type: 3}
+  m_PrefabInstance: {fileID: 3552173412858411383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2159469292395486231 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3223489947782341984, guid: 45933bd38551829408ff89af093c2294, type: 3}
   m_PrefabInstance: {fileID: 3552173412858411383}
   m_PrefabAsset: {fileID: 0}

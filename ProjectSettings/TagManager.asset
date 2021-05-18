@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Soldier
   - CallCounter
+  - Zombie
   layers:
   - Default
   - TransparentFX
