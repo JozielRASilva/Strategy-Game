@@ -1129,6 +1129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1304290663, guid: b03f764576da64a4283d414d4df5306f, type: 3}
+      propertyPath: ExtraMember
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5822115146684011845, guid: b03f764576da64a4283d414d4df5306f, type: 3}
       propertyPath: m_Name
       value: PFB_Support_Soldier (1)
@@ -2071,6 +2075,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1304290663, guid: b03f764576da64a4283d414d4df5306f, type: 3}
+      propertyPath: ExtraMember
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5822115146684011845, guid: b03f764576da64a4283d414d4df5306f, type: 3}
       propertyPath: m_Name
       value: PFB_Support_Soldier

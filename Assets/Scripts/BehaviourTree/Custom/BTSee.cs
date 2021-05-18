@@ -48,17 +48,17 @@ public class BTSee : BTNode
 
         if (status.Equals(Status.SUCCESS))
         {
-
-            if (!cleanTarget)
-            {
-                Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
-                if (selectedTarget)
-                    targetController.SetTarget(selectedTarget);
-            }
-            else
-            {
-                targetController.SetTarget(null);
-            }
+            if (targetController)
+                if (!cleanTarget)
+                {
+                    Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
+                    if (selectedTarget)
+                        targetController.SetTarget(selectedTarget);
+                }
+                else
+                {
+                    targetController.SetTarget(null);
+                }
         }
 
         if (status.Equals(Status.RUNNING))
