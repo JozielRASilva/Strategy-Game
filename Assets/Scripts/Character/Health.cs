@@ -84,7 +84,19 @@ public class Health : MonoBehaviour
         OnHealed?.Invoke();
     }
 
-    public void Die()
+    public int GetLife()
+    {
+        return _currentLife;
+    }
+
+    public bool LifeIsCompleted()
+    {
+        if (_currentLife == maxLife) return true;
+        else return false;
+
+    }
+
+    private void Die()
     {
         OnDie?.Invoke();
 

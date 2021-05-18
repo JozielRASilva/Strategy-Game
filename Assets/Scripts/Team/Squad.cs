@@ -143,6 +143,40 @@ public class Squad
         return SquadFunction.NONE;
     }
 
+    public List<SquadMember> GetMembers(SquadMember member)
+    {
+        List<SquadMember> squadMembers = new List<SquadMember>();
+
+        if (member)
+            if (!member.Equals(Leader)) squadMembers.Add(Leader);
+
+        if (Members != null && member)
+        {
+            foreach (var _member in Members)
+            {
+                if (!_member.Equals(member))
+                {
+                    squadMembers.Add(_member);
+                }
+            }
+
+        }
+
+        if (ExtraMembers != null && member)
+        {
+            foreach (var _member in ExtraMembers)
+            {
+                if (!_member.Equals(member))
+                {
+                    squadMembers.Add(_member);
+                }
+            }
+        }
+        
+
+        return squadMembers;
+    }
+
     public bool Full(int MembersForSquad)
     {
 

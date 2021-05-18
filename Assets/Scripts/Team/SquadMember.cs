@@ -8,6 +8,16 @@ public class SquadMember : MonoBehaviour
 
     public bool ExtraMember;
 
+    public Health health;
+
+    private void Awake()
+    {
+        if (!health)
+        {
+            health = GetComponent<Health>();
+        }
+    }
+
     [Button("Get Function")]
     public void CheckSquadFunction()
     {

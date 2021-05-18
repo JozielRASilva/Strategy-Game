@@ -60,6 +60,21 @@ public class TeamManager : MonoBehaviour
         return null;
     }
 
+    
+    public List<SquadMember> GetSquadMembers(SquadMember member)
+    {
+
+        foreach (var squad in squads)
+        {
+            if (squad.ContainsMember(member))
+            {
+                return squad.GetMembers(member);
+            }
+        }
+
+        return null;
+    }
+
     public void RemoveFromSquad(SquadMember member)
     {
 
