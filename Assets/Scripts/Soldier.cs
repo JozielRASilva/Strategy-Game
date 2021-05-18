@@ -37,7 +37,7 @@ public class Soldier : MonoBehaviour
         }
 
         BTParallelSelector parallel = new BTParallelSelector();
-        parallel.SetNode(new BTMoveTo("Zombie", 2, 1));
+        parallel.SetNode(new BTMoveByNavMesh(navMesh, target, 5, 5));
         parallel.SetNode(new BTCloseToTarget(target, 5, 20));
 
 

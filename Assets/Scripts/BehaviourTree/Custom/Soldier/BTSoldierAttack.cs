@@ -28,7 +28,10 @@ public class BTSoldierAttack : BTNode
 
         if (selectedEnemy)
         {
-            bt.transform.LookAt(selectedEnemy.transform);
+            Vector3 lookAtPosition =
+            new Vector3(selectedEnemy.transform.position.x, bt.transform.position.y, selectedEnemy.transform.position.z);
+
+            bt.transform.LookAt(lookAtPosition);
 
             Vector3 position = muzzle.transform.position;
 
