@@ -58,7 +58,10 @@ public class ObjectSetterIndicator : MonoBehaviour
 
         SetterActions();
 
-        ShowCanvasFeedback(point);
+        if (raycastMouse.ValidPosition(WhereCanSet))
+            ShowCanvasFeedback(point);
+        else
+            HideCanvasFeedback();
 
         SetObject();
 
