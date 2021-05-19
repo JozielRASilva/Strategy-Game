@@ -69,7 +69,7 @@ public class ObjectSetterIndicator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (current.CanSet())
+            if (current.CanSet() && raycastMouse.ValidPosition(WhereCanSet))
             {
                 ObjectSetterManager.Instance.AddObjectToSet(current.transform, settable);
 
@@ -132,6 +132,21 @@ public class ObjectSetterIndicator : MonoBehaviour
         if (!current) current = ObjectSetterManager.Instance?.GetPreviewObject(settable);
 
         if (!current) return;
+
+        if (!raycastMouse)
+        {
+
+            current?.gameObject?.SetActive(false);
+
+            return;
+        }
+        else if (!raycastMouse.ValidPosition(WhereCanSet))
+        {
+            current?.gameObject?.SetActive(false);
+
+            return;
+        }
+
 
         current?.gameObject?.SetActive(true);
         current?.ShowPreview(point + positionOffset);

@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  distanceToSet: 1
+  distanceToSet: 3
   delayToSet: 0.2
   distanceToRegroup: 1
   distanceToLeader: 1
