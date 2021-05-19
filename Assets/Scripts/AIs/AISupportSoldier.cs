@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class AISupportSoldier : MonoBehaviour
+public class AISupportSoldier : MonoBehaviour, AIBase
 {
     public SOAttributes attributes;
 
@@ -74,6 +74,26 @@ public class AISupportSoldier : MonoBehaviour
 
         behaviourTree.Build(root);
 
+    }
+
+    public void RestartBehaviour()
+    {
+
+        SetBehaviour();
+        if (behaviourTree)
+        {
+            behaviourTree.enabled = true;
+            behaviourTree.Initialize();
+        }
+    }
+
+    public void StopBehaviour()
+    {
+        if (behaviourTree)
+        {
+            behaviourTree.Stop();
+            behaviourTree.enabled = false;
+        }
     }
 
     #region SET OBJECT
@@ -187,7 +207,7 @@ public class AISupportSoldier : MonoBehaviour
         sequence_team.SetNode(teamLeaderBranch);
 
         sequence_team.SetNode(teamMemberBranch);
-        
+
         sequence_team.SetNode(teamWithoutLeader);
 
         #endregion

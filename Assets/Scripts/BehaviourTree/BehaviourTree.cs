@@ -17,9 +17,22 @@ public class BehaviourTree : MonoBehaviour
 
     private BTNode root;
 
+    public Coroutine execution;
+
     void Start()
     {
-        StartCoroutine(Execute());
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        execution = StartCoroutine(Execute());
+    }
+
+    public void Stop()
+    {
+        if (execution != null)
+            StopCoroutine(execution);
     }
 
     public void Build(BTNode _root)
@@ -36,7 +49,8 @@ public class BehaviourTree : MonoBehaviour
         }
     }
 
-    private void LateUpdate() {
+    private void LateUpdate()
+    {
         nodes = GetNodes();
     }
 

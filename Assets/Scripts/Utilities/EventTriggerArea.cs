@@ -14,12 +14,10 @@ public class EventTriggerArea : MonoBehaviour
     public UnityEvent OnStay;
     public UnityEvent OnExit;
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
-        {  
-            Debug.Log($"Enter {other.name}");
+        {     
             OnEnter?.Invoke();
         }
     }
@@ -27,8 +25,7 @@ public class EventTriggerArea : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
-        {
-            Debug.Log($"Stay {other.name}");
+        {   
             OnStay?.Invoke();
         }
     }
@@ -37,7 +34,6 @@ public class EventTriggerArea : MonoBehaviour
     {
         if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
         {
-            Debug.Log($"Exit {other.name}");
             OnExit?.Invoke();
         }
     }

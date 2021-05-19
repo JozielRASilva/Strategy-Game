@@ -295,8 +295,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575c6929549b08740b5dce17517ee67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainBody: {fileID: 0}
+  OnKill:
+    m_PersistentCalls:
+      m_Calls: []
+  HasDelayToDestroy: 0
+  delayToDestroy: 0.2
   maxLife: 5
   invincibilityTime: 0.2
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealed:
+    m_PersistentCalls:
+      m_Calls: []
   OnDie:
     m_PersistentCalls:
       m_Calls: []
@@ -536,10 +548,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ae9582f6fa1704391b5d8ee75be616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainBody: {fileID: 0}
+  OnKill:
+    m_PersistentCalls:
+      m_Calls: []
+  HasDelayToDestroy: 0
+  delayToDestroy: 0.2
   Damage: 1
   Damageable:
     serializedVersion: 2
     m_Bits: 256
+  destroyOnDamage: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &585380216
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,10 +1135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Zombie (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2759292864728444539, guid: d9c55356094706841b9fa97ced01cd46, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 9070743945637753857, guid: d9c55356094706841b9fa97ced01cd46, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1670,10 +1688,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ae9582f6fa1704391b5d8ee75be616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainBody: {fileID: 0}
+  OnKill:
+    m_PersistentCalls:
+      m_Calls: []
+  HasDelayToDestroy: 0
+  delayToDestroy: 0.2
   Damage: 1
   Damageable:
     serializedVersion: 2
     m_Bits: 256
+  destroyOnDamage: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1829615824
 Transform:
   m_ObjectHideFlags: 0

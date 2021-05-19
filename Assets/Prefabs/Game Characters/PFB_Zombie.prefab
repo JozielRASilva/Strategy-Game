@@ -129,6 +129,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 5070140945433140221, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070140945433140221, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
 --- !u!4 &1534328692419942124 stripped
