@@ -5,33 +5,39 @@ using Sirenix.OdinInspector;
 
 public class AISupportSoldier : MonoBehaviour, AIBase
 {
-    public SOAttributes attributes;
+    [Title("Geral Info")]
+    public float Speed = 6;
 
+    [Title("Set Object")]
     public float distanceToSet = 0.5f;
-    public float delayToSet = 0f;
+    public float delayToSet = 0.2f;
 
+    [Title("Regroup")]
     public float distanceToRegroup = 1;
 
-    public float distanceToTarget = 1;
-
+    [Title("Team")]
     public float distanceToLeader = 1;
 
+    [Title("Heal")]
     public float distanceToHeal = 0.7f;
+    public float dampingToHeal = 1f;
 
     public GameObject healHitBox;
     public float healCooldown = 2f;
     public float healRest = 1f;
 
+    [Title("Combat")]
     public string target = "Zombie";
+    public float distanceToTarget = 1;
 
-    public TargetController targetController;
 
-    public NavMeshController navMeshController;
-
+    [Title("Geral Controllers")]
     public SquadMember squadMember;
-
+    public TargetController targetController;
+    public NavMeshController navMeshController;
     private BehaviourTree behaviourTree;
 
+    #region Base Info
     private void Awake()
     {
         targetController = GetComponent<TargetController>();
@@ -50,8 +56,6 @@ public class AISupportSoldier : MonoBehaviour, AIBase
     {
         if (!behaviourTree)
             behaviourTree = gameObject.AddComponent<BehaviourTree>();
-
-        if (!attributes) return;
 
         BTSelector root = new BTSelector();
 
@@ -95,6 +99,7 @@ public class AISupportSoldier : MonoBehaviour, AIBase
             behaviourTree.enabled = false;
         }
     }
+    #endregion
 
     #region SET OBJECT
     public BTNode GetBranchSetObject()
@@ -111,7 +116,7 @@ public class AISupportSoldier : MonoBehaviour, AIBase
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
         BTNextToTarget nextToTarget = new BTNextToTarget(targetController, distanceToSet);
-        BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToSet);
+        BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToSet);
 
         parallelSelector_1.SetNode(nextToTarget);
         parallelSelector_1.SetNode(moveToSet);
@@ -145,8 +150,8 @@ public class AISupportSoldier : MonoBehaviour, AIBase
         #region Moving
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-        BTNextToTarget nextToTarget = new BTNextToTarget(targetController, distanceToSet);
-        BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToSet);
+        BTNextToTarget nextToTarget = new BTNextToTarget(targetController, distanceToRegroup);
+        BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToRegroup);
 
         parallelSelector_1.SetNode(nextToTarget);
         parallelSelector_1.SetNode(moveToSet);
@@ -170,9 +175,9 @@ public class AISupportSoldier : MonoBehaviour, AIBase
 
         BTMemberToHeal memberToHeal = new BTMemberToHeal(squadMember, targetController);
 
-        BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToHeal);
+        BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToHeal);
 
-        BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, targetController);
+        BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, targetController, dampingToHeal);
 
         sequence.SetNode(memberToHeal);
         sequence.SetNode(MoveToHeal);
@@ -181,7 +186,6 @@ public class AISupportSoldier : MonoBehaviour, AIBase
         return sequence;
     }
     #endregion
-
 
     #region TEAM
     public BTNode GetBranchTeam()
@@ -229,11 +233,15 @@ public class AISupportSoldier : MonoBehaviour, AIBase
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
         BTSee see = new BTSee(targetController, target, distanceToTarget);
-        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToTarget);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToTarget);
 
         parallelSelector_1.SetNode(see);
         parallelSelector_1.SetNode(moveTo);
 
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+        parallelSelector_1.SetNode(thereIsObjectToSet);
+        parallelSelector_1.SetNode(calledToRegroup);
 
         sequence.SetNode(isLeader);
         sequence.SetNode(thereIs);
@@ -260,21 +268,24 @@ public class AISupportSoldier : MonoBehaviour, AIBase
 
         sequence_2.SetNode(parallelSelector_2);
 
-        // Options get out
+
         BTSee see_2 = new BTSee(targetController, target, distanceToTarget, true);
-
-
-        BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToLeader);
+        BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToLeader);
 
         parallelSelector_2.SetNode(see_2);
         parallelSelector_2.SetNode(moveLeader);
+
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+        parallelSelector_2.SetNode(thereIsObjectToSet);
+        parallelSelector_2.SetNode(calledToRegroup);
+
 
         sequence_2.SetNode(parallelSelector_2);
 
         return sequence_2;
     }
     #endregion
-
 
     #region WITHOUT LEADER
     public BTNode GetBranchWithoutLeader()
@@ -288,10 +299,15 @@ public class AISupportSoldier : MonoBehaviour, AIBase
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
         BTSee see = new BTSee(targetController, target, distanceToTarget);
-        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToTarget);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToTarget);
 
         parallelSelector_1.SetNode(see);
         parallelSelector_1.SetNode(moveTo);
+
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+        parallelSelector_1.SetNode(thereIsObjectToSet);
+        parallelSelector_1.SetNode(calledToRegroup);
 
         sequence.SetNode(thereIs);
         sequence.SetNode(parallelSelector_1);
@@ -301,6 +317,5 @@ public class AISupportSoldier : MonoBehaviour, AIBase
 
     }
     #endregion
-
 
 }

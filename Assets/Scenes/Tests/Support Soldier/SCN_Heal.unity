@@ -296,6 +296,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575c6929549b08740b5dce17517ee67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainBody: {fileID: 0}
+  OnKill:
+    m_PersistentCalls:
+      m_Calls: []
+  HasDelayToDestroy: 0
+  delayToDestroy: 0.2
   maxLife: 5
   invincibilityTime: 0.2
   OnDamaged:
@@ -304,8 +310,6 @@ MonoBehaviour:
   OnHealed:
     m_PersistentCalls:
       m_Calls: []
-  HasDelayToDestroy: 0
-  delayToDestroy: 0.2
   OnDie:
     m_PersistentCalls:
       m_Calls: []

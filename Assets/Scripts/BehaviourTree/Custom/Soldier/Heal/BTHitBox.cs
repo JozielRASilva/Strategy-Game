@@ -9,6 +9,7 @@ public class BTHitbox : BTNode
     private float coolDown;
     private float rest;
     private TargetController targetController;
+    private float damping = 1;
 
     public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetController _targetController)
     {
@@ -17,6 +18,15 @@ public class BTHitbox : BTNode
         targetController = _targetController;
 
         rest = _rest;
+    }
+
+    public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetController _targetController, float _damping)
+    {
+        hitboxes = _hitboxes;
+        coolDown = _coolDown;
+        targetController = _targetController;
+        rest = _rest;
+        damping = _damping;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -29,7 +39,7 @@ public class BTHitbox : BTNode
             var lookPos = targetController.GetTarget().position - bt.transform.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
-            bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * coolDown);
+            bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
 
             yield return null;
         }

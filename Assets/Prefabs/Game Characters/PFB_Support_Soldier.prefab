@@ -107,20 +107,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attributes: {fileID: 11400000, guid: 1877330f548454b4f89406c517399c8c, type: 2}
+  Speed: 5
   distanceToSet: 1
-  delayToSet: 0
+  delayToSet: 0.2
   distanceToRegroup: 1
-  distanceToTarget: 5
   distanceToLeader: 1
   distanceToHeal: 1.2
+  dampingToHeal: 1
   healHitBox: {fileID: 475056069}
   healCooldown: 2
   healRest: 1
   target: Zombie
+  distanceToTarget: 5
+  squadMember: {fileID: 1304290663}
   targetController: {fileID: 2707069501515527838}
   navMeshController: {fileID: 2707069501515527834}
-  squadMember: {fileID: 1304290663}
 --- !u!114 &1304290663
 MonoBehaviour:
   m_ObjectHideFlags: 0
