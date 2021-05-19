@@ -178,11 +178,17 @@ public class AISupportSoldier : MonoBehaviour
         BTNode teamMemberBranch = GetBranchTeamMember();
         #endregion
 
+        #region Without Leader
+        BTNode teamWithoutLeader = GetBranchWithoutLeader();
+        #endregion
+
 
         #region  Apply Node
         sequence_team.SetNode(teamLeaderBranch);
 
         sequence_team.SetNode(teamMemberBranch);
+        
+        sequence_team.SetNode(teamWithoutLeader);
 
         #endregion
 
@@ -248,5 +254,33 @@ public class AISupportSoldier : MonoBehaviour
         return sequence_2;
     }
     #endregion
+
+
+    #region WITHOUT LEADER
+    public BTNode GetBranchWithoutLeader()
+    {
+
+        BTSequence sequence = new BTSequence();
+
+        BTThereIs thereIs = new BTThereIs(targetController, target);
+
+
+        BTParallelSelector parallelSelector_1 = new BTParallelSelector();
+
+        BTSee see = new BTSee(targetController, target, distanceToTarget);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToTarget);
+
+        parallelSelector_1.SetNode(see);
+        parallelSelector_1.SetNode(moveTo);
+
+        sequence.SetNode(thereIs);
+        sequence.SetNode(parallelSelector_1);
+
+
+        return sequence;
+
+    }
+    #endregion
+
 
 }
