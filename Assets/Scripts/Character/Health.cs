@@ -4,9 +4,10 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+public class Health : KillableObject
 {
 
+    [Title("Life Info")]
     public int maxLife = 5;
 
     [Title("Damage")]
@@ -15,12 +16,6 @@ public class Health : MonoBehaviour
 
     [Title("Heal")]
     public UnityEvent OnHealed;
-
-    [Title("Death")]
-
-    public bool HasDelayToDestroy = false;
-    [ShowIf("HasDelayToDestroy", true)]
-    public float delayToDestroy = 0.2f;
 
     public UnityEvent OnDie;
 
@@ -66,7 +61,7 @@ public class Health : MonoBehaviour
         else
         {
             _currentLife = 0;
-            Die();
+            Destroy();
         }
 
     }
@@ -94,29 +89,6 @@ public class Health : MonoBehaviour
         if (_currentLife == maxLife) return true;
         else return false;
 
-    }
-
-    private void Die()
-    {
-        OnDie?.Invoke();
-
-        if (HasDelayToDestroy)
-            StartCoroutine(DestroyCO());
-        else
-            Kill();
-    }
-
-
-    private IEnumerator DestroyCO()
-    {
-        yield return new WaitForSeconds(delayToDestroy);
-
-        Kill();
-    }
-
-    private void Kill()
-    {
-        Destroy(gameObject);
     }
 
 }

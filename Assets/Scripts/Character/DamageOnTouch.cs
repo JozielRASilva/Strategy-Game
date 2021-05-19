@@ -4,9 +4,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
-public class DamageOnTouch : MonoBehaviour
+public class DamageOnTouch : KillableObject
 {
-
+    [Title("Damage Info")]
     public int Damage = 1;
 
     public LayerMask Damageable;
@@ -14,9 +14,6 @@ public class DamageOnTouch : MonoBehaviour
     public bool destroyOnDamage = false;
 
     public UnityEvent OnHit;
-
-    [ShowIf("destroyOnDamage", true)]
-    public UnityEvent OnDestroy;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,11 +34,4 @@ public class DamageOnTouch : MonoBehaviour
         }
     }
 
-
-    private void Destroy()
-    {
-        OnDestroy?.Invoke();
-
-        gameObject.SetActive(false);
-    }
 }
