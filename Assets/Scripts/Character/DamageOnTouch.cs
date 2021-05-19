@@ -13,6 +13,8 @@ public class DamageOnTouch : MonoBehaviour
 
     public bool destroyOnDamage = false;
 
+    public UnityEvent OnHit;
+
     [ShowIf("destroyOnDamage", true)]
     public UnityEvent OnDestroy;
 
@@ -24,6 +26,8 @@ public class DamageOnTouch : MonoBehaviour
             Health _health = other.GetComponent<Health>();
 
             _health.TakeDamage(Damage);
+
+            OnHit?.Invoke();
 
             if (destroyOnDamage)
             {

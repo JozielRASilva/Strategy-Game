@@ -21,7 +21,18 @@ public class BTHitbox : BTNode
 
     public override IEnumerator Run(BehaviourTree bt)
     {
-        yield return new WaitForSeconds(coolDown);
+
+        float timeStamp = Time.time + coolDown;
+
+        while (timeStamp > Time.time)
+        {
+            var lookPos = targetController.GetTarget().position - bt.transform.position;
+            lookPos.y = 0;
+            var rotation = Quaternion.LookRotation(lookPos);
+            bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * coolDown);
+
+            yield return null;
+        }
 
         hitboxes.SetActive(true);
 

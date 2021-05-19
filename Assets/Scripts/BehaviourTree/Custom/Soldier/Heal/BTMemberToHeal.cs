@@ -22,6 +22,8 @@ public class BTMemberToHeal : BTNode
 
         List<SquadMember> members = TeamManager.Instance.GetSquadMembers(squadMember);
 
+        if (members == null) yield break;
+
         List<SquadMember> damagedMembers = members.FindAll(m => !m.health.LifeIsCompleted());
 
         if (damagedMembers == null)
@@ -48,7 +50,7 @@ public class BTMemberToHeal : BTNode
 
 
         targetController.SetTarget(selected.transform);
-        
+
         status = Status.SUCCESS;
 
         yield break;

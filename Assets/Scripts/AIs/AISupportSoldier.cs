@@ -16,7 +16,13 @@ public class AISupportSoldier : MonoBehaviour
 
     public float distanceToLeader = 1;
 
-    public string target = "Zumbi";
+    public float distanceToHeal = 0.7f;
+
+    public GameObject healHitBox;
+    public float healCooldown = 2f;
+    public float healRest = 1f;
+
+    public string target = "Zombie";
 
     public TargetController targetController;
 
@@ -55,11 +61,15 @@ public class AISupportSoldier : MonoBehaviour
         // REGROUP
         BTNode branchRegroup = GetBranchRegroup();
 
+        // HEAL
+        BTNode branchHeal = GetBranchHeal();
+
         // FOLLOW LEADER
         BTNode branchTeam = GetBranchTeam();
 
         root.SetNode(branchSetObject);
         root.SetNode(branchRegroup);
+        root.SetNode(branchHeal);
         root.SetNode(branchTeam);
 
         behaviourTree.Build(root);
@@ -133,6 +143,25 @@ public class AISupportSoldier : MonoBehaviour
     }
     #endregion
 
+    #region  HEAL
+    private BTNode GetBranchHeal()
+    {
+        BTSequence sequence = new BTSequence();
+
+        BTMemberToHeal memberToHeal = new BTMemberToHeal(squadMember, targetController);
+
+        BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(navMeshController, targetController, attributes.speed, distanceToHeal);
+
+        BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, targetController);
+
+        sequence.SetNode(memberToHeal);
+        sequence.SetNode(MoveToHeal);
+        sequence.SetNode(hitboxHeal);
+
+        return sequence;
+    }
+    #endregion
+
 
     #region TEAM
     public BTNode GetBranchTeam()
@@ -160,7 +189,6 @@ public class AISupportSoldier : MonoBehaviour
         return sequence_team;
     }
     #endregion
-
 
     #region TEAM LEADER
     public BTNode GetBranchTeamLeader()
@@ -191,6 +219,7 @@ public class AISupportSoldier : MonoBehaviour
     }
     #endregion
 
+    #region  TEAM MEMBER
     public BTNode GetBranchTeamMember()
     {
         BTSequence sequence_2 = new BTSequence();
@@ -218,5 +247,6 @@ public class AISupportSoldier : MonoBehaviour
 
         return sequence_2;
     }
+    #endregion
 
 }
