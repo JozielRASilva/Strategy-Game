@@ -17,9 +17,16 @@ public class Moedas : MonoBehaviour
         moeda = 0;
     }
 
-     public void AddMoeda() 
+    public void AddMoeda()
     {
         moeda += valorMoeda;
         moedaTxt.text = "Moedas: " + moeda.ToString();
     }
+
+     public void AddMoeda(int value)
+    {
+        moeda += value;
+        moedaTxt.text = "Moedas: " + moeda.ToString();
+    }
+
 }
