@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using Sirenix.OdinInspector;
 using System;
+using UnityEngine.Events;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class LevelManager : MonoBehaviour
 
     public Action OnWin;
     public Action OnLose;
+
+    public UnityEvent EventOnWin;
+    public UnityEvent EventOnLose;
 
     public List<string> enemiesTag = new List<string>();
     public List<string> alliesTag = new List<string>();
@@ -44,13 +49,13 @@ public class LevelManager : MonoBehaviour
         if (!EnemiesAlive())
         {
             OnWin?.Invoke();
-
+            EventOnWin?.Invoke();
             levelFinished = true;
         }
         else if (!SoldiersAlive())
         {
             OnLose?.Invoke();
-
+            EventOnLose?.Invoke();
             levelFinished = true;
         }
 

@@ -32,7 +32,7 @@ public class PoolManager : Singleton<PoolManager>
 	{
 		if(prefabLookup.ContainsKey(prefab))
 		{
-			throw new Exception("Pool for prefab " + prefab.name + " has already been created");
+			Debug.LogWarning("Pool for prefab " + prefab.name + " has already been created");
 		}
 		var pool = new ObjectPool<GameObject>(() => { return InstantiatePrefab(prefab); }, size);
 		prefabLookup[prefab] = pool;

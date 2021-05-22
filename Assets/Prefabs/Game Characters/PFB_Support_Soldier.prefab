@@ -291,6 +291,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 7360774338907319751, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 21e3f5c3e84f02441804cad3e125f905, type: 2}
     m_RemovedComponents:
     - {fileID: 3675497964422395940, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}

@@ -18,8 +18,7 @@ public class ObjectSetterManager : MonoBehaviour
 
         foreach (var objectAvaliable in ObjectsAvaliableToSet)
         {
-
-            PoolManager.WarmPool(objectAvaliable.ObjectToSet, poolSize);
+            PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, poolSize);
             PoolManager.WarmPool(objectAvaliable.ObjectPreviewChecker.gameObject, poolSize);
         }
 
@@ -67,7 +66,7 @@ public class ObjectSetterManager : MonoBehaviour
 
         ObjectToSet objectTo = manageObject.objectToSet;
 
-        PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet, objectTo.position, Quaternion.Euler(objectTo.rotation));
+        PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet.gameObject, objectTo.position, Quaternion.Euler(objectTo.rotation));
 
         manageObject.settableObjectPreview.DisableObject();
 
