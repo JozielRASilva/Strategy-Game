@@ -17,8 +17,6 @@ public class Health : KillableObject
     [Title("Heal")]
     public UnityEvent OnHealed;
 
-    public UnityEvent OnDie;
-
     private int _currentLife;
     private float invincibilityTimeStamp;
 
@@ -32,13 +30,13 @@ public class Health : KillableObject
     [Title("Buttons Actions")]
 
     [Button("Heal")]
-    public void BHeal() => AddLife(1);
+    private void BHeal() => AddLife(1);
 
     [Button("Hit")]
-    public void BHit() => TakeDamage(1);
+    private void BHit() => TakeDamage(1);
 
     [Button("Kill")]
-    public void BKill() => TakeDamage(maxLife);
+    private void BKill() => TakeDamage(maxLife);
 
     private void Awake()
     {
@@ -89,6 +87,11 @@ public class Health : KillableObject
         if (_currentLife == maxLife) return true;
         else return false;
 
+    }
+
+    public bool IsAlive()
+    {
+        return _currentLife > 0;
     }
 
 }
