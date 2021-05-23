@@ -17,6 +17,7 @@ public class NavMeshController : MonoBehaviour
 
     private Transform _currentTarget;
 
+    [SerializeField]
     private bool CanMove;
 
     private void Awake()
@@ -79,6 +80,7 @@ public class NavMeshController : MonoBehaviour
     public void StopMove()
     {
         CanMove = false;
+        agent.SetDestination(transform.position);
     }
 
 }

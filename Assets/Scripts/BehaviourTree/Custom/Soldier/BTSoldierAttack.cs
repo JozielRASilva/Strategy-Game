@@ -9,12 +9,17 @@ public class BTSoldierAttack : BTNode
     private GameObject prefab;
     private GameObject muzzle;
 
-    public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle)
+    private float damping;
+    private string targetTag;
+
+    public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle, float _damping, string _targetTag)
     {
         targetZombie = _targetZombie;
         coolDown = _coolDown;
         prefab = projectile;
         muzzle = _muzzle;
+        targetTag = _targetTag;
+        damping = _damping;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -23,15 +28,21 @@ public class BTSoldierAttack : BTNode
 
         GameObject selectedEnemy = GetTarget(bt.transform);
 
-
-        if (selectedEnemy) yield return new WaitForSeconds(coolDown);
-
         if (selectedEnemy)
         {
-            Vector3 lookAtPosition =
-            new Vector3(selectedEnemy.transform.position.x, bt.transform.position.y, selectedEnemy.transform.position.z);
 
-            bt.transform.LookAt(lookAtPosition);
+            float timeStamp = Time.time + coolDown;
+
+            while (timeStamp > Time.time)
+            {
+                var lookPos = selectedEnemy.transform.position - bt.transform.position;
+                lookPos.y = 0;
+                var rotation = Quaternion.LookRotation(lookPos);
+                bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
+
+                yield return null;
+            }
+
 
             Vector3 position = muzzle.transform.position;
 
@@ -53,7 +64,7 @@ public class BTSoldierAttack : BTNode
     {
         GameObject selected = null;
 
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Zombie");
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
 
         float lastDistance = 0;
 

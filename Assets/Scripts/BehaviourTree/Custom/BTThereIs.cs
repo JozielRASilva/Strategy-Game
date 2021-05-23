@@ -4,19 +4,25 @@ using System.Collections;
 public class BTThereIs : BTNode
 {
 
-    public string target;
+    public string targetTag;
     private TargetController targetController;
 
     public BTThereIs(TargetController _targetController, string _target)
     {
-        target = _target;
+        targetTag = _target;
         targetController = _targetController;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
     {
         status = Status.RUNNING;
-        if (GameObject.FindGameObjectWithTag(target))
+        if (targetTag == "")
+        {
+            status = Status.FAILURE;
+            yield break;
+        }
+
+        if (GameObject.FindGameObjectWithTag(targetTag))
         {
 
             Transform target = GetTarget(bt.transform);
@@ -42,7 +48,7 @@ public class BTThereIs : BTNode
     {
         GameObject selected = null;
 
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(target);
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
 
         float lastDistance = 0;
 

@@ -251,6 +251,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575c6929549b08740b5dce17517ee67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EventOnRespawn:
+    m_PersistentCalls:
+      m_Calls: []
+  EventOnDisable:
+    m_PersistentCalls:
+      m_Calls: []
+  FromPool: 0
+  MainBodyIsOther: 0
   MainBody: {fileID: 0}
   OnKill:
     m_PersistentCalls:
@@ -263,9 +271,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnHealed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDie:
     m_PersistentCalls:
       m_Calls: []
 --- !u!136 &296874272
@@ -1383,6 +1388,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 605390252, guid: b03f764576da64a4283d414d4df5306f, type: 3}
+      propertyPath: dampingToHeal
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5822115146684011845, guid: b03f764576da64a4283d414d4df5306f, type: 3}
       propertyPath: m_Name
       value: PFB_Support_Soldier
@@ -2012,6 +2021,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3541496730936405441
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 829626164, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: target
+      value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908078489216045785, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
+      propertyPath: m_Name
+      value: PFB_Soldier
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
 --- !u!1001 &5361231485981265594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2023,6 +2093,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 667183734}
+    - target: {fileID: 2271932720841921580, guid: 9078a5e664d9c374fb82fa72a8bb9bd3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4730262680231522384, guid: 9078a5e664d9c374fb82fa72a8bb9bd3, type: 3}
       propertyPath: m_Camera
       value: 
