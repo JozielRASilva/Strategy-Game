@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 5e28427a82032fc4b87bfa453e6c25f7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - LEMON MILK
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d9880d5f77bb97d4bbfe04e46c6d9d2c, type: 3}
+  - {fileID: 12800000, guid: 4ec124fcb7c5d9b4f913c94188191b64, type: 3}
+  - {fileID: 12800000, guid: b9fded18ad859b5408c4543f27bb7097, type: 3}
+  - {fileID: 12800000, guid: 9d2ee70291c275844b42e404a7ff97ad, type: 3}
+  - {fileID: 12800000, guid: e494baa77a2cc8949b4015fbaedfad68, type: 3}
+  - {fileID: 12800000, guid: 720a4af5ec3ca7a41a16ff5ae649a21e, type: 3}
+  - {fileID: 12800000, guid: 2d3a7fe2d90940a4195cc947db942371, type: 3}
+  - {fileID: 12800000, guid: f74644eb1dabc904c92fe8045f939aa2, type: 3}
+  - {fileID: 12800000, guid: 1b1e90a168aff914b9fa86c10708c9d7, type: 3}
+  - {fileID: 12800000, guid: 010dfe2ed66ba6c4b89cc9da7b440dec, type: 3}
+  - {fileID: 12800000, guid: 0b38aebd07fcac5409e5eebdcca75389, type: 3}
+  - {fileID: 12800000, guid: 3c69be9d8d65eda458a84f4963a9345b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
