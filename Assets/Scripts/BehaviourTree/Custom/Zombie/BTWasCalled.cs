@@ -18,10 +18,6 @@ public class BTWasCalled : BTNode
     {
         status = Status.FAILURE;
 
-        if (target)
-        {
-
-        }
         GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
         int i = 0;
 
@@ -30,6 +26,7 @@ public class BTWasCalled : BTNode
         {
             if (bt.gameObject == call) continue;
 
+            // verificar a distancia q nem o SeeSoldier
             if (target)
             {
                 target.SetTarget(call.transform);
@@ -45,16 +42,6 @@ public class BTWasCalled : BTNode
                 yield break;
             }
 
-            //target.SetTarget(call.transform);
-            //i++;
-
-            //if (i == 8)
-            //{
-            //    target.SetTarget(null);
-            //}
-
-            //status = Status.SUCCESS;
-            //yield break;
         }
 
         yield break;
