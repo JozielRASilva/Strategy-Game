@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, AIBase
 {
     public Transform[] waypoints;
 
@@ -24,7 +24,11 @@ public class Zombie : MonoBehaviour
 
     void Start()
     {
+        navMesh = gameObject.GetComponent<NavMeshController>();
+        target = gameObject.GetComponent<TargetController>();
         SetBehaviour();
+
+
     }
 
     public void SetBehaviour()
@@ -94,6 +98,28 @@ public class Zombie : MonoBehaviour
         behaviourTree.Build(selector_1);
     }
 
+
+    public void RestartBehaviour()
+    {
+
+        SetBehaviour();
+        if (behaviourTree)
+        {
+            behaviourTree.enabled = true;
+            behaviourTree.Initialize();
+        }
+    }
+
+    public void StopBehaviour()
+    {
+        if (behaviourTree)
+        {
+            behaviourTree.Stop();
+            behaviourTree.enabled = false;
+
+            behaviourTree.StopAllCoroutines();
+        }
+    }
 
         private void OnDrawGizmos()
     {
