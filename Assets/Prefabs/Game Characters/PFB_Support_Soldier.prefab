@@ -469,8 +469,8 @@ MonoBehaviour:
   ShowGizmos: 1
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
   MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
-  distanceToSet: 3
-  delayToSet: 3
+  distanceToSet: 2
+  delayToSet: 1.5
   SetObjectEffect: {fileID: 3105253606689490518}
   SettingObjectEffect: {fileID: 6339521736952954446}
   distanceToHeal: 1.2

@@ -7,6 +7,7 @@ public class SettableObjectPreview : MonoBehaviour
 {
 
     public GameObject preview;
+    public MeshRenderer mesh;
     public GameObject spaceBloker;
 
     [Title("Over Position")]
@@ -26,12 +27,13 @@ public class SettableObjectPreview : MonoBehaviour
     public bool canRotate;
 
     private BoxCollider boxCollider;
-    private MeshRenderer mesh;
+
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
-        mesh = preview.GetComponent<MeshRenderer>();
+        if (!mesh)
+            mesh = preview.GetComponent<MeshRenderer>();
     }
 
     private void OnEnable()
@@ -63,10 +65,20 @@ public class SettableObjectPreview : MonoBehaviour
         if (!canNotSetMaterial || !mesh || !canSetMaterial) return;
         if (CanSet())
         {
+            for (int i = 0; i < mesh.sharedMaterials.Length; i++)
+            {
+                mesh.sharedMaterials[i] = canSetMaterial;
+            }
+
             mesh.material = canSetMaterial;
         }
         else
         {
+            
+            for (int i = 0; i < mesh.sharedMaterials.Length; i++)
+            {
+                mesh.sharedMaterials[i] = canNotSetMaterial;
+            }
             mesh.material = canNotSetMaterial;
         }
     }
@@ -79,6 +91,12 @@ public class SettableObjectPreview : MonoBehaviour
         FillRotation(rotation);
 
         if (!selectedMaterial || !mesh) return;
+
+        for (int i = 0; i < mesh.sharedMaterials.Length; i++)
+        {
+            mesh.sharedMaterials[i] = selectedMaterial;
+        }
+
 
         mesh.material = selectedMaterial;
 

@@ -31,6 +31,34 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 285555168021409934, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_Name
+      value: LandMine
+      objectReference: {fileID: 0}
+    - target: {fileID: 285555168021409934, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 629851134462339636, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798768697626513755, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798768697626513755, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2639573932656606086, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544824511476671889, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5508834850197954153, guid: 9cac4a0632a32ab42bc6552be250ec6d, type: 3}
     - target: {fileID: 5410147256319052176, guid: 9eb1bd592593c484ab1b1283a8ee0b74, type: 3}
       propertyPath: m_RootOrder
       value: 0
