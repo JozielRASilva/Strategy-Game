@@ -31,19 +31,20 @@ public class Soldier : MonoBehaviour, AIBase
     public float shootCooldown = 0.5f;
     public float lookAtZombieDamping = 15f;
 
-    
+
     [Title("Combat")]
     public string target = "Zombie";
     public float distanceToTarget = 1;
-
-
     public Vector2 rangeToSeeTarget = new Vector2(5, 20);
 
+    [Title("AI Attack Events")]
+    public EventCaller AttackEventCaller;
 
     [Title("Gizmos")]
     public bool ShowGizmos = true;
     public Color MaxRangeToSee = Color.blue;
     public Color MinRangeToSee = Color.cyan;
+
 
 
     #region  SETUP
@@ -135,7 +136,7 @@ public class Soldier : MonoBehaviour, AIBase
 
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(parallel);
-        sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target));
+        sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target, AttackEventCaller));
 
 
         BTSequence sequence = new BTSequence();
@@ -313,9 +314,10 @@ public class Soldier : MonoBehaviour, AIBase
     }
     #endregion
 
-    private void OnDrawGizmos() {
-        
-        if(!ShowGizmos) return;
+    private void OnDrawGizmos()
+    {
+
+        if (!ShowGizmos) return;
 
         Gizmos.color = MaxRangeToSee;
         Gizmos.DrawWireSphere(transform.position, rangeToSeeTarget.y);

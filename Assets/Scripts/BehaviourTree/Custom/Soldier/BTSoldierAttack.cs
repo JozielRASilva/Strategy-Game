@@ -12,6 +12,8 @@ public class BTSoldierAttack : BTNode
     private float damping;
     private string targetTag;
 
+    private EventCaller eventCaller;
+
     public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle, float _damping, string _targetTag)
     {
         targetZombie = _targetZombie;
@@ -20,6 +22,18 @@ public class BTSoldierAttack : BTNode
         muzzle = _muzzle;
         targetTag = _targetTag;
         damping = _damping;
+    }
+
+    public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle, float _damping, string _targetTag, EventCaller _eventCaller)
+    {
+        targetZombie = _targetZombie;
+        coolDown = _coolDown;
+        prefab = projectile;
+        muzzle = _muzzle;
+        targetTag = _targetTag;
+        damping = _damping;
+
+        eventCaller = _eventCaller;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -49,6 +63,9 @@ public class BTSoldierAttack : BTNode
             GameObject shoot = GameObject.Instantiate(prefab, position, Quaternion.identity);
             shoot.GetComponent<Rigidbody>().AddForce(bt.transform.forward * 200);
             GameObject.Destroy(shoot, 5);
+
+            if (eventCaller)
+                eventCaller.FirstCall();
 
             status = Status.SUCCESS;
         }

@@ -1,5 +1,97 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &486255172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486255173}
+  - component: {fileID: 486255174}
+  m_Layer: 8
+  m_Name: AttackEventCaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &486255173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486255172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1635640816}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486255174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486255172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fe7a8049ed95b4f879d1832c4f67bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstCaller:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3896766851767335803}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Shoot
+          m_BoolArgument: 0
+        m_CallState: 2
+  SecondCaller:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1635640815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1635640816}
+  m_Layer: 8
+  m_Name: Feedbacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1635640816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635640815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 486255173}
+  m_Father: {fileID: 7908078489216045781}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &829626164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,7 +117,8 @@ MonoBehaviour:
   target: Zombie
   distanceToTarget: 1
   rangeToSeeTarget: {x: 5, y: 10}
-  ShowGizmos: 1
+  AttackEventCaller: {fileID: 486255174}
+  ShowGizmos: 0
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
   MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &3541496730936405443
@@ -111,6 +204,16 @@ PrefabInstance:
 --- !u!1 &7908078489216045785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5070140945433140221, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 3162618955459578148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7908078489216045781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5070140945433140209, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 3162618955459578148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3896766851767335803 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2159469292386398815, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_PrefabInstance: {fileID: 3162618955459578148}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7626666693945643134 stripped
