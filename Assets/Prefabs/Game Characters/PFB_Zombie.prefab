@@ -280,10 +280,18 @@ MonoBehaviour:
   - {fileID: 0}
   gizmoSize: 0.5
   target: {fileID: 0}
+  speed: 2
+  distanceToTarget: 1
+  distanceToWaypoint: 1
   hitboxes: {fileID: 585380213}
+  coolDown: 0.5
   callCounter: {fileID: 371440073}
-  calling: 0
-  zombieDistance: 2
+  listeningField: 20
+  distanceToZombie: 3
+  timeCalling: 5
+  distanceView: 10
+  minDistance: 2
+  maxDistance: 15
 --- !u!1001 &571662859
 PrefabInstance:
   m_ObjectHideFlags: 0
