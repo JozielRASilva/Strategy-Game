@@ -7,9 +7,14 @@ public class BTSetObject : BTNode
 
     private float delayToSet;
 
-    public BTSetObject(float _delayToSet)
+    private EventCaller OnSetting;
+    private EventCaller OnSet;
+
+    public BTSetObject(float _delayToSet, EventCaller _OnSetting, EventCaller _OnSet)
     {
         delayToSet = _delayToSet;
+        OnSetting = _OnSetting;
+        OnSet = _OnSet;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
@@ -23,8 +28,16 @@ public class BTSetObject : BTNode
 
         if (objectToSet != null)
         {
+            if (OnSetting)
+                OnSetting.FirstCall();
 
             yield return new WaitForSeconds(delayToSet);
+            
+            if (OnSetting)
+                OnSetting.SecondCall();
+            
+            if (OnSet)
+                OnSet.FirstCall();
 
             ObjectSetterManager.Instance.SetObject(objectToSet);
 

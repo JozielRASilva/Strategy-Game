@@ -10,6 +10,10 @@ public class AISupportSoldier : Soldier
     public float distanceToSet = 0.5f;
     public float delayToSet = 0.2f;
 
+    [Title("AI Set Object Effect")]
+    public EventCaller SetObjectEffect;
+    public EventCaller SettingObjectEffect;
+
     [Title("Heal")]
     public float distanceToHeal = 0.7f;
     public float dampingToHeal = 1f;
@@ -17,6 +21,9 @@ public class AISupportSoldier : Soldier
     public GameObject healHitBox;
     public float healCooldown = 2f;
     public float healRest = 1f;
+
+    [Title("AI Heal Effect")]
+    public EventCaller HealEffect;
 
     #region Base Info
 
@@ -74,7 +81,7 @@ public class AISupportSoldier : Soldier
         parallelSelector_1.SetNode(nextToTarget);
         parallelSelector_1.SetNode(moveToSet);
 
-        BTSetObject setObject = new BTSetObject(delayToSet);
+        BTSetObject setObject = new BTSetObject(delayToSet, SettingObjectEffect, SetObjectEffect);
 
         sequence_1.SetNode(parallelSelector_1);
         sequence_1.SetNode(setObject);
@@ -99,7 +106,7 @@ public class AISupportSoldier : Soldier
 
         BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToHeal);
 
-        BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, targetController, dampingToHeal);
+        BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, targetController, dampingToHeal, HealEffect);
 
         sequence.SetNode(memberToHeal);
         sequence.SetNode(MoveToHeal);
