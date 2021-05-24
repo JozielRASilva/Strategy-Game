@@ -26,8 +26,6 @@ public class BTChasingSoldier : BTNode
         {
             float distance = Vector3.Distance(bt.transform.position, targetSoldier.GetTarget().position);
 
-            //Print(distance.ToString());
-
             if (distance > maxDistance)
             {
                 targetSoldier.SetTarget(null);

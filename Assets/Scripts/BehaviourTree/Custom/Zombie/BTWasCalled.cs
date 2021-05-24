@@ -5,12 +5,13 @@ using UnityEngine;
 public class BTWasCalled : BTNode
 {
     private TargetController target;
-    private bool calling;
 
-    public BTWasCalled (TargetController _target, bool _calling)
+    private float distanceCall;
+
+    public BTWasCalled (TargetController _target, float _distanceCall)
     {
         target = _target;
-        calling = _calling;
+        distanceCall = _distanceCall;
     }
 
 
@@ -21,26 +22,25 @@ public class BTWasCalled : BTNode
         GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
         int i = 0;
 
-        Debug.Log("entrou");
         foreach (GameObject call in calls)
         {
             if (bt.gameObject == call) continue;
 
-            // verificar a distancia q nem o SeeSoldier
-            if (target)
+            if (Vector3.Distance(bt.transform.position, call.transform.position) < distanceCall)
             {
-                target.SetTarget(call.transform);
-                i++;
+                    target.SetTarget(call.transform);
+                    i++;
 
-                if (i == 8)
-                {
-                    target.SetTarget(null);
-                    i = 0;
-                }
+                    if (i == 8)
+                    {
+                        target.SetTarget(null);
+                        i = 0;
+                    }
 
-                status = Status.SUCCESS;
-                yield break;
+                    status = Status.SUCCESS;
+                    yield break;
             }
+
 
         }
 

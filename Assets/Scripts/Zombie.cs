@@ -5,30 +5,39 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour, AIBase
 {
-    public Transform[] waypoints;
-
     BehaviourTree behaviourTree;
-
-    public float gizmoSize;
-
     private NavMeshController navMesh;
+
+    [Header("Patrol")]
+    public Transform[] waypoints;
+    public float gizmoSize;
     public TargetController target;
+    public float speed;
+    public float distanceToTarget;
+    public float distanceToWaypoint;
 
+    [Header("Attack")]
     public GameObject hitboxes;
+    public float coolDown;
 
+    [Header("Call Zombies")]
     public GameObject callCounter;
+    public float listeningField;
+    public float distanceToZombie;
+    public float timeCalling;
 
-    public bool calling;
+    [Header("Zombie Field of View")]
+    public float distanceView;
 
-    public float zombieDistance;
+    [Header("Chasing Soldier FOV")]
+    public float minDistance;
+    public float maxDistance;
 
     void Start()
     {
         navMesh = gameObject.GetComponent<NavMeshController>();
         target = gameObject.GetComponent<TargetController>();
         SetBehaviour();
-
-
     }
 
     public void SetBehaviour()
@@ -49,53 +58,52 @@ public class Zombie : MonoBehaviour, AIBase
         }
 
 
-        //ctrl r pra renomear tudo de uma vez
-        BTParallelSelector parallel_1 = new BTParallelSelector();
-        parallel_1.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
-        parallel_1.SetNode(new BTChasingSoldier(target, 2, 15));
+        BTParallelSelector parallelSelectorCheckingMove = new BTParallelSelector();
+        parallelSelectorCheckingMove.SetNode(new BTMoveByNavMesh(navMesh, target, speed, distanceToTarget));
+        parallelSelectorCheckingMove.SetNode(new BTChasingSoldier(target, minDistance, maxDistance));
 
 
-        BTSequence sequence_ = new BTSequence();
-        sequence_.SetNode(parallel_1);
-        sequence_.SetNode(new BTZombieAttack(hitboxes, 0.5f));
+        BTSequence sequenceChasing = new BTSequence();
+        sequenceChasing.SetNode(parallelSelectorCheckingMove);
+        sequenceChasing.SetNode(new BTZombieAttack(hitboxes, coolDown));
 
 
-        BTSequence sequence_1 = new BTSequence();
-        sequence_1.SetNode(new BTSeeSoldier(target, 10));
-        sequence_1.SetNode(new BTCallHorde(callCounter, calling, 2));
-        sequence_1.SetNode(sequence_);
+        BTSequence sequenceSeeTarget = new BTSequence();
+        sequenceSeeTarget.SetNode(new BTSeeSoldier(target, distanceView));
+        sequenceSeeTarget.SetNode(new BTCallHorde(callCounter, timeCalling));
+        sequenceSeeTarget.SetNode(sequenceChasing);
 
         BTInverter inverter = new BTInverter();
-        inverter.SetNode(new BTWasCalled(target, calling));
+        inverter.SetNode(new BTWasCalled(target, listeningField));
 
-        BTParallelSelector parallel_2 = new BTParallelSelector();
-        parallel_2.SetNode(inverter);
-        parallel_2.SetNode(new BTSeeSoldier(target, 10));
-        parallel_2.SetNode(new BTMoveByNavMesh(navMesh, target, 2, zombieDistance));
+        BTParallelSelector parallelSelectorUpdateTarget = new BTParallelSelector();
+        parallelSelectorUpdateTarget.SetNode(inverter);
+        parallelSelectorUpdateTarget.SetNode(new BTSeeSoldier(target, distanceView));
+        parallelSelectorUpdateTarget.SetNode(new BTMoveByNavMesh(navMesh, target, speed, distanceToZombie));
 
-        BTSequence sequence_2 = new BTSequence();
-        sequence_2.SetNode(new BTWasCalled(target, calling));
-        sequence_2.SetNode(parallel_2);
+        BTSequence sequenceCalled = new BTSequence();
+        sequenceCalled.SetNode(new BTWasCalled(target, listeningField));
+        sequenceCalled.SetNode(parallelSelectorUpdateTarget);
 
-        BTSequence patrol = new BTSequence();
-        patrol.SetNode(new BTCheckWaypoint(1, target));
-        patrol.SetNode(new BTRealignWaypoint(waypoints, target));
+        BTSequence sequencePatrol = new BTSequence();
+        sequencePatrol.SetNode(new BTCheckWaypoint(distanceToWaypoint, target));
+        sequencePatrol.SetNode(new BTRealignWaypoint(waypoints, target));
 
-        BTParallelSelector parallel = new BTParallelSelector();
-        parallel.SetNode(new BTSeeSoldier(target, 10));
-        parallel.SetNode(new BTWasCalled(target, calling));
-        parallel.SetNode(new BTMoveByNavMesh(navMesh, target, 2, 1));
+        BTParallelSelector parallelSelectorChecking = new BTParallelSelector();
+        parallelSelectorChecking.SetNode(new BTSeeSoldier(target, distanceView));
+        parallelSelectorChecking.SetNode(new BTWasCalled(target, listeningField));
+        parallelSelectorChecking.SetNode(new BTMoveByNavMesh(navMesh, target, speed, distanceToTarget));
 
-        BTSelector selector = new BTSelector();
-        selector.SetNode(patrol);
-        selector.SetNode(parallel);
+        BTSelector selectorRoutine = new BTSelector();
+        selectorRoutine.SetNode(sequencePatrol);
+        selectorRoutine.SetNode(parallelSelectorChecking);
 
-        BTSelector selector_1 = new BTSelector();
-        selector_1.SetNode(sequence_1);
-        selector_1.SetNode(sequence_2);
-        selector_1.SetNode(selector);
+        BTSelector selectorStart = new BTSelector();
+        selectorStart.SetNode(sequenceSeeTarget);
+        selectorStart.SetNode(sequenceCalled);
+        selectorStart.SetNode(selectorRoutine);
 
-        behaviourTree.Build(selector_1);
+        behaviourTree.Build(selectorStart);
     }
 
 

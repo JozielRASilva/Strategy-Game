@@ -5,14 +5,12 @@ using UnityEngine;
 public class BTCallHorde : BTNode
 {
     private GameObject callCounter;
-    private bool calling;
 
     private float timeCalling;
 
-    public BTCallHorde (GameObject _callCounter, bool _calling, float _timeCalling)
+    public BTCallHorde (GameObject _callCounter, float _timeCalling)
     {
         callCounter = _callCounter;
-        calling = _calling;
         timeCalling = _timeCalling;
     }
 
@@ -20,7 +18,6 @@ public class BTCallHorde : BTNode
     public override IEnumerator Run(BehaviourTree bt)
     {
         callCounter.SetActive(true);
-        calling = true;
 
         yield return new WaitForSeconds(timeCalling);
 
