@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Moedas : MonoBehaviour
 {
@@ -11,22 +12,27 @@ public class Moedas : MonoBehaviour
 
     public static Moedas moedas;
 
+    public UnityEvent OnGetCash;
+
     void Start()
     {
         moedas = this;
-        moeda = 0;
+        moedaTxt.text = moeda.ToString();
     }
 
     public void AddMoeda()
     {
         moeda += valorMoeda;
-        moedaTxt.text = "Moedas: " + moeda.ToString();
+        moedaTxt.text = moeda.ToString();
+        OnGetCash?.Invoke();
     }
 
      public void AddMoeda(int value)
     {
         moeda += value;
-        moedaTxt.text = "Moedas: " + moeda.ToString();
+        moedaTxt.text = moeda.ToString();
+
+        OnGetCash?.Invoke();
     }
 
 }
