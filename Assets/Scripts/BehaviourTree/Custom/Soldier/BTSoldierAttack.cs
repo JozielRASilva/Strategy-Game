@@ -39,7 +39,7 @@ public class BTSoldierAttack : BTNode
     public override IEnumerator Run(BehaviourTree bt)
     {
         status = Status.RUNNING;
-
+        Debug.Log($"Entrou {bt.name}");
         GameObject selectedEnemy = GetTarget(bt.transform);
 
         if (selectedEnemy)
@@ -59,7 +59,7 @@ public class BTSoldierAttack : BTNode
 
 
             Vector3 position = muzzle.transform.position;
-
+            
             GameObject shoot = GameObject.Instantiate(prefab, position, Quaternion.identity);
             shoot.GetComponent<Rigidbody>().AddForce(bt.transform.forward * 200);
             GameObject.Destroy(shoot, 5);

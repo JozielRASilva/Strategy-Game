@@ -27,10 +27,36 @@ public class AISupportSoldier : Soldier
 
     #region Base Info
 
+    protected override void Awake()
+    {
+        targetController = GetComponent<TargetController>();
+
+        navMeshController = GetComponent<NavMeshController>();
+
+        squadMember = GetComponent<SquadMember>();
+    }
+
+    protected override void Start()
+    {
+        SetBehaviour();
+    }
+
     public override void SetBehaviour()
     {
         if (!behaviourTree)
+        {
             behaviourTree = gameObject.AddComponent<BehaviourTree>();
+        }
+
+        if (!navMeshController)
+        {
+            navMeshController = gameObject.AddComponent<NavMeshController>();
+        }
+
+        if (!targetController)
+        {
+            targetController = gameObject.AddComponent<TargetController>();
+        }
 
         BTSelector root = new BTSelector();
 
@@ -59,6 +85,28 @@ public class AISupportSoldier : Soldier
 
     }
 
+
+    public override void RestartBehaviour()
+    {
+
+        SetBehaviour();
+        if (behaviourTree)
+        {
+            behaviourTree.enabled = true;
+            behaviourTree.Initialize();
+        }
+    }
+
+    public override void StopBehaviour()
+    {
+        if (behaviourTree)
+        {
+            behaviourTree.Stop();
+            behaviourTree.enabled = false;
+
+            behaviourTree.StopAllCoroutines();
+        }
+    }
     #endregion
 
     #region SET OBJECT
@@ -132,7 +180,7 @@ public class AISupportSoldier : Soldier
 
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(parallel);
-        sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target));
+        sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target, AttackEventCaller));
 
 
         BTSequence sequence = new BTSequence();

@@ -101,7 +101,7 @@ public class Soldier : MonoBehaviour, AIBase
     }
 
 
-    public void RestartBehaviour()
+    public virtual void RestartBehaviour()
     {
 
         SetBehaviour();
@@ -112,7 +112,7 @@ public class Soldier : MonoBehaviour, AIBase
         }
     }
 
-    public void StopBehaviour()
+    public virtual void StopBehaviour()
     {
         if (behaviourTree)
         {

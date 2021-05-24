@@ -143,7 +143,7 @@ MonoBehaviour:
   shootCooldown: 0.5
   lookAtZombieDamping: 15
   target: Zombie
-  distanceToTarget: 1
+  distanceToTarget: 5
   rangeToSeeTarget: {x: 5, y: 10}
   AttackEventCaller: {fileID: 486255174}
   ShowGizmos: 0
@@ -678,6 +678,10 @@ PrefabInstance:
       propertyPath: FirstCaller.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2990296889045977550}
+    - target: {fileID: 7066183792118420680, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3675497964422395940, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
