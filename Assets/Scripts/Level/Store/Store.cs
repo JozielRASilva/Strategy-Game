@@ -15,6 +15,7 @@ public class Store : MonoBehaviour
     public EventItem OnBuy;
     public UnityEvent OnCanBuy;
     public UnityEvent OnCanNotBuy;
+    public UnityEvent OnRefund;
 
     private StoreItem _currentBought;
 
@@ -44,7 +45,7 @@ public class Store : MonoBehaviour
         if (_currentBought == null) return;
 
         Moedas.moedas.AddMoeda(_currentBought.price);
-
+        OnRefund?.Invoke();
         _currentBought = null;
     }
 

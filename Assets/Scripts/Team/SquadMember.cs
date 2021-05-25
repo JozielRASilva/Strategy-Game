@@ -18,6 +18,14 @@ public class SquadMember : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (GetSquadFunction().Equals(Squad.SquadFunction.NONE))
+        {
+            GetSquadFunction();
+        }
+    }
+
     [Button("Get Function")]
     public void CheckSquadFunction()
     {
