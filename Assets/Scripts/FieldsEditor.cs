@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(Zombie))]
 public class FieldsEditor : Editor
 {
@@ -22,3 +22,4 @@ public class FieldsEditor : Editor
     }
 
 }
+#endif

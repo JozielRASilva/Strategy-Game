@@ -32,6 +32,7 @@ public class NavMeshController : MonoBehaviour
     {
         SetDestinationToTarget();
 
+        if(CanMove)
         SetAnimationValues();
     }
 
@@ -81,6 +82,7 @@ public class NavMeshController : MonoBehaviour
     {
         CanMove = false;
         agent.SetDestination(transform.position);
+        animator.SetFloat(xSpeed, 0);
     }
 
 }
