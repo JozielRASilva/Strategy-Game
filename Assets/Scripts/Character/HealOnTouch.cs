@@ -28,7 +28,7 @@ public class HealOnTouch : MonoBehaviour
         {
 
             Health _health = other.GetComponent<Health>();
-
+            if (!_health.IsAlive()) return;
             _health.AddLife(Heal);
 
             OnHeal?.Invoke();

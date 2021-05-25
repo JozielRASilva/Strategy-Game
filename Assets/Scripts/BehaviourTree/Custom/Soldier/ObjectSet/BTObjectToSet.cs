@@ -15,7 +15,7 @@ public class BTObjectToSet : BTNode
     {
         status = Status.FAILURE;
 
-        if (!ObjectSetterManager.Instance || !member.GetSquadFunction().Equals(Squad.SquadFunction.EXTRA))
+        if (!ObjectSetterManager.Instance || !member.ExtraMember)
             yield break;
 
         ObjectToSet objectToSet = ObjectSetterManager.Instance.GetObjectToSet(bt.gameObject);

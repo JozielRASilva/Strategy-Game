@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 2656188607129854480}
   m_Layer: 8
   m_Name: PFB_Barricade
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

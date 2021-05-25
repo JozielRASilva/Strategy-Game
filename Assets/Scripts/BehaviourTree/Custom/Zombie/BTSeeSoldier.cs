@@ -23,6 +23,7 @@ public class BTSeeSoldier : BTNode
         foreach (GameObject soldier in soldiers)
         {
             if (bt.gameObject == soldier) continue;
+            if(!soldier.activeSelf) continue;
             if (Vector3.Distance(bt.transform.position, soldier.transform.position) < distanceView)
             {
                 targetSoldier.SetTarget(soldier.transform);

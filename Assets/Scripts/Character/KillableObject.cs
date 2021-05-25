@@ -23,6 +23,7 @@ public class KillableObject : MonoBehaviour, IKillableObject
     public GameObject MainBody;
 
     public UnityEvent OnKill;
+    public Action ActionOnKill;
 
     public bool HasDelayToDestroy = false;
     [ShowIf("HasDelayToDestroy", true)]
@@ -52,6 +53,7 @@ public class KillableObject : MonoBehaviour, IKillableObject
     public void Destroy()
     {
         OnKill?.Invoke();
+        ActionOnKill?.Invoke();
 
         if (HasDelayToDestroy)
             StartCoroutine(DestroyCO());

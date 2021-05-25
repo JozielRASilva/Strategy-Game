@@ -61,7 +61,7 @@ public class BTSoldierAttack : BTNode
             Vector3 position = muzzle.transform.position;
             
             GameObject shoot = GameObject.Instantiate(prefab, position, Quaternion.identity);
-            shoot.GetComponent<Rigidbody>().AddForce(bt.transform.forward * 200);
+            shoot.GetComponent<Rigidbody>().AddForce(bt.transform.forward * 400);
             GameObject.Destroy(shoot, 5);
 
             if (eventCaller)

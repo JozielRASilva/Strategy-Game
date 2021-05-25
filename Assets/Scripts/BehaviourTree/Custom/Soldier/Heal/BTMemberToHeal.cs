@@ -24,7 +24,10 @@ public class BTMemberToHeal : BTNode
 
         if (members == null) yield break;
 
-        List<SquadMember> damagedMembers = members.FindAll(m => !m.health.LifeIsCompleted());
+        List<SquadMember> damagedMembers = members.FindAll(m => !m.health.LifeIsCompleted()
+        && m.health.IsAlive());
+
+        damagedMembers.RemoveAll(m => m.GetSquadFunction().Equals(Squad.SquadFunction.EXTRA));
 
         if (damagedMembers == null)
             yield break;

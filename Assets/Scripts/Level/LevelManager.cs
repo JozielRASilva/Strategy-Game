@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance;
 
+    public int targetFrameRate = 60;
+
     public Action OnWin;
     public Action OnLose;
 
@@ -40,6 +42,8 @@ public class LevelManager : MonoBehaviour
         Instance = this;
 
         UpdateCharacters();
+
+        Application.targetFrameRate = targetFrameRate;
     }
 
     private void Update()

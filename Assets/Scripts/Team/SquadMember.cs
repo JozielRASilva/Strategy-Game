@@ -16,13 +16,20 @@ public class SquadMember : MonoBehaviour
         {
             health = GetComponent<Health>();
         }
+
+        health.ActionOnKill += RemoveFromSquad;
     }
 
     private void Update()
     {
-        if (GetSquadFunction().Equals(Squad.SquadFunction.NONE))
+
+        if (health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
         {
             GetSquadFunction();
+        }
+        else if (!health.IsAlive())
+        {
+            RemoveFromSquad();
         }
     }
 
