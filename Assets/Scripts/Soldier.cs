@@ -134,6 +134,11 @@ public class Soldier : MonoBehaviour, AIBase
         BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
         parallel.SetNode(calledToRegroup);
 
+        BTInverter inverter = new BTInverter();
+        BTSeeZombie seeZombie = new BTSeeZombie(targetController, rangeToSeeTarget.y);
+        inverter.SetNode(seeZombie);
+        parallel.SetNode(inverter);
+
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(parallel);
         sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target, AttackEventCaller));
@@ -234,7 +239,7 @@ public class Soldier : MonoBehaviour, AIBase
         parallelSelector_1.SetNode(see);
         parallelSelector_1.SetNode(moveTo);
 
-        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
         BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
         parallelSelector_1.SetNode(thereIsObjectToSet);
         parallelSelector_1.SetNode(calledToRegroup);
@@ -271,7 +276,7 @@ public class Soldier : MonoBehaviour, AIBase
         parallelSelector_2.SetNode(see_2);
         parallelSelector_2.SetNode(moveLeader);
 
-        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
         BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
         parallelSelector_2.SetNode(thereIsObjectToSet);
         parallelSelector_2.SetNode(calledToRegroup);
@@ -300,7 +305,7 @@ public class Soldier : MonoBehaviour, AIBase
         parallelSelector_1.SetNode(see);
         parallelSelector_1.SetNode(moveTo);
 
-        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
         BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
         parallelSelector_1.SetNode(thereIsObjectToSet);
         parallelSelector_1.SetNode(calledToRegroup);

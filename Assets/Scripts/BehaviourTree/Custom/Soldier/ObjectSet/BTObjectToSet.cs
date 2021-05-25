@@ -5,16 +5,17 @@ using UnityEngine;
 public class BTObjectToSet : BTNode
 {
 
-    public BTObjectToSet()
+    SquadMember member;
+    public BTObjectToSet(SquadMember _member)
     {
-
+        member = _member;
     }
 
     public override IEnumerator Run(BehaviourTree bt)
     {
         status = Status.FAILURE;
 
-        if (!ObjectSetterManager.Instance)
+        if (!ObjectSetterManager.Instance || !member.GetSquadFunction().Equals(Squad.SquadFunction.EXTRA))
             yield break;
 
         ObjectToSet objectToSet = ObjectSetterManager.Instance.GetObjectToSet(bt.gameObject);
@@ -23,7 +24,7 @@ public class BTObjectToSet : BTNode
         {
             status = Status.SUCCESS;
         }
-      
+
         yield break;
     }
 

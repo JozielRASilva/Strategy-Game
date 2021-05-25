@@ -115,7 +115,7 @@ public class AISupportSoldier : Soldier
         BTSequence sequence_setObject = new BTSequence();
 
         #region Cheking
-        BTObjectToSet thereIsObjectToSet = new BTObjectToSet();
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
         BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(targetController);
         #endregion
 
@@ -175,8 +175,16 @@ public class AISupportSoldier : Soldier
         parallel.SetNode(new BTCloseToTarget(targetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
         BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
         BTMemberToHeal memberToHeal = new BTMemberToHeal(squadMember, targetController);
+        BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
+
+        parallel.SetNode(thereIsObjectToSet);
         parallel.SetNode(calledToRegroup);
         parallel.SetNode(memberToHeal);
+
+        BTInverter inverter = new BTInverter();
+        BTSeeZombie seeZombie = new BTSeeZombie(targetController, rangeToSeeTarget.y);
+        inverter.SetNode(seeZombie);
+        parallel.SetNode(inverter);
 
         BTSequence sequence_1 = new BTSequence();
         sequence_1.SetNode(parallel);
