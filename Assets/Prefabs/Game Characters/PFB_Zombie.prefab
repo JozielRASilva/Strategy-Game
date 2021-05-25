@@ -301,14 +301,14 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 2
   distanceToTarget: 1
-  distanceToWaypoint: 1
+  distanceToWaypoint: 3
   hitboxes: {fileID: 585380213}
   coolDown: 0.2
   OnAttackEvent: {fileID: 1105881112}
   callCounter: {fileID: 371440073}
-  listeningField: 8
+  listeningField: 10
   distanceToZombie: 3
-  timeCalling: 3
+  timeCalling: 0.2
   OnCallEvent: {fileID: 3923622199825305593}
   distanceView: 6
   minDistance: 2
@@ -371,18 +371,6 @@ MonoBehaviour:
   FirstCaller:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6194675293686199}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Roar
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2990296887559515606}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play

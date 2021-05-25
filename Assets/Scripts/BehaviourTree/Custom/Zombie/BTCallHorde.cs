@@ -19,7 +19,7 @@ public class BTCallHorde : BTNode
         timeCalling = _timeCalling;
         eventCaller = _eventCaller;
 
-        timeToEffectAgain = timeCalling * 20;
+        timeToEffectAgain = timeCalling * 100;
     }
 
 

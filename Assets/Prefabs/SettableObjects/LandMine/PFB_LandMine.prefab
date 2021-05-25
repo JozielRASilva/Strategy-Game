@@ -412,7 +412,7 @@ MonoBehaviour:
         m_CallState: 2
   HasDelayToDestroy: 1
   delayToDestroy: 0.5
-  Damage: 5
+  Damage: 10
   Damageable:
     serializedVersion: 2
     m_Bits: 384
