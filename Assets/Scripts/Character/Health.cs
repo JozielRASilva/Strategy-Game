@@ -38,8 +38,9 @@ public class Health : KillableObject
     [Button("Kill")]
     private void BKill() => TakeDamage(maxLife);
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _currentLife = maxLife;
     }
 
@@ -48,16 +49,17 @@ public class Health : KillableObject
     {
         if (Time.time < invincibilityTimeStamp) return;
 
+
+
         if (_currentLife - value > 0)
         {
             _currentLife -= value;
-
             invincibilityTimeStamp = Time.time + invincibilityTime;
-
             OnDamaged?.Invoke();
         }
         else
         {
+            invincibilityTimeStamp = Time.time + delayToDestroy;
             _currentLife = 0;
             Destroy();
         }

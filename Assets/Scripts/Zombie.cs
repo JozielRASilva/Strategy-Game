@@ -20,11 +20,17 @@ public class Zombie : MonoBehaviour, AIBase
     public GameObject hitboxes;
     public float coolDown;
 
+    [Header("Attack Events")]
+    public EventCaller OnAttackEvent;
+
     [Header("Call Zombies")]
     public GameObject callCounter;
     public float listeningField;
     public float distanceToZombie;
     public float timeCalling;
+
+    [Header("Call Events")]
+    public EventCaller OnCallEvent;
 
     [Header("Zombie Field of View")]
     public float distanceView;
@@ -52,7 +58,7 @@ public class Zombie : MonoBehaviour, AIBase
             navMesh = gameObject.AddComponent<NavMeshController>();
         }
 
-        if (!target)                                                                                                                                                                                                                                                                                                                                                                       
+        if (!target)
         {
             target = gameObject.AddComponent<TargetController>();
         }
@@ -65,12 +71,12 @@ public class Zombie : MonoBehaviour, AIBase
 
         BTSequence sequenceChasing = new BTSequence();
         sequenceChasing.SetNode(parallelSelectorCheckingMove);
-        sequenceChasing.SetNode(new BTZombieAttack(hitboxes, coolDown));
+        sequenceChasing.SetNode(new BTZombieAttack(hitboxes, coolDown, OnAttackEvent));
 
 
         BTSequence sequenceSeeTarget = new BTSequence();
         sequenceSeeTarget.SetNode(new BTSeeSoldier(target, distanceView));
-        sequenceSeeTarget.SetNode(new BTCallHorde(callCounter, timeCalling));
+        sequenceSeeTarget.SetNode(new BTCallHorde(callCounter, timeCalling, OnCallEvent));
         sequenceSeeTarget.SetNode(sequenceChasing);
 
         BTInverter inverter = new BTInverter();
@@ -129,7 +135,7 @@ public class Zombie : MonoBehaviour, AIBase
         }
     }
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (waypoints != null)
         {

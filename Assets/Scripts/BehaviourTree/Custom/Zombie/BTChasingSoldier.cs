@@ -21,7 +21,7 @@ public class BTChasingSoldier : BTNode
     {
         status = Status.FAILURE;
 
-        Print();
+        //Print();
         if (targetSoldier)
         {
             float distance = Vector3.Distance(bt.transform.position, targetSoldier.GetTarget().position);

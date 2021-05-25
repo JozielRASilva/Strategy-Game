@@ -1838,10 +1838,12 @@ MonoBehaviour:
   distanceToWaypoint: 0
   hitboxes: {fileID: 0}
   coolDown: 0
+  OnAttackEvent: {fileID: 0}
   callCounter: {fileID: 0}
   listeningField: 0
   distanceToZombie: 0
   timeCalling: 0
+  OnCallEvent: {fileID: 0}
   distanceView: 0
   minDistance: 0
   maxDistance: 0
