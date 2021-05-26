@@ -5,7 +5,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -25,6 +25,17 @@ public class LevelManager : MonoBehaviour
 
     public List<Health> Zombies = new List<Health>();
     public List<Health> Soldiers = new List<Health>();
+
+    [Title("UI")]
+
+    [Title("Soldier")]
+    public Text SoldierTotal;
+    public Text SoldierCurrent;
+
+
+    [Title("Zombie")]
+    public Text ZombieTotal;
+    public Text ZombieCurrent;
 
     [Button("Check Enemies")]
     private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {EnemiesAlive()}");
@@ -66,9 +77,28 @@ public class LevelManager : MonoBehaviour
 
     }
 
+
+    private void UpdateUICurrent(Text text, int value)
+    {
+        if (text)
+            text.text = value.ToString();
+    }
+
+    private void UpdateUITotal()
+    {
+        if (ZombieTotal)
+            ZombieTotal.text = Zombies.Count.ToString();
+
+        if (SoldierTotal)
+            SoldierTotal.text = Soldiers.Count.ToString();
+    }
+
     private bool EnemiesAlive()
     {
         var enemiesAlive = Zombies.FindAll(zombie => zombie.IsAlive());
+
+        if (ZombieCurrent)
+            UpdateUICurrent(ZombieCurrent, enemiesAlive.Count);
 
         if (enemiesAlive.Count > 0)
             return true;
@@ -79,6 +109,10 @@ public class LevelManager : MonoBehaviour
     private bool SoldiersAlive()
     {
         var soldiersAlive = Soldiers.FindAll(soldier => soldier.IsAlive());
+
+
+        if (SoldierCurrent)
+            UpdateUICurrent(SoldierCurrent, soldiersAlive.Count);
 
         if (soldiersAlive.Count > 0)
             return true;
@@ -94,6 +128,7 @@ public class LevelManager : MonoBehaviour
 
         Soldiers = AllCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag));
 
+        UpdateUITotal();
     }
 
 

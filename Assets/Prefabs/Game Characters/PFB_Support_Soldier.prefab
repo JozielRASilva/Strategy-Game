@@ -254,59 +254,6 @@ MonoBehaviour:
   SecondCaller:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &605390252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822115146684011845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 4
-  distanceToRegroup: 2
-  distanceToLeader: 3
-  squadMember: {fileID: 0}
-  targetController: {fileID: 0}
-  navMeshController: {fileID: 0}
-  muzzle: {fileID: 6099054148090206178}
-  bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
-  shootCooldown: 0.5
-  lookAtZombieDamping: 15
-  target: Zombie
-  distanceToTarget: 5
-  rangeToSeeTarget: {x: 5, y: 8}
-  AttackEventCaller: {fileID: 899358430901405663}
-  ShowGizmos: 1
-  MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
-  MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
-  distanceToSet: 2
-  delayToSet: 1.5
-  SetObjectEffect: {fileID: 3105253606689490518}
-  SettingObjectEffect: {fileID: 6339521736952954446}
-  distanceToHeal: 1.2
-  dampingToHeal: 10
-  healHitBox: {fileID: 475056069}
-  healCooldown: 3
-  healRest: 0.5
-  HealEffect: {fileID: 8745678455274301854}
---- !u!114 &1304290663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822115146684011845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ef74ed9e278e14a9243a05e6910a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ExtraMember: 1
-  health: {fileID: 0}
 --- !u!1 &3936270478673211580
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +440,59 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &605390252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 4
+  distanceToRegroup: 2
+  distanceToLeader: 3
+  squadMember: {fileID: 0}
+  targetController: {fileID: 0}
+  navMeshController: {fileID: 0}
+  muzzle: {fileID: 6099054148090206178}
+  bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
+  shootCooldown: 0.5
+  lookAtZombieDamping: 15
+  target: Zombie
+  distanceToTarget: 6
+  rangeToSeeTarget: {x: 6, y: 10}
+  AttackEventCaller: {fileID: 899358430901405663}
+  ShowGizmos: 0
+  MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
+  MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
+  distanceToSet: 2
+  delayToSet: 1.5
+  SetObjectEffect: {fileID: 3105253606689490518}
+  SettingObjectEffect: {fileID: 6339521736952954446}
+  distanceToHeal: 1.2
+  dampingToHeal: 10
+  healHitBox: {fileID: 475056069}
+  healCooldown: 3
+  healRest: 0.5
+  HealEffect: {fileID: 8745678455274301854}
+--- !u!114 &1304290663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ef74ed9e278e14a9243a05e6910a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtraMember: 1
+  health: {fileID: 0}
 --- !u!1001 &335731606331853943
 PrefabInstance:
   m_ObjectHideFlags: 0
