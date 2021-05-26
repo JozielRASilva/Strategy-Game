@@ -22,6 +22,7 @@ public class DamageOnTouch : KillableObject
 
             Health _health = other.GetComponent<Health>();
 
+            if (!_health.IsAlive()) return;
             _health.TakeDamage(Damage);
 
             OnHit?.Invoke();

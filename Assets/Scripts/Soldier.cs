@@ -299,8 +299,8 @@ public class Soldier : MonoBehaviour, AIBase
 
         BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-        BTSee see = new BTSee(targetController, target, distanceToTarget);
-        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToTarget);
+        BTSee see = new BTSee(targetController, target, rangeToSeeTarget.y);
+        BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, rangeToSeeTarget.x);
 
         parallelSelector_1.SetNode(see);
         parallelSelector_1.SetNode(moveTo);
