@@ -463,8 +463,8 @@ MonoBehaviour:
   shootCooldown: 0.5
   lookAtZombieDamping: 15
   target: Zombie
-  distanceToTarget: 6
-  rangeToSeeTarget: {x: 6, y: 10}
+  distanceToTarget: 8
+  rangeToSeeTarget: {x: 8, y: 10}
   AttackEventCaller: {fileID: 899358430901405663}
   ShowGizmos: 0
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}

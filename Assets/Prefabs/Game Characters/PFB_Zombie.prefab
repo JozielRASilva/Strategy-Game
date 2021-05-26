@@ -310,7 +310,7 @@ MonoBehaviour:
   distanceToZombie: 3
   timeCalling: 0.2
   OnCallEvent: {fileID: 3923622199825305593}
-  distanceView: 6
+  distanceView: 8
   minDistance: 2
   maxDistance: 15
 --- !u!114 &6394551119402832637
