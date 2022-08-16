@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    public ControleCamera cameraController;
+    public CameraController cameraController;
     public float ZoomSpeed = 5;
     public Vector2 ZoomRange = new Vector2(-25, -50);
 
@@ -12,8 +12,8 @@ public class CameraZoom : MonoBehaviour
     {
         if (!cameraController) return;
 
-        cameraController.camdistancia += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
+        cameraController.CameraDistance += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
 
-        cameraController.camdistancia = Mathf.Clamp(cameraController.camdistancia, ZoomRange.x, ZoomRange.y);
+        cameraController.CameraDistance = Mathf.Clamp(cameraController.CameraDistance, ZoomRange.x, ZoomRange.y);
     }
 }

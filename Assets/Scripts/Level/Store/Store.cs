@@ -28,11 +28,11 @@ public class Store : MonoBehaviour
     public bool CanBuy(int itemId)
     {
         if (storeItems.Count == 0) return false;
-        if (!Moedas.moedas || itemId >= storeItems.Count) return false;
+        if (!Coins.Instance || itemId >= storeItems.Count) return false;
 
         StoreItem item = storeItems[itemId];
 
-        if (Moedas.moedas.moeda - item.price >= 0)
+        if (Coins.Instance.CoinsCount - item.price >= 0)
         {
             return true;
         }
@@ -44,7 +44,7 @@ public class Store : MonoBehaviour
     {
         if (_currentBought == null) return;
 
-        Moedas.moedas.AddMoeda(_currentBought.price);
+        Coins.Instance.AddCoin(_currentBought.price);
         OnRefund?.Invoke();
         _currentBought = null;
     }
@@ -59,7 +59,7 @@ public class Store : MonoBehaviour
 
             OnBuy?.Invoke(item.Item);
 
-            Moedas.moedas.AddMoeda(-item.price);
+            Coins.Instance.AddCoin(-item.price);
 
             _currentBought = item;
         }

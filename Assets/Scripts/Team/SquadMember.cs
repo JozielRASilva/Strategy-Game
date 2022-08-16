@@ -22,7 +22,6 @@ public class SquadMember : MonoBehaviour
 
     private void Update()
     {
-
         if (health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
         {
             GetSquadFunction();
@@ -38,8 +37,7 @@ public class SquadMember : MonoBehaviour
     {
         if (!TeamManager.Instance) return;
 
-        Squad.SquadFunction function = GetSquadFunction();
-
+        GetSquadFunction();
     }
 
     [Button("Remove Function")]

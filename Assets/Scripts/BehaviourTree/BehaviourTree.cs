@@ -15,6 +15,8 @@ public class BehaviourTree : MonoBehaviour
         GUILayout.Label($"{nodes}");
     }
 
+    private bool debug;
+
     private BTNode root;
 
     public Coroutine execution;
@@ -51,7 +53,10 @@ public class BehaviourTree : MonoBehaviour
 
     private void LateUpdate()
     {
-        nodes = GetNodes();
+#if UNITY_EDITOR
+        if (debug)
+            nodes = GetNodes();
+#endif
     }
 
     private string GetNodes()
