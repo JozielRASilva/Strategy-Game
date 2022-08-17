@@ -24,7 +24,7 @@ public class HealOnTouch : MonoBehaviour
 
         if (other.gameObject.Equals(health.gameObject)) return;
 
-        if (UnityExtensions.Contains(Healable, other.gameObject.layer))
+        if (UnityLayerMaskExtensions.Contains(Healable, other.gameObject.layer))
         {
 
             Health _health = other.GetComponent<Health>();

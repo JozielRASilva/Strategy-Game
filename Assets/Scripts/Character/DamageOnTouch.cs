@@ -17,7 +17,7 @@ public class DamageOnTouch : KillableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (UnityExtensions.Contains(Damageable, other.gameObject.layer))
+        if (UnityLayerMaskExtensions.Contains(Damageable, other.gameObject.layer))
         {
 
             Health _health = other.GetComponent<Health>();

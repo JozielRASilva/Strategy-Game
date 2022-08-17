@@ -10,7 +10,7 @@ public class DestroyOnTouch : KillableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (UnityExtensions.Contains(Destructor, other.gameObject.layer))
+        if (UnityLayerMaskExtensions.Contains(Destructor, other.gameObject.layer))
         {
             Destroy();
         }
