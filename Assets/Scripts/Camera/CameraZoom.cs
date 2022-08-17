@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraZoom : MonoBehaviour
+namespace ZombieDiorama.Cameras
 {
-    public CameraController cameraController;
-    public float ZoomSpeed = 5;
-    public Vector2 ZoomRange = new Vector2(-25, -50);
-
-    void LateUpdate()
+    public class CameraZoom : MonoBehaviour
     {
-        if (!cameraController) return;
+        public CameraController cameraController;
+        public float ZoomSpeed = 5;
+        public Vector2 ZoomRange = new Vector2(-25, -50);
 
-        cameraController.CameraDistance += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
+        void LateUpdate()
+        {
+            if (!cameraController) return;
 
-        cameraController.CameraDistance = Mathf.Clamp(cameraController.CameraDistance, ZoomRange.x, ZoomRange.y);
+            cameraController.CameraDistance += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
+
+            cameraController.CameraDistance = Mathf.Clamp(cameraController.CameraDistance, ZoomRange.x, ZoomRange.y);
+        }
     }
 }

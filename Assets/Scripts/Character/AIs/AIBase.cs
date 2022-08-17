@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public interface AIBase
+namespace ZombieDiorama.Character.AIs
 {
-    void SetBehaviour();
-
-    void RestartBehaviour();
-
-    void StopBehaviour();
-
+    public interface AIBase
+    {
+        void SetBehaviour();
+        void RestartBehaviour();
+        void StopBehaviour();
+    }
 }

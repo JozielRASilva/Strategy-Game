@@ -3,55 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class SquadMember : MonoBehaviour
+namespace ZombieDiorama.Character.AIs.Controllers.Team
 {
-
-    public bool ExtraMember;
-
-    public Health health;
-
-    private void Awake()
+    public class SquadMember : MonoBehaviour
     {
-        if (!health)
+
+        public bool ExtraMember;
+
+        public Health health;
+
+        private void Awake()
         {
-            health = GetComponent<Health>();
+            if (!health)
+            {
+                health = GetComponent<Health>();
+            }
+
+            health.ActionOnKill += RemoveFromSquad;
         }
 
-        health.ActionOnKill += RemoveFromSquad;
-    }
-
-    private void Update()
-    {
-        if (health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
+        private void Update()
         {
+            if (health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
+            {
+                GetSquadFunction();
+            }
+            else if (!health.IsAlive())
+            {
+                RemoveFromSquad();
+            }
+        }
+
+        [Button("Get Function")]
+        public void CheckSquadFunction()
+        {
+            if (!TeamManager.Instance) return;
+
             GetSquadFunction();
         }
-        else if (!health.IsAlive())
+
+        [Button("Remove Function")]
+        public void RemoveFromSquad()
         {
-            RemoveFromSquad();
+            if (!TeamManager.Instance) return;
+
+            TeamManager.Instance.RemoveFromSquad(this);
+
         }
-    }
 
-    [Button("Get Function")]
-    public void CheckSquadFunction()
-    {
-        if (!TeamManager.Instance) return;
-
-        GetSquadFunction();
-    }
-
-    [Button("Remove Function")]
-    public void RemoveFromSquad()
-    {
-        if (!TeamManager.Instance) return;
-
-        TeamManager.Instance.RemoveFromSquad(this);
+        public Squad.SquadFunction GetSquadFunction()
+        {
+            return TeamManager.Instance.GetSquadFunction(this);
+        }
 
     }
-
-    public Squad.SquadFunction GetSquadFunction()
-    {
-        return TeamManager.Instance.GetSquadFunction(this);
-    }
-
 }
