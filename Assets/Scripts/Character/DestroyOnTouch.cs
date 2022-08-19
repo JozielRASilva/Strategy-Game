@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using ZombieDiorama.Extensions;
 
-public class DestroyOnTouch : KillableObject
+namespace ZombieDiorama.Character
 {
-    [Title("Destroy Info")]
-    public LayerMask Destructor;
-
-    private void OnTriggerEnter(Collider other)
+    public class DestroyOnTouch : KillableObject
     {
-        if (UnityLayerMaskExtensions.Contains(Destructor, other.gameObject.layer))
+        [Title("Destroy Info")]
+        public LayerMask Destructor;
+
+        private void OnTriggerEnter(Collider other)
         {
-            Destroy();
+            if (UnityLayerMaskExtensions.Contains(Destructor, other.gameObject.layer))
+            {
+                Destroy();
+            }
         }
     }
 }

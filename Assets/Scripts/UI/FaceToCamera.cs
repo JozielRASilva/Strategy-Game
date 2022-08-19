@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceToCamera : MonoBehaviour
+namespace ZombieDiorama.UI
 {
-
-    void Update()
+    public class FaceToCamera : MonoBehaviour
     {
-        transform.LookAt(Camera.main.transform);
+        private void Update()
+        {
+            transform.LookAt(Camera.main.transform);
+        }
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
+using ZombieDiorama.ObjectPlacer;
 
-
-[System.Serializable]
-public class EventItem : UnityEvent<SettableObjectInfo>
+namespace ZombieDiorama.Level.Store
 {
+    [System.Serializable]
+    public class EventItem : UnityEvent<SettableObjectInfo>
+    {
 
+    }
 }

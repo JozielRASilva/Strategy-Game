@@ -1,11 +1,12 @@
 
 using UnityEngine;
-using UnityEngine.Events;
-
-public static class UnityLayerMaskExtensions
+namespace ZombieDiorama.Extensions
 {
-    public static bool Contains(this LayerMask mask, int layer)
+    public static class UnityLayerMaskExtensions
     {
-        return mask == (mask | (1 << layer));
+        public static bool Contains(this LayerMask mask, int layer)
+        {
+            return mask == (mask | (1 << layer));
+        }
     }
 }

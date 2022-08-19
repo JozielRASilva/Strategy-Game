@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using ZombieDiorama.Character.AIs;
-using ZombieDiorama.Character.AIs.Behaviours;
-using ZombieDiorama.Character.AIs.Behaviours.Custom;
-using ZombieDiorama.Character.AIs.Behaviours.Custom.Zombie;
-using ZombieDiorama.Character.AIs.Behaviours.Decorators;
-using ZombieDiorama.Character.AIs.Controllers;
+using ZombieDiorama.Character.Behaviours;
+using ZombieDiorama.Character.Behaviours.Custom;
+using ZombieDiorama.Character.Behaviours.Zombie;
+using ZombieDiorama.Character.Behaviours.Decorators;
+using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Utilities;
 
 namespace ZombieDiorama.Character.AIs
 {

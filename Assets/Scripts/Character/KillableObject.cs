@@ -1,88 +1,87 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 using System;
 
-
-public class KillableObject : MonoBehaviour, IKillableObject
+namespace ZombieDiorama.Character
 {
-
-    public UnityEvent EventOnRespawn;
-    public Action OnRespawn;
-
-    public UnityEvent EventOnDisable;
-    public Action ActionOnDisable;
-
-    public bool FromPool;
-
-    [Title("Destroy")]
-    public bool MainBodyIsOther = false;
-    [ShowIf("MainBodyIsOther", true)]
-    public GameObject MainBody;
-
-    public UnityEvent OnKill;
-    public Action ActionOnKill;
-
-    public bool HasDelayToDestroy = false;
-    [ShowIf("HasDelayToDestroy", true)]
-    public float delayToDestroy = 0.2f;
-
-    private string defaultTag;
-
-    protected virtual void Awake()
+    public class KillableObject : MonoBehaviour, IKillableObject
     {
-        defaultTag = gameObject.tag;
-    }
 
-    private void OnEnable()
-    {
-        EventOnRespawn?.Invoke();
+        public UnityEvent EventOnRespawn;
+        public Action OnRespawn;
 
-        OnRespawn?.Invoke();
-    }
+        public UnityEvent EventOnDisable;
+        public Action ActionOnDisable;
 
-    private void OnDisable()
-    {
-        EventOnDisable?.Invoke();
+        public bool FromPool;
 
-        ActionOnDisable?.Invoke();
-    }
+        [Title("Destroy")]
+        public bool MainBodyIsOther = false;
+        [ShowIf("MainBodyIsOther", true)]
+        public GameObject MainBody;
 
-    public void Destroy()
-    {
-        OnKill?.Invoke();
-        ActionOnKill?.Invoke();
+        public UnityEvent OnKill;
+        public Action ActionOnKill;
 
-        if (HasDelayToDestroy)
-            StartCoroutine(DestroyCO());
-        else Kill();
-    }
+        public bool HasDelayToDestroy = false;
+        [ShowIf("HasDelayToDestroy", true)]
+        public float delayToDestroy = 0.2f;
 
-    public IEnumerator DestroyCO()
-    {
-        gameObject.tag = "Untagged";
-        yield return new WaitForSeconds(delayToDestroy);
-        gameObject.tag = defaultTag;
-        Kill();
-    }
+        private string defaultTag;
 
-    public void Kill()
-    {
-        if (MainBody)
+        protected virtual void Awake()
         {
-            if (FromPool)
-                PoolManager.ReleaseObject(MainBody);
-            else
-                MainBody.SetActive(false);
+            defaultTag = gameObject.tag;
         }
-        else
+
+        private void OnEnable()
         {
-            if (FromPool)
-                PoolManager.ReleaseObject(this.gameObject);
+            EventOnRespawn?.Invoke();
+            OnRespawn?.Invoke();
+        }
+
+        private void OnDisable()
+        {
+            EventOnDisable?.Invoke();
+            ActionOnDisable?.Invoke();
+        }
+
+        public void Destroy()
+        {
+            OnKill?.Invoke();
+            ActionOnKill?.Invoke();
+
+            if (HasDelayToDestroy)
+                StartCoroutine(DestroyCO());
+            else Kill();
+        }
+
+        public IEnumerator DestroyCO()
+        {
+            gameObject.tag = "Untagged";
+            yield return new WaitForSeconds(delayToDestroy);
+            gameObject.tag = defaultTag;
+            Kill();
+        }
+
+        public void Kill()
+        {
+            if (MainBody)
+            {
+                if (FromPool)
+                    PoolManager.ReleaseObject(MainBody);
+                else
+                    MainBody.SetActive(false);
+            }
             else
-                gameObject.SetActive(false);
+            {
+                if (FromPool)
+                    PoolManager.ReleaseObject(this.gameObject);
+                else
+                    gameObject.SetActive(false);
+            }
         }
     }
 }

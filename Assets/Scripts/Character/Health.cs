@@ -1,99 +1,93 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
-public class Health : KillableObject
+namespace ZombieDiorama.Character
 {
-
-    [Title("Life Info")]
-    public int maxLife = 5;
-
-    [Title("Damage")]
-    public float invincibilityTime = 0.2f;
-    public UnityEvent OnDamaged;
-
-    [Title("Heal")]
-    public UnityEvent OnHealed;
-
-    private int _currentLife;
-    private float invincibilityTimeStamp;
-
-    [OnInspectorGUI]
-    private void Nodes()
+    public class Health : KillableObject
     {
-        GUILayout.Label($"Life: {_currentLife} / {maxLife}");
-    }
+        [Title("Life Info")]
+        public int maxLife = 5;
 
+        [Title("Damage")]
+        public float invincibilityTime = 0.2f;
+        public UnityEvent OnDamaged;
 
-    [Title("Buttons Actions")]
+        [Title("Heal")]
+        public UnityEvent OnHealed;
 
-    [Button("Heal")]
-    private void BHeal() => AddLife(1);
+        private int _currentLife;
+        private float invincibilityTimeStamp;
 
-    [Button("Hit")]
-    private void BHit() => TakeDamage(1);
-
-    [Button("Kill")]
-    private void BKill() => TakeDamage(maxLife);
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _currentLife = maxLife;
-    }
-
-
-    public void TakeDamage(int value)
-    {
-        if (Time.time < invincibilityTimeStamp) return;
-
-
-
-        if (_currentLife - value > 0)
+        [OnInspectorGUI]
+        private void Nodes()
         {
-            _currentLife -= value;
-            invincibilityTimeStamp = Time.time + invincibilityTime;
-            OnDamaged?.Invoke();
-        }
-        else
-        {
-            invincibilityTimeStamp = Time.time + delayToDestroy;
-            _currentLife = 0;
-            Destroy();
+            GUILayout.Label($"Life: {_currentLife} / {maxLife}");
         }
 
-    }
+        [Title("Buttons Actions")]
 
-    public void AddLife(int value)
-    {
-        if (_currentLife + value < maxLife)
+        [Button("Heal")]
+        private void BHeal() => AddLife(1);
+
+        [Button("Hit")]
+        private void BHit() => TakeDamage(1);
+
+        [Button("Kill")]
+        private void BKill() => TakeDamage(maxLife);
+
+        protected override void Awake()
         {
-            _currentLife += value;
-        }
-        else
-        {
+            base.Awake();
             _currentLife = maxLife;
         }
-        OnHealed?.Invoke();
+
+        public void TakeDamage(int value)
+        {
+            if (Time.time < invincibilityTimeStamp) return;
+
+            if (_currentLife - value > 0)
+            {
+                _currentLife -= value;
+                invincibilityTimeStamp = Time.time + invincibilityTime;
+                OnDamaged?.Invoke();
+            }
+            else
+            {
+                invincibilityTimeStamp = Time.time + delayToDestroy;
+                _currentLife = 0;
+                Destroy();
+            }
+        }
+
+        public void AddLife(int value)
+        {
+            if (_currentLife + value < maxLife)
+            {
+                _currentLife += value;
+            }
+            else
+            {
+                _currentLife = maxLife;
+            }
+            OnHealed?.Invoke();
+        }
+
+        public int GetLife()
+        {
+            return _currentLife;
+        }
+
+        public bool LifeIsCompleted()
+        {
+            if (_currentLife == maxLife) return true;
+            else return false;
+
+        }
+
+        public bool IsAlive()
+        {
+            return _currentLife > 0;
+        }
     }
-
-    public int GetLife()
-    {
-        return _currentLife;
-    }
-
-    public bool LifeIsCompleted()
-    {
-        if (_currentLife == maxLife) return true;
-        else return false;
-
-    }
-
-    public bool IsAlive()
-    {
-        return _currentLife > 0;
-    }
-
 }

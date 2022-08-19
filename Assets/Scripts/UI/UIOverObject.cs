@@ -6,13 +6,11 @@ using UnityEngine.EventSystems;
 
 public class UIOverObject : MonoBehaviour
 {
-
     public UnityEvent OnEnterOver;
     public UnityEvent OnStayOver;
     public UnityEvent OnExitOver;
 
     private bool isOver;
-
 
     PointerEventData pointerEventData;
     
@@ -30,7 +28,6 @@ public class UIOverObject : MonoBehaviour
                 OnEnterOver?.Invoke();
                 isOver = true;
             }
-
             OnStayOver?.Invoke();
         }
         else
@@ -41,14 +38,10 @@ public class UIOverObject : MonoBehaviour
                 isOver = false;
             }
         }
-
-
     }
-
 
     private bool IsMouseOverThis()
     {
-
         pointerEventData.position = Input.mousePosition;
 
         List<RaycastResult> raycastResultsList = new List<RaycastResult>();

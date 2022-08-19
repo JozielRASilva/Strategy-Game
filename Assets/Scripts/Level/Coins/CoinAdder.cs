@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinAdder : MonoBehaviour
+namespace ZombieDiorama.Level.Coins
 {
-    public void AddCoins()
+    public class CoinAdder : MonoBehaviour
     {
-        Coins.Instance.AddCoin();
+        public void AddCoins()
+        {
+            CoinCounter.Instance.AddCoin();
+        }
     }
-
 }

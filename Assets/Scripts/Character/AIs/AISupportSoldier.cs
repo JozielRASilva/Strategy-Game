@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using ZombieDiorama.Character.AIs.Controllers;
-using ZombieDiorama.Character.AIs.Controllers.Team;
-using ZombieDiorama.Character.AIs.Behaviours;
-using ZombieDiorama.Character.AIs.Behaviours.Custom.Soldier.ObjectSet;
-using ZombieDiorama.Character.AIs.Behaviours.Custom.Soldier;
-using ZombieDiorama.Character.AIs.Behaviours.Custom;
-using ZombieDiorama.Character.AIs.Behaviours.Custom.Soldier.Heal;
-using ZombieDiorama.Character.AIs.Behaviours.Custom.Soldier.Reagroup;
-using ZombieDiorama.Character.AIs.Behaviours.Decorators;
+using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Behaviours;
+using ZombieDiorama.Character.Behaviours.Soldier;
+using ZombieDiorama.Character.Behaviours.Custom;
+using ZombieDiorama.Character.Behaviours.Decorators;
+using ZombieDiorama.Utilities;
 
 namespace ZombieDiorama.Character.AIs
 {

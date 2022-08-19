@@ -1,38 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
+using ZombieDiorama.Extensions;
 
-public class DamageOnTouch : KillableObject
+namespace ZombieDiorama.Character
 {
-    [Title("Damage Info")]
-    public int Damage = 1;
-
-    public LayerMask Damageable;
-
-    public bool destroyOnDamage = false;
-
-    public UnityEvent OnHit;
-
-    private void OnTriggerEnter(Collider other)
+    public class DamageOnTouch : KillableObject
     {
-        if (UnityLayerMaskExtensions.Contains(Damageable, other.gameObject.layer))
+        [Title("Damage Info")]
+        public int Damage = 1;
+        public LayerMask Damageable;
+        public bool destroyOnDamage = false;
+        public UnityEvent OnHit;
+
+        private void OnTriggerEnter(Collider other)
         {
-
-            Health _health = other.GetComponent<Health>();
-
-            if (!_health.IsAlive()) return;
-            _health.TakeDamage(Damage);
-
-            OnHit?.Invoke();
-
-            if (destroyOnDamage)
+            if (UnityLayerMaskExtensions.Contains(Damageable, other.gameObject.layer))
             {
-                Destroy();
-            }
+                Health _health = other.GetComponent<Health>();
 
+                if (!_health.IsAlive()) return;
+                _health.TakeDamage(Damage);
+
+                OnHit?.Invoke();
+
+                if (destroyOnDamage)
+                {
+                    Destroy();
+                }
+            }
         }
     }
-
 }

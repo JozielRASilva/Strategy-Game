@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using ZombieDiorama.Character.AIs;
+
 #if UNITY_EDITOR
 [CustomEditor(typeof(Zombie))]
 public class FieldsEditor : Editor

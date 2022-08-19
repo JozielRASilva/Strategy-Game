@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ExitGame : MonoBehaviour
+namespace ZombieDiorama.Level
 {
-    public void QuitGame()
+    public class ExitGame : MonoBehaviour
     {
+        public void QuitGame()
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
          Application.Quit();
 #endif
+        }
     }
 }

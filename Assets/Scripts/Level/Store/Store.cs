@@ -3,72 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
-
-public class Store : MonoBehaviour
+using ZombieDiorama.Level.Coins;
+namespace ZombieDiorama.Level.Store
 {
-
-    public static Store Instance;
-
-    public List<StoreItem> storeItems = new List<StoreItem>();
-
-    [Title("Events")]
-    public EventItem OnBuy;
-    public UnityEvent OnCanBuy;
-    public UnityEvent OnCanNotBuy;
-    public UnityEvent OnRefund;
-
-    private StoreItem _currentBought;
-
-
-    private void Awake()
+    public class Store : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static Store Instance;
 
-    public bool CanBuy(int itemId)
-    {
-        if (storeItems.Count == 0) return false;
-        if (!Coins.Instance || itemId >= storeItems.Count) return false;
+        public List<StoreItem> storeItems = new List<StoreItem>();
 
-        StoreItem item = storeItems[itemId];
+        [Title("Events")]
+        public EventItem OnBuy;
+        public UnityEvent OnCanBuy;
+        public UnityEvent OnCanNotBuy;
+        public UnityEvent OnRefund;
 
-        if (Coins.Instance.CoinsCount - item.price >= 0)
+        private StoreItem currentBought;
+
+        private void Awake()
         {
-            return true;
+            Instance = this;
         }
 
-        return false;
-    }
-
-    public void Refund()
-    {
-        if (_currentBought == null) return;
-
-        Coins.Instance.AddCoin(_currentBought.price);
-        OnRefund?.Invoke();
-        _currentBought = null;
-    }
-
-    public void Buy(int itemId)
-    {
-        if (CanBuy(itemId))
+        public bool CanBuy(int itemId)
         {
+            if (storeItems.Count == 0) return false;
+            if (!CoinCounter.Instance || itemId >= storeItems.Count) return false;
+
             StoreItem item = storeItems[itemId];
 
-            OnCanBuy?.Invoke();
+            if (CoinCounter.Instance.CoinsCount - item.price >= 0)
+            {
+                return true;
+            }
 
-            OnBuy?.Invoke(item.Item);
-
-            Coins.Instance.AddCoin(-item.price);
-
-            _currentBought = item;
+            return false;
         }
-        else
+
+        public void Refund()
         {
+            if (currentBought == null) return;
 
-            OnCanNotBuy?.Invoke();
+            CoinCounter.Instance.AddCoin(currentBought.price);
+            OnRefund?.Invoke();
+            currentBought = null;
+        }
 
+        public void Buy(int itemId)
+        {
+            if (CanBuy(itemId))
+            {
+                StoreItem item = storeItems[itemId];
+
+                OnCanBuy?.Invoke();
+                OnBuy?.Invoke(item.Item);
+                CoinCounter.Instance.AddCoin(-item.price);
+                currentBought = item;
+            }
+            else
+            {
+                OnCanNotBuy?.Invoke();
+            }
         }
     }
-
 }

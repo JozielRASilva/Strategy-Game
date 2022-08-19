@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenUrl : MonoBehaviour
+namespace ZombieDiorama.Level
 {
-    public void Open(string value)
+    public class OpenUrl : MonoBehaviour
     {
-        Application.OpenURL(value);
+        public void Open(string value)
+        {
+            Application.OpenURL(value);
+        }
     }
 }

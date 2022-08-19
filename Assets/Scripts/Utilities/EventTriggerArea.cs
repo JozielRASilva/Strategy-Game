@@ -4,43 +4,44 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class EventTriggerArea : MonoBehaviour
+namespace ZombieDiorama.Utilities
 {
-
-    public LayerMask LayerToDetect;
-
-    [TitleGroup("On Trigger Enter")]
-    public UnityEvent OnEnter;
-    public UnityEvent OnStay;
-    public UnityEvent OnExit;
-
-    private void OnTriggerEnter(Collider other)
+    public class EventTriggerArea : MonoBehaviour
     {
-        if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
-        {     
-            OnEnter?.Invoke();
-        }
-    }
+        public LayerMask LayerToDetect;
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
-        {   
-            OnStay?.Invoke();
-        }
-    }
+        [TitleGroup("On Trigger Enter")]
+        public UnityEvent OnEnter;
+        public UnityEvent OnStay;
+        public UnityEvent OnExit;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
+        private void OnTriggerEnter(Collider other)
         {
-            OnExit?.Invoke();
+            if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
+            {
+                OnEnter?.Invoke();
+            }
         }
-    }
 
+        private void OnTriggerStay(Collider other)
+        {
+            if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
+            {
+                OnStay?.Invoke();
+            }
+        }
 
-    private bool LayerContains(int layer, LayerMask layerMask)
-    {
-        return layerMask == (layerMask | (1 << layer));
+        private void OnTriggerExit(Collider other)
+        {
+            if (LayerContains(other.transform.gameObject.layer, LayerToDetect))
+            {
+                OnExit?.Invoke();
+            }
+        }
+
+        private bool LayerContains(int layer, LayerMask layerMask)
+        {
+            return layerMask == (layerMask | (1 << layer));
+        }
     }
 }
