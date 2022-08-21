@@ -5,21 +5,12 @@ using System.Linq;
 
 namespace ZombieDiorama.Character.Controllers.Team
 {
-    public class TeamManager : MonoBehaviour
+    public class TeamController : Utilities.Patterns.Singleton<TeamController>
     {
-
-        public static TeamManager Instance;
-
         public List<Squad> squads = new List<Squad>();
 
         [Title("Squad Info")]
         public int MembersForSquad = 4;
-
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         [Button("Validate")]
         public void GetFunctionCall()
@@ -42,17 +33,14 @@ namespace ZombieDiorama.Character.Controllers.Team
             return Squad.SquadFunction.NONE;
         }
 
-
         public SquadMember GetSquadLeader(SquadMember member)
         {
-
             foreach (var squad in squads)
             {
                 if (squad.ContainsMember(member))
                 {
                     if (squad.Leader == member)
                         return null;
-
                     return squad.Leader;
                 }
             }
@@ -63,7 +51,6 @@ namespace ZombieDiorama.Character.Controllers.Team
 
         public List<SquadMember> GetSquadMembers(SquadMember member)
         {
-
             foreach (var squad in squads)
             {
                 if (squad.ContainsMember(member))
@@ -71,13 +58,11 @@ namespace ZombieDiorama.Character.Controllers.Team
                     return squad.GetMembers(member);
                 }
             }
-
             return null;
         }
 
         public void RemoveFromSquad(SquadMember member)
         {
-
             foreach (var squad in squads)
             {
                 if (squad.ContainsMember(member))
@@ -100,12 +85,10 @@ namespace ZombieDiorama.Character.Controllers.Team
 
             Squad.SquadFunction function = CheckDefaultFunction(member);
 
-
             if (squadsWithSpace != null && member)
             {
                 if (squadsWithSpace.Count != 0)
                 {
-
                     if (!function.Equals(Squad.SquadFunction.EXTRA))
                     {
                         squadsWithSpace[0].AddMember(function, member);
@@ -129,18 +112,14 @@ namespace ZombieDiorama.Character.Controllers.Team
                                 selected = squadWithSpace;
                             }
                         }
-
                         if (selected != null)
                         {
                             selected.AddMember(function, member);
                         }
-
                     }
-
                     return;
                 }
             }
-
 
             if (member)
             {
@@ -175,7 +154,6 @@ namespace ZombieDiorama.Character.Controllers.Team
                 }
             }
 
-
             bool existFreeSquad = squads.Exists(s => !s.Full(MembersForSquad) && !squadsOneLeader.Contains(s));
 
             if (existFreeSquad)
@@ -183,10 +161,8 @@ namespace ZombieDiorama.Character.Controllers.Team
                 squads.RemoveAll(s => squadsOneLeader.Contains(s));
             }
 
-
             // Delete squad
             squads.RemoveAll(s => !s.Leader && s.Members.Count == 0);
-
         }
 
 

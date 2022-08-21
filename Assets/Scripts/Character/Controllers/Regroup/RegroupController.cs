@@ -1,11 +1,9 @@
 using UnityEngine;
-
+using ZombieDiorama;
 namespace ZombieDiorama.Character.Controllers.Regroup
 {
-    public class RegroupController : MonoBehaviour
+    public class RegroupController : Utilities.Patterns.Singleton<RegroupController>
     {
-
-        public static RegroupController Instance;
 
         public Vector3 RegroupPoint;
         public int currentRegroupId = -1;
@@ -16,9 +14,9 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         public Transform pointReference;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = GetComponent<RegroupController>();
+            base.Awake();
 
             currentRegroupId = -1;
         }

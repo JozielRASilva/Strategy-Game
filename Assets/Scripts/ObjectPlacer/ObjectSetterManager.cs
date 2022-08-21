@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MonsterLove.Pooller;
 using UnityEngine;
 
 namespace ZombieDiorama.ObjectPlacer

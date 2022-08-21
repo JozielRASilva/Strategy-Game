@@ -3,6 +3,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 using System;
+using MonsterLove.Pooller;
 
 namespace ZombieDiorama.Character
 {

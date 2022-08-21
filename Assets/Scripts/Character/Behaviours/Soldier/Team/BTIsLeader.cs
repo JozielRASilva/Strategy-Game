@@ -16,9 +16,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         {
             status = Status.FAILURE;
 
-            if (!TeamManager.Instance) yield break;
+            if (!TeamController.Instance) yield break;
 
-            Squad.SquadFunction function = TeamManager.Instance.GetSquadFunction(squadMember);
+            Squad.SquadFunction function = TeamController.Instance.GetSquadFunction(squadMember);
 
             if (function.Equals(Squad.SquadFunction.LEADER))
             {

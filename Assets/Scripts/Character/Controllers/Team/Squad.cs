@@ -74,9 +74,7 @@ namespace ZombieDiorama.Character.Controllers.Team
             }
 
             Members.RemoveAll(m => m.Equals(null));
-
             ExtraMembers.RemoveAll(m => m.Equals(null));
-
         }
 
         public void RemoveMember(SquadMember member)
@@ -88,7 +86,6 @@ namespace ZombieDiorama.Character.Controllers.Team
             if (Members.Contains(member)) Members.Remove(member);
 
             if (ExtraMembers.Contains(member)) ExtraMembers.Remove(member);
-
 
             UpdateLeader();
         }
@@ -124,7 +121,6 @@ namespace ZombieDiorama.Character.Controllers.Team
                 }
 
             if (selected) Leader = selected;
-
         }
 
         public SquadFunction GetFunction(SquadMember member)
@@ -157,7 +153,6 @@ namespace ZombieDiorama.Character.Controllers.Team
                         squadMembers.Add(_member);
                     }
                 }
-
             }
 
             if (ExtraMembers != null && member)
@@ -171,13 +166,11 @@ namespace ZombieDiorama.Character.Controllers.Team
                 }
             }
 
-
             return squadMembers;
         }
 
         public bool Full(int MembersForSquad)
         {
-
             if (!Leader) return false;
 
             if (Members.Count < MembersForSquad - 1) return false;

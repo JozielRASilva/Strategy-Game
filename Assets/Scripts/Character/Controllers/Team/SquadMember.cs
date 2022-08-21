@@ -5,28 +5,25 @@ namespace ZombieDiorama.Character.Controllers.Team
 {
     public class SquadMember : MonoBehaviour
     {
-
         public bool ExtraMember;
-
-        public Health health;
+        public Health Health;
 
         private void Awake()
         {
-            if (!health)
+            if (!Health)
             {
-                health = GetComponent<Health>();
+                Health = GetComponent<Health>();
             }
-
-            health.ActionOnKill += RemoveFromSquad;
+            Health.ActionOnKill += RemoveFromSquad;
         }
 
         private void Update()
         {
-            if (health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
+            if (Health.IsAlive() && GetSquadFunction().Equals(Squad.SquadFunction.NONE))
             {
                 GetSquadFunction();
             }
-            else if (!health.IsAlive())
+            else if (!Health.IsAlive())
             {
                 RemoveFromSquad();
             }
@@ -35,7 +32,7 @@ namespace ZombieDiorama.Character.Controllers.Team
         [Button("Get Function")]
         public void CheckSquadFunction()
         {
-            if (!TeamManager.Instance) return;
+            if (!TeamController.Instance) return;
 
             GetSquadFunction();
         }
@@ -43,15 +40,15 @@ namespace ZombieDiorama.Character.Controllers.Team
         [Button("Remove Function")]
         public void RemoveFromSquad()
         {
-            if (!TeamManager.Instance) return;
+            if (!TeamController.Instance) return;
 
-            TeamManager.Instance.RemoveFromSquad(this);
+            TeamController.Instance.RemoveFromSquad(this);
 
         }
 
         public Squad.SquadFunction GetSquadFunction()
         {
-            return TeamManager.Instance.GetSquadFunction(this);
+            return TeamController.Instance.GetSquadFunction(this);
         }
 
     }

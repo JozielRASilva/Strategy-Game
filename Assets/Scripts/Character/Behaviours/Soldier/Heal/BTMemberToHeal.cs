@@ -20,14 +20,14 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         {
             status = Status.FAILURE;
 
-            if (!TeamManager.Instance) yield break;
+            if (!TeamController.Instance) yield break;
 
-            List<SquadMember> members = TeamManager.Instance.GetSquadMembers(squadMember);
+            List<SquadMember> members = TeamController.Instance.GetSquadMembers(squadMember);
 
             if (members == null) yield break;
 
-            List<SquadMember> damagedMembers = members.FindAll(m => !m.health.LifeIsCompleted()
-            && m.health.IsAlive());
+            List<SquadMember> damagedMembers = members.FindAll(m => !m.Health.LifeIsCompleted()
+            && m.Health.IsAlive());
 
             damagedMembers.RemoveAll(m => m.GetSquadFunction().Equals(Squad.SquadFunction.EXTRA));
 
@@ -43,7 +43,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             {
                 if (selected)
                 {
-                    if (selected.health.GetLife() < member.health.GetLife())
+                    if (selected.Health.GetLife() < member.Health.GetLife())
                         selected = member;
                 }
                 else
