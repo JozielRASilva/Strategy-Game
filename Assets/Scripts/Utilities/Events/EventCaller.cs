@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ZombieDiorama.Utilities
+namespace ZombieDiorama.Utilities.Events
 {
     public class EventCaller : MonoBehaviour
     {

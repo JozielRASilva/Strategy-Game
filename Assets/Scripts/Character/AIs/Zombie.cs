@@ -7,7 +7,7 @@ using ZombieDiorama.Character.Behaviours.Custom;
 using ZombieDiorama.Character.Behaviours.Zombie;
 using ZombieDiorama.Character.Behaviours.Decorators;
 using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Utilities;
+using ZombieDiorama.Utilities.Events;
 
 namespace ZombieDiorama.Character.AIs
 {

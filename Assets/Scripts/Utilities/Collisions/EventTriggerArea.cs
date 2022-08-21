@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-namespace ZombieDiorama.Utilities
+namespace ZombieDiorama.Utilities.Collisions
 {
     public class EventTriggerArea : MonoBehaviour
     {

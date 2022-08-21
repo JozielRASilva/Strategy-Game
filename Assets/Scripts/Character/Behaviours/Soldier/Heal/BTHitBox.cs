@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Utilities;
+using ZombieDiorama.Utilities.Events;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
