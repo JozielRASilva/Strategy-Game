@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using MonsterLove.Pooller;
 using UnityEngine;
+using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.ObjectPlacer
 {
-    public class ObjectSetterManager : MonoBehaviour
+    public class ObjectSetterManager : Singleton<ObjectSetterManager>
     {
         public List<SettableObjectInfo> ObjectsAvaliableToSet = new List<SettableObjectInfo>();
         public int poolSize = 20;
 
-        public static ObjectSetterManager Instance;
-
         public List<ManageObject> objectsToSet = new List<ManageObject>();
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = this;
+            base.Awake();
             foreach (var objectAvaliable in ObjectsAvaliableToSet)
             {
                 PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, poolSize);

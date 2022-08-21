@@ -7,13 +7,12 @@ using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using ZombieDiorama.Character;
+using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : Singleton<LevelManager>
     {
-        public static LevelManager Instance;
-
         public int targetFrameRate = 60;
 
         public Action OnWin;
@@ -47,9 +46,9 @@ namespace ZombieDiorama.Level
         private List<Health> AllCharacters = new List<Health>();
         private bool levelFinished;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = this;
+            base.Awake();
             UpdateCharacters();
             Application.targetFrameRate = targetFrameRate;
         }

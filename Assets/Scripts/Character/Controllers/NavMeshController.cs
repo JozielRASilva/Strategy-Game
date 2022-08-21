@@ -9,30 +9,23 @@ namespace ZombieDiorama.Character.Controllers
 
         [Header("Animation")]
         public string xSpeed = "xSpeed";
-
         public Animator animator;
 
-
         private NavMeshAgent agent;
-
-        private Transform _currentTarget;
-
-        [SerializeField]
-        private bool CanMove;
+        private Transform currentTarget;
+        private bool canMove;
 
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
 
             if (!animator) animator = GetComponent<Animator>();
-
         }
 
         private void Update()
         {
             SetDestinationToTarget();
-
-            if (CanMove)
+            if (canMove)
                 SetAnimationValues();
         }
 
@@ -40,14 +33,13 @@ namespace ZombieDiorama.Character.Controllers
         {
             if (animator)
                 animator.SetFloat(xSpeed, agent.velocity.magnitude);
-
         }
 
         public void SetDestinationToTarget()
         {
-            if (_currentTarget && CanMove)
+            if (currentTarget && canMove)
             {
-                agent.SetDestination(_currentTarget.position);
+                agent.SetDestination(currentTarget.position);
                 agent.isStopped = false;
             }
             else
@@ -58,29 +50,29 @@ namespace ZombieDiorama.Character.Controllers
 
         private bool CanMoveToDestination()
         {
-            if (_currentTarget && CanMove) return true;
+            if (currentTarget && canMove) return true;
             return false;
         }
 
         public void SetTarget(Transform transform, float speed, float distance)
         {
-            _currentTarget = transform;
+            currentTarget = transform;
 
             agent.speed = speed;
 
             agent.stoppingDistance = distance;
 
-            CanMove = true;
+            canMove = true;
         }
 
         public void StartMove()
         {
-            CanMove = true;
+            canMove = true;
         }
 
         public void StopMove()
         {
-            CanMove = false;
+            canMove = false;
             agent.SetDestination(transform.position);
             animator.SetFloat(xSpeed, 0);
         }
