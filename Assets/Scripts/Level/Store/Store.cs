@@ -6,6 +6,8 @@ using Sirenix.OdinInspector;
 using ZombieDiorama.Level.Coins;
 namespace ZombieDiorama.Level.Store
 {
+    //TODO: trocar o singleton
+    //TODO: Colocar o dinheiro em um scriptable object
     public class Store : MonoBehaviour
     {
         public static Store Instance;

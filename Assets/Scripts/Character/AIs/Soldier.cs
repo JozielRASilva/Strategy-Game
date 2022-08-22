@@ -13,7 +13,7 @@ using ZombieDiorama.Utilities.Events;
 
 namespace ZombieDiorama.Character.AIs
 {
-    public class Soldier : MonoBehaviour, AIBase
+    public class Soldier : AIBase
     {
         [Title("Geral Info")]
         public float Speed = 6;
@@ -26,10 +26,7 @@ namespace ZombieDiorama.Character.AIs
 
         [Title("Geral Controllers")]
         public SquadMember SquadMember;
-        public TargetController TargetController;
-        public NavMeshController NavMeshController;
         public ShootHandler ShootHandler;
-        protected BehaviourTree behaviourTree;
 
         [Title("Fight")]
         public GameObject muzzle;
@@ -51,36 +48,15 @@ namespace ZombieDiorama.Character.AIs
         public Color MinRangeToSee = Color.cyan;
 
         #region  SETUP
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            TargetController = GetComponent<TargetController>();
-            NavMeshController = GetComponent<NavMeshController>();
+            base.Awake();
             SquadMember = GetComponent<SquadMember>();
             ShootHandler = GetComponent<ShootHandler>();
         }
 
-        protected virtual void Start()
+        public override void SetBehaviour()
         {
-            SetBehaviour();
-        }
-
-        public virtual void SetBehaviour()
-        {
-            if (!behaviourTree)
-            {
-                behaviourTree = gameObject.AddComponent<BehaviourTree>();
-            }
-
-            if (!NavMeshController)
-            {
-                NavMeshController = gameObject.AddComponent<NavMeshController>();
-            }
-
-            if (!TargetController)
-            {
-                TargetController = gameObject.AddComponent<TargetController>();
-            }
-
             BTSelector root = new BTSelector();
             // REGROUP
             BTNode branchRegroup = GetBranchRegroup();
@@ -96,25 +72,6 @@ namespace ZombieDiorama.Character.AIs
             behaviourTree.Build(root);
         }
 
-        public virtual void RestartBehaviour()
-        {
-            SetBehaviour();
-            if (behaviourTree)
-            {
-                behaviourTree.enabled = true;
-                behaviourTree.Initialize();
-            }
-        }
-
-        public virtual void StopBehaviour()
-        {
-            if (behaviourTree)
-            {
-                behaviourTree.Stop();
-                behaviourTree.enabled = false;
-                behaviourTree.StopAllCoroutines();
-            }
-        }
         #endregion
 
         #region FIGHT

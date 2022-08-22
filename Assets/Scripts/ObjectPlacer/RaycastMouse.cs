@@ -8,7 +8,7 @@ namespace ZombieDiorama.ObjectPlacer
     public class RaycastMouse : MonoBehaviour
     {
         private Camera mainCamera;
-        private Vector3 currentPoint;
+        private Vector3 currentPoint; //TODO: remover
 
         private RaycastHit hit;
         private Ray ray;

@@ -11,6 +11,8 @@ using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level
 {
+    // TODO: Usar o observer para melhorar a contagem de mortes
+    // TODO: Separar ui em outro script
     public class LevelManager : Singleton<LevelManager>
     {
         public int targetFrameRate = 60;

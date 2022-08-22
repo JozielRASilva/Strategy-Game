@@ -34,36 +34,8 @@ namespace ZombieDiorama.Character.AIs
         public EventCaller HealEffect;
 
         #region Base Info
-        protected override void Awake()
-        {
-            TargetController = GetComponent<TargetController>();
-            NavMeshController = GetComponent<NavMeshController>();
-            SquadMember = GetComponent<SquadMember>();
-            ShootHandler = GetComponent<ShootHandler>();
-        }
-
-        protected override void Start()
-        {
-            SetBehaviour();
-        }
-
         public override void SetBehaviour()
         {
-            if (!behaviourTree)
-            {
-                behaviourTree = gameObject.AddComponent<BehaviourTree>();
-            }
-
-            if (!NavMeshController)
-            {
-                NavMeshController = gameObject.AddComponent<NavMeshController>();
-            }
-
-            if (!TargetController)
-            {
-                TargetController = gameObject.AddComponent<TargetController>();
-            }
-
             BTSelector root = new BTSelector();
 
             // SET OBJECT
@@ -88,27 +60,6 @@ namespace ZombieDiorama.Character.AIs
             root.SetNode(branchTeam);
 
             behaviourTree.Build(root);
-        }
-
-
-        public override void RestartBehaviour()
-        {
-            SetBehaviour();
-            if (behaviourTree)
-            {
-                behaviourTree.enabled = true;
-                behaviourTree.Initialize();
-            }
-        }
-
-        public override void StopBehaviour()
-        {
-            if (behaviourTree)
-            {
-                behaviourTree.Stop();
-                behaviourTree.enabled = false;
-                behaviourTree.StopAllCoroutines();
-            }
         }
         #endregion
 

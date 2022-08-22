@@ -19,6 +19,7 @@ namespace ZombieDiorama.UI
         private bool becomeFull = true;
         private bool died = false;
 
+        // TODO: Colocar em um action para não executar direto
         private void Update()
         {
             if (!health) return;
