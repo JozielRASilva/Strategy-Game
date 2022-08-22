@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using ZombieDiorama.Character.Controllers;
 using ZombieDiorama.Character.Behaviours;
 
@@ -9,15 +6,15 @@ namespace ZombieDiorama.Character.AIs
 {
     public class AIBase : MonoBehaviour
     {
-        protected TargetController TargetController;
-        protected NavMeshController NavMeshController;
-        protected BehaviourTree behaviourTree;
+        protected TargetController _targetController;
+        protected NavMeshController _navMeshController;
+        protected BehaviourTree _behaviourTree;
 
         #region  SETUP
         protected virtual void Awake()
         {
-            TargetController = GetComponent<TargetController>();
-            NavMeshController = GetComponent<NavMeshController>();
+            _targetController = GetComponent<TargetController>();
+            _navMeshController = GetComponent<NavMeshController>();
         }
 
         protected virtual void Start()
@@ -28,19 +25,19 @@ namespace ZombieDiorama.Character.AIs
 
         protected virtual void Initialize()
         {
-            if (!behaviourTree)
+            if (!_behaviourTree)
             {
-                behaviourTree = gameObject.AddComponent<BehaviourTree>();
+                _behaviourTree = gameObject.AddComponent<BehaviourTree>();
             }
 
-            if (!NavMeshController)
+            if (!_navMeshController)
             {
-                NavMeshController = gameObject.AddComponent<NavMeshController>();
+                _navMeshController = gameObject.AddComponent<NavMeshController>();
             }
 
-            if (!TargetController)
+            if (!_targetController)
             {
-                TargetController = gameObject.AddComponent<TargetController>();
+                _targetController = gameObject.AddComponent<TargetController>();
             }
         }
 
@@ -54,20 +51,20 @@ namespace ZombieDiorama.Character.AIs
         public virtual void RestartBehaviour()
         {
             SetBehaviour();
-            if (behaviourTree)
+            if (_behaviourTree)
             {
-                behaviourTree.enabled = true;
-                behaviourTree.Initialize();
+                _behaviourTree.enabled = true;
+                _behaviourTree.Initialize();
             }
         }
 
         public virtual void StopBehaviour()
         {
-            if (behaviourTree)
+            if (_behaviourTree)
             {
-                behaviourTree.Stop();
-                behaviourTree.enabled = false;
-                behaviourTree.StopAllCoroutines();
+                _behaviourTree.Stop();
+                _behaviourTree.enabled = false;
+                _behaviourTree.StopAllCoroutines();
             }
         }
     }

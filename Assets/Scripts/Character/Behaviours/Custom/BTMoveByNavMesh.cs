@@ -6,17 +6,16 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveByNavMesh : BTNode
     {
-
-        private TargetController targetController;
-        private float speed = 1;
-        private float distance = 1;
+        private TargetController _targetController;
+        private float _speed = 1;
+        private float _distance = 1;
         private NavMeshController NavMeshController;
 
         public BTMoveByNavMesh(NavMeshController _navMeshController, TargetController _targetController, float _speed, float _distance)
         {
-            targetController = _targetController;
-            speed = _speed;
-            distance = _distance;
+            this._targetController = _targetController;
+            this._speed = _speed;
+            this._distance = _distance;
             NavMeshController = _navMeshController;
         }
 
@@ -29,7 +28,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
             while (true)
             {
-                target = targetController.GetTarget();
+                target = _targetController.GetTarget();
 
                 if (!target || !NavMeshController)
                 {
@@ -37,9 +36,9 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                     break;
                 }
 
-                if (Vector3.Distance(npc.position, target.position) < distance) break;
+                if (Vector3.Distance(npc.position, target.position) < _distance) break;
 
-                NavMeshController.SetTarget(target, speed, distance);
+                NavMeshController.SetTarget(target, _speed, _distance);
 
                 yield return null;
             }

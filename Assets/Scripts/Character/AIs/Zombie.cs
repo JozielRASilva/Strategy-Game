@@ -47,38 +47,38 @@ namespace ZombieDiorama.Character.AIs
         public override void SetBehaviour()
         {
             BTParallelSelector parallelSelectorCheckingMove = new BTParallelSelector();
-            parallelSelectorCheckingMove.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, speed, distanceToTarget));
-            parallelSelectorCheckingMove.SetNode(new BTChasingSoldier(TargetController, minDistance, maxDistance));
+            parallelSelectorCheckingMove.SetNode(new BTMoveByNavMesh(_navMeshController, _targetController, speed, distanceToTarget));
+            parallelSelectorCheckingMove.SetNode(new BTChasingSoldier(_targetController, minDistance, maxDistance));
 
             BTSequence sequenceChasing = new BTSequence();
             sequenceChasing.SetNode(parallelSelectorCheckingMove);
             sequenceChasing.SetNode(new BTZombieAttack(hitboxes, coolDown, OnAttackEvent));
 
             BTSequence sequenceSeeTarget = new BTSequence();
-            sequenceSeeTarget.SetNode(new BTSeeSoldier(TargetController, distanceView));
+            sequenceSeeTarget.SetNode(new BTSeeSoldier(_targetController, distanceView));
             sequenceSeeTarget.SetNode(new BTCallHorde(callCounter, timeCalling, OnCallEvent));
             sequenceSeeTarget.SetNode(sequenceChasing);
 
             BTInverter inverter = new BTInverter();
-            inverter.SetNode(new BTWasCalled(TargetController, listeningField));
+            inverter.SetNode(new BTWasCalled(_targetController, listeningField));
 
             BTParallelSelector parallelSelectorUpdateTarget = new BTParallelSelector();
             parallelSelectorUpdateTarget.SetNode(inverter);
-            parallelSelectorUpdateTarget.SetNode(new BTSeeSoldier(TargetController, distanceView));
-            parallelSelectorUpdateTarget.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, speed, distanceToZombie));
+            parallelSelectorUpdateTarget.SetNode(new BTSeeSoldier(_targetController, distanceView));
+            parallelSelectorUpdateTarget.SetNode(new BTMoveByNavMesh(_navMeshController, _targetController, speed, distanceToZombie));
 
             BTSequence sequenceCalled = new BTSequence();
-            sequenceCalled.SetNode(new BTWasCalled(TargetController, listeningField));
+            sequenceCalled.SetNode(new BTWasCalled(_targetController, listeningField));
             sequenceCalled.SetNode(parallelSelectorUpdateTarget);
 
             BTSequence sequencePatrol = new BTSequence();
-            sequencePatrol.SetNode(new BTCheckWaypoint(distanceToWaypoint, TargetController));
-            sequencePatrol.SetNode(new BTRealignWaypoint(waypoints, TargetController));
+            sequencePatrol.SetNode(new BTCheckWaypoint(distanceToWaypoint, _targetController));
+            sequencePatrol.SetNode(new BTRealignWaypoint(waypoints, _targetController));
 
             BTParallelSelector parallelSelectorChecking = new BTParallelSelector();
-            parallelSelectorChecking.SetNode(new BTSeeSoldier(TargetController, distanceView));
-            parallelSelectorChecking.SetNode(new BTWasCalled(TargetController, listeningField));
-            parallelSelectorChecking.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, speed, distanceToTarget));
+            parallelSelectorChecking.SetNode(new BTSeeSoldier(_targetController, distanceView));
+            parallelSelectorChecking.SetNode(new BTWasCalled(_targetController, listeningField));
+            parallelSelectorChecking.SetNode(new BTMoveByNavMesh(_navMeshController, _targetController, speed, distanceToTarget));
 
             BTSelector selectorRoutine = new BTSelector();
             selectorRoutine.SetNode(sequencePatrol);
@@ -89,7 +89,7 @@ namespace ZombieDiorama.Character.AIs
             selectorStart.SetNode(sequenceCalled);
             selectorStart.SetNode(selectorRoutine);
 
-            behaviourTree.Build(selectorStart);
+            _behaviourTree.Build(selectorStart);
         }
 
         private void OnDrawGizmos()

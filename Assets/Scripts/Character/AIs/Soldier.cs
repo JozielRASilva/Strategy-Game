@@ -69,7 +69,7 @@ namespace ZombieDiorama.Character.AIs
             root.SetNode(fight);
             root.SetNode(branchTeam);
 
-            behaviourTree.Build(root);
+            _behaviourTree.Build(root);
         }
 
         #endregion
@@ -78,22 +78,22 @@ namespace ZombieDiorama.Character.AIs
         public virtual BTNode GetBranchFight()
         {
             BTParallelSelector parallel = new BTParallelSelector();
-            parallel.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, Speed, rangeToSeeTarget.x));
-            parallel.SetNode(new BTCloseToTarget(TargetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
+            parallel.SetNode(new BTMoveByNavMesh(_navMeshController, _targetController, Speed, rangeToSeeTarget.x));
+            parallel.SetNode(new BTCloseToTarget(_targetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
             parallel.SetNode(calledToRegroup);
 
             BTInverter inverter = new BTInverter();
-            BTSeeZombie seeZombie = new BTSeeZombie(TargetController, rangeToSeeTarget.y);
+            BTSeeZombie seeZombie = new BTSeeZombie(_targetController, rangeToSeeTarget.y);
             inverter.SetNode(seeZombie);
             parallel.SetNode(inverter);
 
             BTSequence sequence_1 = new BTSequence();
             sequence_1.SetNode(parallel);
-            sequence_1.SetNode(new BTSoldierAttack(TargetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
+            sequence_1.SetNode(new BTSoldierAttack(_targetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
 
             BTSequence sequence = new BTSequence();
-            sequence.SetNode(new BTSeeZombie(TargetController, rangeToSeeTarget.y));
+            sequence.SetNode(new BTSeeZombie(_targetController, rangeToSeeTarget.y));
             sequence.SetNode(sequence_1);
 
             BTSelector selector = new BTSelector();
@@ -109,15 +109,15 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence_regroup = new BTSequence();
 
             #region Cheking
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
-            BTUpdateRegroup updateRegroup = new BTUpdateRegroup(TargetController);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
+            BTUpdateRegroup updateRegroup = new BTUpdateRegroup(_targetController);
             #endregion
 
             #region Moving
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTNextToTarget nextToTarget = new BTNextToTarget(TargetController, distanceToRegroup);
-            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToRegroup);
+            BTNextToTarget nextToTarget = new BTNextToTarget(_targetController, distanceToRegroup);
+            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, distanceToRegroup);
 
             parallelSelector_1.SetNode(nextToTarget);
             parallelSelector_1.SetNode(moveToSet);
@@ -166,18 +166,18 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence = new BTSequence();
 
             BTIsLeader isLeader = new BTIsLeader(SquadMember);
-            BTThereIs thereIs = new BTThereIs(TargetController, target);
+            BTThereIs thereIs = new BTThereIs(_targetController, target);
 
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTSee see = new BTSee(TargetController, target, rangeToSeeTarget.y);
-            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, rangeToSeeTarget.x);
+            BTSee see = new BTSee(_targetController, target, rangeToSeeTarget.y);
+            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, rangeToSeeTarget.x);
 
             parallelSelector_1.SetNode(see);
             parallelSelector_1.SetNode(moveTo);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
             parallelSelector_1.SetNode(thereIsObjectToSet);
             parallelSelector_1.SetNode(calledToRegroup);
 
@@ -196,21 +196,21 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence_2 = new BTSequence();
 
             BTHasLeader hasLeader = new BTHasLeader(SquadMember);
-            BTUpdateLeader updateLeader = new BTUpdateLeader(SquadMember, TargetController);
+            BTUpdateLeader updateLeader = new BTUpdateLeader(SquadMember, _targetController);
             sequence_2.SetNode(hasLeader);
             sequence_2.SetNode(updateLeader);
 
             BTParallelSelector parallelSelector_2 = new BTParallelSelector();
             sequence_2.SetNode(parallelSelector_2);
 
-            BTSee see_2 = new BTSee(TargetController, target, distanceToTarget, true);
-            BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToLeader);
+            BTSee see_2 = new BTSee(_targetController, target, distanceToTarget, true);
+            BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, distanceToLeader);
 
             parallelSelector_2.SetNode(see_2);
             parallelSelector_2.SetNode(moveLeader);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
             parallelSelector_2.SetNode(thereIsObjectToSet);
             parallelSelector_2.SetNode(calledToRegroup);
 
@@ -224,18 +224,18 @@ namespace ZombieDiorama.Character.AIs
         public BTNode GetBranchWithoutLeader()
         {
             BTSequence sequence = new BTSequence();
-            BTThereIs thereIs = new BTThereIs(TargetController, target);
+            BTThereIs thereIs = new BTThereIs(_targetController, target);
 
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTSee see = new BTSee(TargetController, target, rangeToSeeTarget.y);
-            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, rangeToSeeTarget.x);
+            BTSee see = new BTSee(_targetController, target, rangeToSeeTarget.y);
+            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, rangeToSeeTarget.x);
 
             parallelSelector_1.SetNode(see);
             parallelSelector_1.SetNode(moveTo);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
             parallelSelector_1.SetNode(thereIsObjectToSet);
             parallelSelector_1.SetNode(calledToRegroup);
 

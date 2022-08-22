@@ -7,30 +7,31 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTSee : BTNode
     {
-        private TargetController targetController;
-        public string target;
-        public float rangeToCheckEnemy = 5;
-        private bool cleanTarget = false;
+        public string Target;
+        public float RangeToCheckEnemy = 5;
+
+        private TargetController _targetController;
+        private bool _cleanTarget = false;
 
         public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy)
         {
-            target = _target;
-            rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
+            Target = _target;
+            RangeToCheckEnemy = _rangeToCheckEnemy;
+            this._targetController = _targetController;
         }
 
         public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
         {
-            target = _target;
-            rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
-            cleanTarget = _cleanTarget;
+            Target = _target;
+            RangeToCheckEnemy = _rangeToCheckEnemy;
+            this._targetController = _targetController;
+            this._cleanTarget = _cleanTarget;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             status = Status.RUNNING;
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(target);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(Target);
             List<GameObject> enemiesThatCanSee = new List<GameObject>();
 
             foreach (var enemy in enemies)
@@ -38,7 +39,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 if (enemy == bt.gameObject) continue;
                 float distance = Vector3.Distance(enemy.transform.position, bt.transform.position);
 
-                if (distance < rangeToCheckEnemy)
+                if (distance < RangeToCheckEnemy)
                 {
                     enemiesThatCanSee.Add(enemy);
                     status = Status.SUCCESS;
@@ -47,16 +48,16 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
             if (status.Equals(Status.SUCCESS))
             {
-                if (targetController)
-                    if (!cleanTarget)
+                if (_targetController)
+                    if (!_cleanTarget)
                     {
                         Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
                         if (selectedTarget)
-                            targetController.SetTarget(selectedTarget);
+                            _targetController.SetTarget(selectedTarget);
                     }
                     else
                     {
-                        targetController.SetTarget(null);
+                        _targetController.SetTarget(null);
                     }
             }
 
