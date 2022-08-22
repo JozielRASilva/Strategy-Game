@@ -7,20 +7,20 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTSetObject : BTNode
     {
-        private float _delayToSet;
-        private EventCaller _onSetting;
-        private EventCaller _onSet;
+        private float delayToSet;
+        private EventCaller OnSetting;
+        private EventCaller OnSet;
 
-        public BTSetObject(float delayToSet, EventCaller onSetting, EventCaller onSet)
+        public BTSetObject(float _delayToSet, EventCaller _OnSetting, EventCaller _OnSet)
         {
-            _delayToSet = delayToSet;
-            _onSetting = onSetting;
-            _onSet = onSet;
+            delayToSet = _delayToSet;
+            OnSetting = _OnSetting;
+            OnSet = _OnSet;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
 
             if (!ObjectSetterManager.Instance)
                 yield break;
@@ -29,24 +29,24 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (objectToSet != null)
             {
-                if (_onSetting)
-                    _onSetting.FirstCall();
+                if (OnSetting)
+                    OnSetting.FirstCall();
 
-                yield return new WaitForSeconds(_delayToSet);
+                yield return new WaitForSeconds(delayToSet);
 
-                if (_onSetting)
-                    _onSetting.SecondCall();
+                if (OnSetting)
+                    OnSetting.SecondCall();
 
-                if (_onSet)
-                    _onSet.FirstCall();
+                if (OnSet)
+                    OnSet.FirstCall();
 
                 ObjectSetterManager.Instance.SetObject(objectToSet);
 
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             else
             {
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             yield break;
         }

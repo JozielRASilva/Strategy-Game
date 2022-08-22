@@ -30,7 +30,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(Target);
             List<GameObject> enemiesThatCanSee = new List<GameObject>();
 
@@ -42,11 +42,11 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 if (distance < RangeToCheckEnemy)
                 {
                     enemiesThatCanSee.Add(enemy);
-                    CurrentStatus = Status.SUCCESS;
+                    status = Status.SUCCESS;
                 }
             }
 
-            if (CurrentStatus.Equals(Status.SUCCESS))
+            if (status.Equals(Status.SUCCESS))
             {
                 if (_targetController)
                     if (!_cleanTarget)
@@ -61,8 +61,8 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                     }
             }
 
-            if (CurrentStatus.Equals(Status.RUNNING))
-                CurrentStatus = Status.FAILURE;
+            if (status.Equals(Status.RUNNING))
+                status = Status.FAILURE;
 
             yield break;
         }

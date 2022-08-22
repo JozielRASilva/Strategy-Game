@@ -8,7 +8,7 @@ namespace ZombieDiorama.Character.Behaviours
     {
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
 
             Dictionary<BTNode, Coroutine> coroutines = new Dictionary<BTNode, Coroutine>();
             foreach (var node in children)
@@ -16,32 +16,32 @@ namespace ZombieDiorama.Character.Behaviours
                 coroutines.Add(node, bt.StartCoroutine(node.Run(bt)));
             }
 
-            while (CurrentStatus.Equals(Status.RUNNING))
+            while (status.Equals(Status.RUNNING))
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
 
                 foreach (var node in children)
                 {
-                    if (node.CurrentStatus.Equals(Status.RUNNING)) CurrentStatus = Status.RUNNING;
+                    if (node.status.Equals(Status.RUNNING)) status = Status.RUNNING;
 
-                    if (node.CurrentStatus.Equals(Status.SUCCESS))
+                    if (node.status.Equals(Status.SUCCESS))
                     {
-                        CurrentStatus = Status.SUCCESS;
+                        status = Status.SUCCESS;
                         break;
                     }
                 }
 
-                if (CurrentStatus.Equals(Status.RUNNING))
+                if (status.Equals(Status.RUNNING))
                 {
                     foreach (var node in children)
                     {
-                        if (node.CurrentStatus.Equals(Status.FAILURE))
+                        if (node.status.Equals(Status.FAILURE))
                         {
                             coroutines[node] = bt.StartCoroutine(node.Run(bt));
                         }
                     }
                 }
-                else if (CurrentStatus.Equals(Status.SUCCESS))
+                else if (status.Equals(Status.SUCCESS))
                 {
                     foreach (var pair in coroutines)
                     {

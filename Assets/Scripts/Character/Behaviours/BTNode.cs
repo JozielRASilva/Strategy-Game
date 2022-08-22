@@ -7,17 +7,17 @@ namespace ZombieDiorama.Character.Behaviours
     public abstract class BTNode
     {
         public enum Status { RUNNING, SUCCESS, FAILURE }
-        public Status CurrentStatus;
+        public Status status;
         public List<BTNode> children = new List<BTNode>();
         public abstract IEnumerator Run(BehaviourTree bt);
 
         public void Print(string text = "")
         {
             string color = "lightblue";
-            if (CurrentStatus == Status.SUCCESS) color = "green";
-            if (CurrentStatus == Status.SUCCESS) color = "orange";
+            if (status == Status.SUCCESS) color = "green";
+            if (status == Status.SUCCESS) color = "orange";
 
-            Debug.Log($"<color={color}> {this.ToString()} : {CurrentStatus.ToString()} - {text} </color>");
+            Debug.Log($"<color={color}> {this.ToString()} : {status.ToString()} - {text} </color>");
         }
 
         public void SetNode(BTNode node)

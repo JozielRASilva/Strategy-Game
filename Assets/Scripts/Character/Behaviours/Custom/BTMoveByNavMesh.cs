@@ -21,7 +21,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
 
             Transform npc = bt.transform;
             Transform target = null;
@@ -32,7 +32,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
                 if (!target || !NavMeshController)
                 {
-                    CurrentStatus = Status.FAILURE;
+                    status = Status.FAILURE;
                     break;
                 }
 
@@ -45,8 +45,8 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
             NavMeshController.StopMove();
 
-            if (CurrentStatus.Equals(Status.RUNNING))
-                CurrentStatus = Status.SUCCESS;
+            if (status.Equals(Status.RUNNING))
+                status = Status.SUCCESS;
         }
     }
 }

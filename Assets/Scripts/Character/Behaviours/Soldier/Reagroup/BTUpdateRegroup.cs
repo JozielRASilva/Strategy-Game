@@ -7,16 +7,16 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateRegroup : BTNode
     {
-        private TargetController _targetController;
+        private TargetController targetController;
 
-        public BTUpdateRegroup(TargetController targetController)
+        public BTUpdateRegroup(TargetController _targetController)
         {
-            _targetController = targetController;
+            targetController = _targetController;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.FAILURE;
+            status = Status.FAILURE;
 
             if (!RegroupController.Instance)
                 yield break;
@@ -25,9 +25,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (regroupPoint != null)
             {
-                _targetController.SetTarget(regroupPoint);
+                targetController.SetTarget(regroupPoint);
 
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             yield break;
         }

@@ -6,11 +6,11 @@ namespace ZombieDiorama.Character.Behaviours.Decorators
     {
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
 
             if (children.Count == 0)
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
                 yield break;
             }
 
@@ -18,18 +18,18 @@ namespace ZombieDiorama.Character.Behaviours.Decorators
 
             yield return bt.StartCoroutine(node.Run(bt));
 
-            if (node.CurrentStatus.Equals(Status.SUCCESS))
+            if (node.status.Equals(Status.SUCCESS))
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
                 yield break;
             }
-            else if (node.CurrentStatus.Equals(Status.FAILURE))
+            else if (node.status.Equals(Status.FAILURE))
             {
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
                 yield break;
             }
 
-            CurrentStatus = Status.FAILURE;
+            status = Status.FAILURE;
         }
     }
 }

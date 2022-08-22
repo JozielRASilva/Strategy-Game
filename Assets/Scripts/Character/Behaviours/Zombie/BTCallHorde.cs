@@ -6,34 +6,34 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTCallHorde : BTNode
     {
-        private GameObject _callCounter;
-        private float _timeCalling;
-        private EventCaller _eventCaller;
-        private float _timeToEffectAgain;
-        private float _timeStamp;
+        private GameObject callCounter;
+        private float timeCalling;
+        private EventCaller eventCaller;
+        private float timeToEffectAgain;
+        private float timeStamp;
 
-        public BTCallHorde(GameObject callCounter, float timeCalling, EventCaller eventCaller)
+        public BTCallHorde(GameObject _callCounter, float _timeCalling, EventCaller _eventCaller)
         {
-            _callCounter = callCounter;
-            _timeCalling = timeCalling;
-            _eventCaller = eventCaller;
-            _timeToEffectAgain = this._timeCalling * 100;
+            callCounter = _callCounter;
+            timeCalling = _timeCalling;
+            eventCaller = _eventCaller;
+            timeToEffectAgain = timeCalling * 100;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            _callCounter.SetActive(true);
+            callCounter.SetActive(true);
 
-            if (_timeStamp < Time.time)
+            if (timeStamp < Time.time)
             {
-                _eventCaller.FirstCall();
-                _timeStamp = _timeToEffectAgain + Time.deltaTime;
+                eventCaller.FirstCall();
+                timeStamp = timeToEffectAgain + Time.deltaTime;
             }
 
-            yield return new WaitForSeconds(_timeCalling);
+            yield return new WaitForSeconds(timeCalling);
 
-            _callCounter.SetActive(false);
-            CurrentStatus = Status.SUCCESS;
+            callCounter.SetActive(false);
+            status = Status.SUCCESS;
 
             yield break;
         }

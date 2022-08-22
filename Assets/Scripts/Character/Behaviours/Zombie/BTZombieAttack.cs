@@ -6,28 +6,28 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTZombieAttack : BTNode
     {
-        private GameObject _hitboxes;
-        private float _coolDown;
-        private EventCaller _eventCaller;
+        GameObject hitboxes;
+        float coolDown;
+        private EventCaller eventCaller;
 
-        public BTZombieAttack(GameObject hitboxes, float coolDown, EventCaller eventCaller)
+        public BTZombieAttack(GameObject _hitboxes, float _coolDown, EventCaller _eventCaller)
         {
-            _hitboxes = hitboxes;
-            _coolDown = coolDown;
-            _eventCaller = eventCaller;
+            hitboxes = _hitboxes;
+            coolDown = _coolDown;
+            eventCaller = _eventCaller;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            yield return new WaitForSeconds(_coolDown);
+            yield return new WaitForSeconds(coolDown);
 
-            _eventCaller.FirstCall();
-            _hitboxes.SetActive(true);
+            eventCaller.FirstCall();
+            hitboxes.SetActive(true);
 
-            yield return new WaitForSeconds(_coolDown);
+            yield return new WaitForSeconds(coolDown);
 
-            _hitboxes.SetActive(false);
-            CurrentStatus = Status.SUCCESS;
+            hitboxes.SetActive(false);
+            status = Status.SUCCESS;
 
             yield break;
         }

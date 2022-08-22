@@ -1,67 +1,70 @@
 using UnityEngine;
+using ZombieDiorama;
 namespace ZombieDiorama.Character.Controllers.Regroup
 {
     public class RegroupController : Utilities.Patterns.Singleton<RegroupController>
     {
 
         public Vector3 RegroupPoint;
-        public int CurrentRegroupId = -1;
+        public int currentRegroupId = -1;
+
         public bool TimeLimitToRegroup = false;
-        public float RegroupTime = 10;
+        public float regroupTime = 10;
         public float TimeStamp;
-        public Transform PointReference;
+
+        public Transform pointReference;
 
         protected override void Awake()
         {
             base.Awake();
 
-            CurrentRegroupId = -1;
+            currentRegroupId = -1;
         }
 
         public void SetPoint(Vector3 position)
         {
             RegroupPoint = position;
 
-            CurrentRegroupId++;
+            currentRegroupId++;
 
-            TimeStamp = Time.time + RegroupTime;
+            TimeStamp = Time.time + regroupTime;
         }
 
         private void Update()
         {
             if (CanRegroup())
             {
-                PointReference.gameObject.SetActive(true);
+                pointReference.gameObject.SetActive(true);
 
-                PointReference.position = RegroupPoint;
+                pointReference.position = RegroupPoint;
             }
             else
             {
-                PointReference.gameObject.SetActive(false);
+                pointReference.gameObject.SetActive(false);
             }
         }
 
         public Transform GetRegroupPoint()
         {
-            PointReference.position = RegroupPoint;
-            return PointReference;
+            pointReference.position = RegroupPoint;
+            return pointReference;
         }
 
         public int GetRegroupId()
         {
-            return CurrentRegroupId;
+            return currentRegroupId;
         }
 
         public bool CanRegroup(int id = -1)
         {
-            if (CurrentRegroupId < 0) return false;
+            if (currentRegroupId < 0) return false;
 
             if (TimeLimitToRegroup)
             {
                 if (Time.time > TimeStamp) return false;
             }
 
-            if (id != CurrentRegroupId) return true;
+            if (id != currentRegroupId) return true;
 
             return false;
         }

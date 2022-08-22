@@ -18,10 +18,10 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
             if (TargetTag == "")
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
                 yield break;
             }
 
@@ -32,11 +32,11 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 {
                     _targetController.SetTarget(target);
                 }
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             else
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
             }
             yield break;
         }

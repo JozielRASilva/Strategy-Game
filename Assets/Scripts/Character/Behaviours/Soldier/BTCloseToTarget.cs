@@ -6,39 +6,39 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTCloseToTarget : BTNode
     {
-        private TargetController _targetZombie;
-        private float _minDistance;
-        private float _maxDistance;
+        private TargetController targetZombie;
+        private float minDistance;
+        private float maxDistance;
 
-        public BTCloseToTarget(TargetController targetZombie, float minDistance, float maxDistance)
+        public BTCloseToTarget(TargetController _targetZombie, float _minDistance, float _maxDistance)
         {
-            _targetZombie = targetZombie;
-            _minDistance = minDistance;
-            _maxDistance = maxDistance;
+            targetZombie = _targetZombie;
+            minDistance = _minDistance;
+            maxDistance = _maxDistance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.FAILURE;
+            status = Status.FAILURE;
 
-            if (_targetZombie)
+            if (targetZombie)
             {
-                if (_targetZombie.GetTarget())
+                if (targetZombie.GetTarget())
                     yield break;
 
-                float distance = Vector3.Distance(bt.transform.position, _targetZombie.GetTarget().position);
+                float distance = Vector3.Distance(bt.transform.position, targetZombie.GetTarget().position);
 
-                if (distance > _maxDistance)
+                if (distance > maxDistance)
                 {
-                    _targetZombie.SetTarget(null);
-                    CurrentStatus = Status.SUCCESS;
+                    targetZombie.SetTarget(null);
+                    status = Status.SUCCESS;
                     yield break;
                 }
 
-                if (distance < _minDistance)
+                if (distance < minDistance)
                 {
-                    _targetZombie.SetTarget(null);
-                    CurrentStatus = Status.SUCCESS;
+                    targetZombie.SetTarget(null);
+                    status = Status.SUCCESS;
                     yield break;
                 }
             }

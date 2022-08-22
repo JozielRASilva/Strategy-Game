@@ -7,68 +7,68 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTSoldierAttack : BTNode
     {
-        private TargetController _targetZombie;
-        private ShootHandler _shootHandler;
-        private float _coolDown;
-        private float _damping;
-        private string _targetTag;
-        private EventCaller _eventCaller;
+        private TargetController targetZombie;
+        private ShootHandler shootHandler;
+        private float coolDown;
+        private float damping;
+        private string targetTag;
+        private EventCaller eventCaller;
 
-        public BTSoldierAttack(TargetController targetZombie, float coolDown, ShootHandler shootHandler, float damping, string targetTag)
+        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag)
         {
-            _targetZombie = targetZombie;
-            _coolDown = coolDown;
-            _shootHandler = shootHandler;
-            _targetTag = targetTag;
-            _damping = damping;
+            targetZombie = _targetZombie;
+            coolDown = _coolDown;
+            shootHandler = _shootHandler;
+            targetTag = _targetTag;
+            damping = _damping;
         }
 
-        public BTSoldierAttack(TargetController targetZombie, float coolDown, ShootHandler shootHandler, float damping, string targetTag, EventCaller eventCaller)
+        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _eventCaller)
         {
-            _targetZombie = targetZombie;
-            _coolDown = coolDown;
-            _shootHandler = shootHandler;
-            _targetTag = targetTag;
-            _damping = damping;
-            _eventCaller = eventCaller;
+            targetZombie = _targetZombie;
+            coolDown = _coolDown;
+            shootHandler = _shootHandler;
+            targetTag = _targetTag;
+            damping = _damping;
+            eventCaller = _eventCaller;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
 
             GameObject selectedEnemy = GetTarget(bt.transform);
 
             if (selectedEnemy)
             {
-                float timeStamp = Time.time + _coolDown;
+                float timeStamp = Time.time + coolDown;
                 while (timeStamp > Time.time)
                 {
                     var lookPos = selectedEnemy.transform.position - bt.transform.position;
                     lookPos.y = 0;
                     var rotation = Quaternion.LookRotation(lookPos);
-                    bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * _damping);
+                    bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
 
                     yield return null;
                 }
 
-                _shootHandler.Execute();
+                shootHandler.Execute();
 
-                if (_eventCaller)
-                    _eventCaller.FirstCall();
+                if (eventCaller)
+                    eventCaller.FirstCall();
 
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             else
             {
-                CurrentStatus = Status.FAILURE;
+                status = Status.FAILURE;
             }
         }
 
         public GameObject GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(_targetTag);
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
             float lastDistance = 0;
 
             foreach (var _target in targets)

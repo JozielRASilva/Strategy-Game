@@ -6,25 +6,25 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTObjectToSet : BTNode
     {
-        private SquadMember _member;
+        SquadMember member;
      
-        public BTObjectToSet(SquadMember member)
+        public BTObjectToSet(SquadMember _member)
         {
-            _member = member;
+            member = _member;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.FAILURE;
+            status = Status.FAILURE;
 
-            if (!ObjectSetterManager.Instance || !_member.ExtraMember)
+            if (!ObjectSetterManager.Instance || !member.ExtraMember)
                 yield break;
 
             ObjectToSet objectToSet = ObjectSetterManager.Instance.GetObjectToSet(bt.gameObject);
 
             if (objectToSet != null)
             {
-                CurrentStatus = Status.SUCCESS;
+                status = Status.SUCCESS;
             }
             yield break;
         }

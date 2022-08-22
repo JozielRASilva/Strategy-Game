@@ -6,18 +6,18 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTSeeSoldier : BTNode
     {
-        private TargetController _targetSoldier;
-        private float _distanceView;
+        private TargetController targetSoldier;
+        private float distanceView;
 
-        public BTSeeSoldier(TargetController targetSoldier, float distanceView)
+        public BTSeeSoldier(TargetController _targetSoldier, float _distanceView)
         {
-            _targetSoldier = targetSoldier;
-            _distanceView = distanceView;
+            targetSoldier = _targetSoldier;
+            distanceView = _distanceView;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.FAILURE;
+            status = Status.FAILURE;
 
             GameObject[] soldiers = GameObject.FindGameObjectsWithTag("Soldier");
 
@@ -25,10 +25,10 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
             {
                 if (bt.gameObject == soldier) continue;
                 if (!soldier.activeSelf) continue;
-                if (Vector3.Distance(bt.transform.position, soldier.transform.position) < _distanceView)
+                if (Vector3.Distance(bt.transform.position, soldier.transform.position) < distanceView)
                 {
-                    _targetSoldier.SetTarget(soldier.transform);
-                    CurrentStatus = Status.SUCCESS;
+                    targetSoldier.SetTarget(soldier.transform);
+                    status = Status.SUCCESS;
                     break;
                 }
             }

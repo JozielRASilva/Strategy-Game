@@ -18,7 +18,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            CurrentStatus = Status.RUNNING;
+            status = Status.RUNNING;
             Transform npc = bt.transform;
             Transform target = GetTarget(npc);
 
@@ -26,7 +26,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
             {
                 if (!target)
                 {
-                    CurrentStatus = Status.FAILURE;
+                    status = Status.FAILURE;
                     break;
                 }
 
@@ -36,8 +36,8 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 npc.position += npc.forward * Time.deltaTime * Speed;
                 yield return null;
             }
-            if (CurrentStatus.Equals(Status.RUNNING))
-                CurrentStatus = Status.SUCCESS;
+            if (status.Equals(Status.RUNNING))
+                status = Status.SUCCESS;
         }
 
         public Transform GetTarget(Transform current)
