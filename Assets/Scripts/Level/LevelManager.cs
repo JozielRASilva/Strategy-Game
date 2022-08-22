@@ -109,7 +109,7 @@ namespace ZombieDiorama.Level
 
         private void UpdateCharacters()
         {
-            AllCharacters = FindObjectsOfType<Health>(true).ToList();
+            AllCharacters = FindObjectsOfType<Health>().ToList();
             Zombies = AllCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag));
             Soldiers = AllCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag));
             UpdateUITotal();

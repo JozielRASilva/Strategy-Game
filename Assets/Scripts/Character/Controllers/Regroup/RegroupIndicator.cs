@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using ZombieDiorama.ObjectPlacer;
+using ZombieDiorama.Utilities.Patterns;
+using System.Collections.Generic;
 
 namespace ZombieDiorama.Character.Controllers.Regroup
 {
@@ -12,8 +14,14 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         [Title("Enable")]
         public bool startActivated = true;
+        public bool AlwaysActivated = false;
+
+        [Title("Observer Events")]
+        public List<ObserverEvent> EventsToLock = new List<ObserverEvent>();
+        public List<ObserverEvent> EventsToUnLock = new List<ObserverEvent>();
 
         private bool activated = true;
+        private bool locked = false;
 
         private RaycastMouse raycastMouse;
 
@@ -37,17 +45,15 @@ namespace ZombieDiorama.Character.Controllers.Regroup
             raycastMouse = GetComponent<RaycastMouse>();
 
             if (startActivated)
-                Enable();
+                Indicate();
             else
-                Disable();
+                StopIndicate();
         }
 
         private void Update()
         {
-            if (!activated) return;
-
-            if (!raycastMouse) return;
-
+            if (locked || (!activated && !AlwaysActivated) || !raycastMouse)
+                return;
 
             Vector3 point;
             if (raycastMouse.ValidPosition(WhereCanSet))
@@ -57,15 +63,17 @@ namespace ZombieDiorama.Character.Controllers.Regroup
             ShowCanvasFeedback(point);
 
             if (hideWithInvalid && !raycastMouse.ValidPosition(WhereCanSet))
+            {
                 HideCanvasFeedback();
-
+                return;
+            }
 
             lastPoint = point;
 
-            SetObject();
+            IndicatorReadInput();
         }
 
-        private void SetObject()
+        private void IndicatorReadInput()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -73,13 +81,18 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
                 OnSet?.Invoke();
 
-                StopIndicate();
+                if (!AlwaysActivated)
+                    StopIndicate();
 
+                return;
             }
-            else if (Input.GetMouseButtonDown(1))
+
+            if (AlwaysActivated)
+                return;
+
+            if (Input.GetMouseButtonDown(1))
             {
                 OnStopSet?.Invoke();
-
                 StopIndicate();
             }
         }
@@ -102,26 +115,47 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         public void Indicate()
         {
-            Enable();
+            activated = true;
         }
 
         public void StopIndicate()
         {
-            Disable();
-        }
-
-
-        private void Enable()
-        {
-            activated = true;
-
-        }
-
-        private void Disable()
-        {
             activated = false;
-
             HideCanvasFeedback();
+        }
+
+        private void OnEnable()
+        {
+            Observer.Subscribe(ReadEvents);
+        }
+
+        private void OnDisable()
+        {
+            Observer.UnSubscribe(ReadEvents);
+        }
+
+        private void ReadEvents(ObserverEvent eventType, object o = null)
+        {
+            if (EventsToLock.Contains(eventType))
+            {
+                LockIndicator();
+            }
+            else if (EventsToUnLock.Contains(eventType))
+            {
+                UnlockIndicator();
+            }
+        }
+
+        private void UnlockIndicator()
+        {
+            locked = false;
+            Indicate();
+        }
+
+        private void LockIndicator()
+        {
+            locked = true;
+            StopIndicate();
         }
     }
 }

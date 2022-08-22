@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using ZombieDiorama.Utilities.Patterns;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
@@ -32,6 +31,10 @@ namespace ZombieDiorama.ObjectPlacer
         private RaycastMouse raycastMouse;
         private SettableObjectPreview current;
 
+        [Title("Observer events")]
+        public ObserverEvent SettingEvent;
+        public ObserverEvent StopSettingEvent;
+
 
         [Title("Events")]
         public UnityEvent OnSet;
@@ -61,12 +64,16 @@ namespace ZombieDiorama.ObjectPlacer
             SetterActions();
 
             if (raycastMouse.ValidPosition(WhereCanSet))
+            {
                 ShowCanvasFeedback(point);
+            }
             else
+            {
                 HideCanvasFeedback();
+                return;
+            }
 
             SetObject();
-
         }
 
 
@@ -162,11 +169,15 @@ namespace ZombieDiorama.ObjectPlacer
         {
             settable = info;
 
+            Observer.Notify(SettingEvent);
+
             EnableSetter();
         }
 
         public void StopIndicateObjectToSet()
         {
+            Observer.Notify(StopSettingEvent);
+
             DisableSetter();
         }
 
