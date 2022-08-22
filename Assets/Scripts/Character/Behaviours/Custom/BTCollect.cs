@@ -5,13 +5,13 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTCollect : BTNode
     {
-        public string Target;
-        public float Distance = 1;
+        public string target;
+        public float distance = 1;
 
         public BTCollect(string _target, float _distance)
         {
-            Target = _target;
-            Distance = _distance;
+            target = _target;
+            distance = _distance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
@@ -19,11 +19,11 @@ namespace ZombieDiorama.Character.Behaviours.Custom
             status = Status.FAILURE;
 
             Transform npc = bt.transform;
-            GameObject[] items = GameObject.FindGameObjectsWithTag(Target);
+            GameObject[] items = GameObject.FindGameObjectsWithTag(target);
 
             foreach (GameObject item in items)
             {
-                if (Vector3.Distance(npc.position, item.transform.position) < Distance)
+                if (Vector3.Distance(npc.position, item.transform.position) < distance)
                 {
                     GameObject.Destroy(item);
                     status = Status.SUCCESS;

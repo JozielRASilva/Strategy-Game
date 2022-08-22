@@ -5,15 +5,15 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveTo : BTNode
     {
-        public string Target;
-        public float Speed = 1;
-        public float Distance = 1;
+        public string target;
+        public float speed = 1;
+        public float distance = 1;
 
         public BTMoveTo(string _target, float _speed, float _distance)
         {
-            Target = _target;
-            Speed = _speed;
-            Distance = _distance;
+            target = _target;
+            speed = _speed;
+            distance = _distance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
@@ -30,10 +30,10 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                     break;
                 }
 
-                if (Vector3.Distance(npc.position, target.position) < Distance) break;
+                if (Vector3.Distance(npc.position, target.position) < distance) break;
 
                 npc.LookAt(target);
-                npc.position += npc.forward * Time.deltaTime * Speed;
+                npc.position += npc.forward * Time.deltaTime * speed;
                 yield return null;
             }
             if (status.Equals(Status.RUNNING))
@@ -43,7 +43,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
         public Transform GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(Target);
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(target);
             float lastDistance = 0;
 
             foreach (var _target in targets)

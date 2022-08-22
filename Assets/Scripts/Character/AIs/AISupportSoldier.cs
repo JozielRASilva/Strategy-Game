@@ -15,20 +15,20 @@ namespace ZombieDiorama.Character.AIs
     public class AISupportSoldier : Soldier
     {
         [Title("Set Object")]
-        public float DistanceToSet = 0.5f;
-        public float DelayToSet = 0.2f;
+        public float distanceToSet = 0.5f;
+        public float delayToSet = 0.2f;
 
         [Title("AI Set Object Effect")]
         public EventCaller SetObjectEffect;
         public EventCaller SettingObjectEffect;
 
         [Title("Heal")]
-        public float DistanceToHeal = 0.7f;
-        public float DampingToHeal = 1f;
+        public float distanceToHeal = 0.7f;
+        public float dampingToHeal = 1f;
 
-        public GameObject HealHitBox;
-        public float HealCooldown = 2f;
-        public float HealRest = 1f;
+        public GameObject healHitBox;
+        public float healCooldown = 2f;
+        public float healRest = 1f;
 
         [Title("AI Heal Effect")]
         public EventCaller HealEffect;
@@ -59,7 +59,7 @@ namespace ZombieDiorama.Character.AIs
             root.SetNode(fight);
             root.SetNode(branchTeam);
 
-            _behaviourTree.Build(root);
+            behaviourTree.Build(root);
         }
         #endregion
 
@@ -70,20 +70,20 @@ namespace ZombieDiorama.Character.AIs
 
             #region Cheking
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
-            BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(_targetController);
+            BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(TargetController);
             #endregion
 
             #region Moving
             BTSequence sequence_1 = new BTSequence();
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTNextToTarget nextToTarget = new BTNextToTarget(_targetController, DistanceToSet);
-            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, DistanceToSet);
+            BTNextToTarget nextToTarget = new BTNextToTarget(TargetController, distanceToSet);
+            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToSet);
 
             parallelSelector_1.SetNode(nextToTarget);
             parallelSelector_1.SetNode(moveToSet);
 
-            BTSetObject setObject = new BTSetObject(DelayToSet, SettingObjectEffect, SetObjectEffect);
+            BTSetObject setObject = new BTSetObject(delayToSet, SettingObjectEffect, SetObjectEffect);
 
             sequence_1.SetNode(parallelSelector_1);
             sequence_1.SetNode(setObject);
@@ -104,11 +104,11 @@ namespace ZombieDiorama.Character.AIs
         {
             BTSequence sequence = new BTSequence();
 
-            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, _targetController);
+            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, TargetController);
 
-            BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(_navMeshController, _targetController, Speed, DistanceToHeal);
+            BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToHeal);
 
-            BTHitbox hitboxHeal = new BTHitbox(HealHitBox, HealCooldown, HealRest, _targetController, DampingToHeal, HealEffect);
+            BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, TargetController, dampingToHeal, HealEffect);
 
             sequence.SetNode(memberToHeal);
             sequence.SetNode(MoveToHeal);
@@ -122,10 +122,10 @@ namespace ZombieDiorama.Character.AIs
         public override BTNode GetBranchFight()
         {
             BTParallelSelector parallel = new BTParallelSelector();
-            parallel.SetNode(new BTMoveByNavMesh(_navMeshController, _targetController, Speed, rangeToSeeTarget.x));
-            parallel.SetNode(new BTCloseToTarget(_targetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(_targetController, distanceToRegroup);
-            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, _targetController);
+            parallel.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, Speed, rangeToSeeTarget.x));
+            parallel.SetNode(new BTCloseToTarget(TargetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
+            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, TargetController);
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
 
             parallel.SetNode(thereIsObjectToSet);
@@ -133,16 +133,16 @@ namespace ZombieDiorama.Character.AIs
             parallel.SetNode(memberToHeal);
 
             BTInverter inverter = new BTInverter();
-            BTSeeZombie seeZombie = new BTSeeZombie(_targetController, rangeToSeeTarget.y);
+            BTSeeZombie seeZombie = new BTSeeZombie(TargetController, rangeToSeeTarget.y);
             inverter.SetNode(seeZombie);
             parallel.SetNode(inverter);
 
             BTSequence sequence_1 = new BTSequence();
             sequence_1.SetNode(parallel);
-            sequence_1.SetNode(new BTSoldierAttack(_targetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
+            sequence_1.SetNode(new BTSoldierAttack(TargetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
 
             BTSequence sequence = new BTSequence();
-            sequence.SetNode(new BTSeeZombie(_targetController, rangeToSeeTarget.y));
+            sequence.SetNode(new BTSeeZombie(TargetController, rangeToSeeTarget.y));
             sequence.SetNode(sequence_1);
 
             BTSelector selector = new BTSelector();
