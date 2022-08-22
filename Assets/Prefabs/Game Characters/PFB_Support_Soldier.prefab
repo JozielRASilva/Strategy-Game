@@ -254,6 +254,76 @@ MonoBehaviour:
   SecondCaller:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &605390252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 4
+  distanceToRegroup: 2
+  distanceToLeader: 3
+  SquadMember: {fileID: 0}
+  TargetController: {fileID: 0}
+  NavMeshController: {fileID: 0}
+  ShootHandler: {fileID: 0}
+  muzzle: {fileID: 6099054148090206178}
+  bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
+  shootCooldown: 0.5
+  lookAtZombieDamping: 15
+  target: Zombie
+  distanceToTarget: 8
+  rangeToSeeTarget: {x: 8, y: 10}
+  AttackEventCaller: {fileID: 899358430901405663}
+  ShowGizmos: 0
+  MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
+  MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
+  distanceToSet: 2
+  delayToSet: 1.5
+  SetObjectEffect: {fileID: 3105253606689490518}
+  SettingObjectEffect: {fileID: 6339521736952954446}
+  distanceToHeal: 1.2
+  dampingToHeal: 10
+  healHitBox: {fileID: 475056069}
+  healCooldown: 3
+  healRest: 0.5
+  HealEffect: {fileID: 8745678455274301854}
+--- !u!114 &1304290663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ef74ed9e278e14a9243a05e6910a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtraMember: 1
+  Health: {fileID: 0}
+--- !u!114 &7991892312326631783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d891cfb0fd8d746b406074ee3debd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Force: 10
+  Muzzle: {fileID: 6099054148090206178}
+  Prefab: {fileID: 3783100584242825085, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
+  PoolSize: 20
 --- !u!1 &3936270478673211580
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,59 +510,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &605390252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822115146684011845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 4
-  distanceToRegroup: 2
-  distanceToLeader: 3
-  squadMember: {fileID: 0}
-  targetController: {fileID: 0}
-  navMeshController: {fileID: 0}
-  muzzle: {fileID: 6099054148090206178}
-  bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
-  shootCooldown: 0.5
-  lookAtZombieDamping: 15
-  target: Zombie
-  distanceToTarget: 8
-  rangeToSeeTarget: {x: 8, y: 10}
-  AttackEventCaller: {fileID: 899358430901405663}
-  ShowGizmos: 0
-  MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
-  MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
-  distanceToSet: 2
-  delayToSet: 1.5
-  SetObjectEffect: {fileID: 3105253606689490518}
-  SettingObjectEffect: {fileID: 6339521736952954446}
-  distanceToHeal: 1.2
-  dampingToHeal: 10
-  healHitBox: {fileID: 475056069}
-  healCooldown: 3
-  healRest: 0.5
-  HealEffect: {fileID: 8745678455274301854}
---- !u!114 &1304290663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822115146684011845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ef74ed9e278e14a9243a05e6910a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ExtraMember: 1
-  health: {fileID: 0}
 --- !u!1001 &335731606331853943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1065,32 +1082,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3675497964422395940, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
---- !u!95 &821754460492479719 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2159469292386398815, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+--- !u!4 &5822115146684011849 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5070140945433140209, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_PrefabInstance: {fileID: 1625954164736593592}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &3422321294280714518 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4174286716622497710, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
-  m_PrefabInstance: {fileID: 1625954164736593592}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6099054148090206178 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4770646658972850522, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
-  m_PrefabInstance: {fileID: 1625954164736593592}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2707069501515527838 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3675497964422395942, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
-  m_PrefabInstance: {fileID: 1625954164736593592}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822115146684011845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2007ef63a5c9734c968f5394c59a90b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2707069501515527834 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3675497964422395938, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
@@ -1107,11 +1103,32 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5070140945433140221, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_PrefabInstance: {fileID: 1625954164736593592}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5822115146684011849 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5070140945433140209, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+--- !u!198 &3422321294280714518 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4174286716622497710, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
   m_PrefabInstance: {fileID: 1625954164736593592}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6099054148090206178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4770646658972850522, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 1625954164736593592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &821754460492479719 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2159469292386398815, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 1625954164736593592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2707069501515527838 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3675497964422395942, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+  m_PrefabInstance: {fileID: 1625954164736593592}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822115146684011845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2007ef63a5c9734c968f5394c59a90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3051321780276964610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1252,14 +1269,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
---- !u!4 &1878167953881008859 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2990296888127076201, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
-  m_PrefabInstance: {fileID: 3706247954246188466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &1878167953881008860 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 2990296888127076206, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
+  m_PrefabInstance: {fileID: 3706247954246188466}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1878167953881008859 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2990296888127076201, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
   m_PrefabInstance: {fileID: 3706247954246188466}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5436109352808420858

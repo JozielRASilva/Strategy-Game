@@ -135,9 +135,10 @@ MonoBehaviour:
   Speed: 3
   distanceToRegroup: 2
   distanceToLeader: 3
-  squadMember: {fileID: 0}
-  targetController: {fileID: 0}
-  navMeshController: {fileID: 0}
+  SquadMember: {fileID: 0}
+  TargetController: {fileID: 0}
+  NavMeshController: {fileID: 0}
+  ShootHandler: {fileID: 0}
   muzzle: {fileID: 7626666693945643134}
   bullet: {fileID: 4577716031164410930, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
   shootCooldown: 0.5
@@ -162,7 +163,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExtraMember: 0
-  health: {fileID: 0}
+  Health: {fileID: 0}
+--- !u!114 &7887895668309332450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908078489216045785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d891cfb0fd8d746b406074ee3debd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Force: 10
+  Muzzle: {fileID: 7626666693945643134}
+  Prefab: {fileID: 1658256294567481864, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
+  PoolSize: 20
 --- !u!1001 &213615983
 PrefabInstance:
   m_ObjectHideFlags: 0
