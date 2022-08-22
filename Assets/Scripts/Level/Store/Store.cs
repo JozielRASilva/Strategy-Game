@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using ZombieDiorama.Level.Coins;
+using ZombieDiorama.Utilities.Patterns;
+
 namespace ZombieDiorama.Level.Store
 {
     //TODO: trocar o singleton
     //TODO: Colocar o dinheiro em um scriptable object
-    public class Store : MonoBehaviour
+    public class Store : Singleton<Store>
     {
-        public static Store Instance;
-
         public List<StoreItem> storeItems = new List<StoreItem>();
 
         [Title("Events")]
@@ -21,11 +21,6 @@ namespace ZombieDiorama.Level.Store
         public UnityEvent OnRefund;
 
         private StoreItem currentBought;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         public bool CanBuy(int itemId)
         {
@@ -38,7 +33,6 @@ namespace ZombieDiorama.Level.Store
             {
                 return true;
             }
-
             return false;
         }
 

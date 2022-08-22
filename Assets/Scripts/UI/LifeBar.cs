@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using ZombieDiorama.Character;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.UI
 {
     public class LifeBar : MonoBehaviour
     {
-        public Health health;
+        [FormerlySerializedAs("health")] public Health Health;
 
         public Image FillBar;
 
@@ -19,12 +20,17 @@ namespace ZombieDiorama.UI
         private bool becomeFull = true;
         private bool died = false;
 
-        // TODO: Colocar em um action para não executar direto
-        private void Update()
+        private void Start()
         {
-            if (!health) return;
+            if (Health)
+                Health.OnChange += UpdateBar;
+        }
 
-            if (health.GetLife() != health.maxLife)
+        private void UpdateBar()
+        {
+            if (!Health) return;
+
+            if (Health.GetLife() != Health.maxLife)
             {
                 if (becomeFull)
                 {
@@ -32,9 +38,8 @@ namespace ZombieDiorama.UI
                     becomeFull = false;
                 }
 
-                if (!health.IsAlive() && !died)
+                if (!Health.IsAlive() && !died)
                 {
-
                     OnBecomeLifeFull?.Invoke();
                     died = true;
                 }
@@ -47,15 +52,13 @@ namespace ZombieDiorama.UI
                     becomeFull = true;
                 }
             }
-
             UpdateLifeBar();
         }
 
         private void UpdateLifeBar()
         {
-            if (!health) return;
-            float maxLife = health.maxLife;
-            float currentLife = health.GetLife();
+            float maxLife = Health.maxLife;
+            float currentLife = Health.GetLife();
             float value = Remap(currentLife, 0, maxLife, 0, 1);
 
             if (FillBar)

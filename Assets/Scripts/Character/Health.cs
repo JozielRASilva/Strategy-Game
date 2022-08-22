@@ -1,6 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
+using System;
 
 namespace ZombieDiorama.Character
 {
@@ -15,6 +16,8 @@ namespace ZombieDiorama.Character
 
         [Title("Heal")]
         public UnityEvent OnHealed;
+
+        public Action OnChange;
 
         private int _currentLife;
         private float invincibilityTimeStamp;
@@ -50,12 +53,16 @@ namespace ZombieDiorama.Character
             {
                 _currentLife -= value;
                 invincibilityTimeStamp = Time.time + invincibilityTime;
+
                 OnDamaged?.Invoke();
+                OnChange?.Invoke();
             }
             else
             {
                 invincibilityTimeStamp = Time.time + delayToDestroy;
                 _currentLife = 0;
+                
+                OnChange?.Invoke();
                 Destroy();
             }
         }
@@ -70,6 +77,7 @@ namespace ZombieDiorama.Character
             {
                 _currentLife = maxLife;
             }
+            OnChange?.Invoke();
             OnHealed?.Invoke();
         }
 
@@ -82,7 +90,6 @@ namespace ZombieDiorama.Character
         {
             if (_currentLife == maxLife) return true;
             else return false;
-
         }
 
         public bool IsAlive()
