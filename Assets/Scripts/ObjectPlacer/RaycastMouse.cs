@@ -61,7 +61,6 @@ namespace ZombieDiorama.ObjectPlacer
             for (int index = 0; index < eventSystemRaycastResults.Count; index++)
             {
                 RaycastResult currentRaycastResult = eventSystemRaycastResults[index];
-                Debug.Log($"{currentRaycastResult.gameObject.name}");
                 if (currentRaycastResult.gameObject.layer == uiLayer)
                     return true;
             }
