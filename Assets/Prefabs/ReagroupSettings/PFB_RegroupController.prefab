@@ -127,7 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e9c30bc3525c64eb0ce5187bf0c56f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  MasksToBlock:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!114 &371031415611743130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +146,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   startActivated: 0
+  AlwaysActivated: 0
+  EventsToLock:
+  - {fileID: 11400000, guid: 3f8245d1f593a2741aae841e79d5894b, type: 2}
+  EventsToUnLock:
+  - {fileID: 11400000, guid: 4c1689a242995984d87214bd15a84eef, type: 2}
   hideWithInvalid: 1
   rectTransform: {fileID: 371031414877317260}
   rotation: {x: 0, y: 0, z: 0}
