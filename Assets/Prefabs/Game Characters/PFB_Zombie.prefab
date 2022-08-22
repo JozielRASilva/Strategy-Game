@@ -298,7 +298,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   gizmoSize: 0.5
-  target: {fileID: 0}
   speed: 2
   distanceToTarget: 1
   distanceToWaypoint: 3
@@ -325,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69be3e7f25bc1640803f88b84523d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Amount: {fileID: 11400000, guid: ed1a487fdf1287042b2f305461c3d577, type: 2}
 --- !u!1 &7716385257371829281
 GameObject:
   m_ObjectHideFlags: 0

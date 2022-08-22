@@ -98,6 +98,8 @@ namespace ZombieDiorama.Character.AIs
             {
                 for (int i = 0; i < waypoints.Length; i++)
                 {
+                    if (!waypoints[i])
+                        continue;
                     if (i + 1 < waypoints.Length)
                         Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
                     else

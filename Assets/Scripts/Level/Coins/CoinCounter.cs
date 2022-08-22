@@ -5,33 +5,32 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using ZombieDiorama.Utilities.Patterns;
+using ZombieDiorama.Utilities.Primitives;
+using System;
 
 namespace ZombieDiorama.Level.Coins
 {
-    // TODO: Trocar os singletons e armazenar
     public class CoinCounter : Singleton<CoinCounter>
     {
-        [FormerlySerializedAs("moedaTxt")] public Text CoinText;
-        [FormerlySerializedAs("moeda")] public int CoinsCount; //TODO: Colocar scriptable object
-        [FormerlySerializedAs("valorMoeda")] public int CoinValue = 1; //TODO: Trocar nome par um mais claro e colocar como scriptable object  
+        public SOInt Counter; 
+        public SOInt InitialValue; 
 
-        public UnityEvent OnGetCash;
+        public static Action<int> OnUpdateCounter;
 
         private void Start()
         {
-            CoinText.text = CoinsCount.ToString();
-        }
-
-        public void AddCoin()
-        {
-            AddCoin(CoinValue);
+            SetCoin(InitialValue.Value);
         }
 
         public void AddCoin(int value)
         {
-            CoinsCount += value;
-            CoinText.text = CoinsCount.ToString();
-            OnGetCash?.Invoke();
+            SetCoin(Counter.Value + value);
+        }
+
+        private void SetCoin(int value)
+        {
+            Counter.Value = value;
+            OnUpdateCounter.Invoke(Counter.Value);
         }
     }
 }

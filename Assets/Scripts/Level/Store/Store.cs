@@ -29,7 +29,7 @@ namespace ZombieDiorama.Level.Store
 
             StoreItem item = storeItems[itemId];
 
-            if (CoinCounter.Instance.CoinsCount - item.price >= 0)
+            if (CoinCounter.Instance.Counter.Value - item.price >= 0)
             {
                 return true;
             }
