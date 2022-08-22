@@ -6,36 +6,36 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTChasingSoldier : BTNode
     {
-        private TargetController targetSoldier;
-        private float minDistance;
-        private float maxDistance;
+        private TargetController _targetSoldier;
+        private float _minDistance;
+        private float _maxDistance;
 
-        public BTChasingSoldier(TargetController _targetSoldier, float _minDistance, float _maxDistance)
+        public BTChasingSoldier(TargetController targetSoldier, float minDistance, float maxDistance)
         {
-            targetSoldier = _targetSoldier;
-            minDistance = _minDistance;
-            maxDistance = _maxDistance;
+            _targetSoldier = targetSoldier;
+            _minDistance = minDistance;
+            _maxDistance = maxDistance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (targetSoldier)
+            if (_targetSoldier)
             {
-                float distance = Vector3.Distance(bt.transform.position, targetSoldier.GetTarget().position);
+                float distance = Vector3.Distance(bt.transform.position, _targetSoldier.GetTarget().position);
 
-                if (distance > maxDistance)
+                if (distance > _maxDistance)
                 {
-                    targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    _targetSoldier.SetTarget(null);
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
 
-                if (distance < minDistance)
+                if (distance < _minDistance)
                 {
-                    targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    _targetSoldier.SetTarget(null);
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

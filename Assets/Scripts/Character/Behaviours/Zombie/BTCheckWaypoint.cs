@@ -6,29 +6,29 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTCheckWaypoint : BTNode
     {
-        private float distance = 1;
-        private TargetController targetController;
+        private float _distance = 1;
+        private TargetController _targetController;
 
-        public BTCheckWaypoint(float _distance, TargetController _targetController)
+        public BTCheckWaypoint(float distance, TargetController targetController)
         {
-            distance = _distance;
-            targetController = _targetController;
+            _distance = distance;
+            _targetController = targetController;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             Transform zombie = bt.transform;
-            Transform target = targetController.GetTarget();
+            Transform target = _targetController.GetTarget();
 
             if (target)
             {
-                if (Vector3.Distance(zombie.position, target.position) < distance)
+                if (Vector3.Distance(zombie.position, target.position) < _distance)
                 {
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
-                else status = Status.FAILURE;
+                else CurrentStatus = Status.FAILURE;
             }
-            else status = Status.SUCCESS;
+            else CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

@@ -6,39 +6,39 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTCloseToTarget : BTNode
     {
-        private TargetController targetZombie;
-        private float minDistance;
-        private float maxDistance;
+        private TargetController _targetZombie;
+        private float _minDistance;
+        private float _maxDistance;
 
-        public BTCloseToTarget(TargetController _targetZombie, float _minDistance, float _maxDistance)
+        public BTCloseToTarget(TargetController targetZombie, float minDistance, float maxDistance)
         {
-            targetZombie = _targetZombie;
-            minDistance = _minDistance;
-            maxDistance = _maxDistance;
+            _targetZombie = targetZombie;
+            _minDistance = minDistance;
+            _maxDistance = maxDistance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (targetZombie)
+            if (_targetZombie)
             {
-                if (targetZombie.GetTarget())
+                if (_targetZombie.GetTarget())
                     yield break;
 
-                float distance = Vector3.Distance(bt.transform.position, targetZombie.GetTarget().position);
+                float distance = Vector3.Distance(bt.transform.position, _targetZombie.GetTarget().position);
 
-                if (distance > maxDistance)
+                if (distance > _maxDistance)
                 {
-                    targetZombie.SetTarget(null);
-                    status = Status.SUCCESS;
+                    _targetZombie.SetTarget(null);
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
 
-                if (distance < minDistance)
+                if (distance < _minDistance)
                 {
-                    targetZombie.SetTarget(null);
-                    status = Status.SUCCESS;
+                    _targetZombie.SetTarget(null);
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

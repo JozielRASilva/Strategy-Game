@@ -6,27 +6,27 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTNextToTarget : BTNode
     {
-        private TargetController targetController;
-        private float distance;
+        private TargetController _targetController;
+        private float _distance;
 
-        public BTNextToTarget(TargetController _targetController, float _distance)
+        public BTNextToTarget(TargetController targetController, float distance)
         {
-            targetController = _targetController;
-            distance = _distance;
+            _targetController = targetController;
+            _distance = distance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            Transform target = targetController.GetTarget();
+            Transform target = _targetController.GetTarget();
 
             if (target)
             {
                 float currentDistance = Vector3.Distance(bt.transform.position, target.position);
-                if (currentDistance < distance)
+                if (currentDistance < _distance)
                 {
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;

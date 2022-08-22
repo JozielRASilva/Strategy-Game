@@ -6,22 +6,22 @@ namespace ZombieDiorama.Character.Behaviours
     {
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
 
             foreach (var node in children)
             {
                 yield return bt.StartCoroutine(node.Run(bt));
 
-                if (node.status.Equals(Status.FAILURE))
+                if (node.CurrentStatus.Equals(Status.FAILURE))
                 {
-                    status = Status.FAILURE;
+                    CurrentStatus = Status.FAILURE;
                     break;
                 }
             }
 
-            if (status.Equals(Status.RUNNING))
+            if (CurrentStatus.Equals(Status.RUNNING))
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
         }
     }

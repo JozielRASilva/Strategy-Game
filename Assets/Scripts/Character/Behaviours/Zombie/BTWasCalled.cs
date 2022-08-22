@@ -6,18 +6,18 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTWasCalled : BTNode
     {
-        private TargetController target;
-        private float distanceCall;
+        private TargetController _target;
+        private float _distanceCall;
 
-        public BTWasCalled(TargetController _target, float _distanceCall)
+        public BTWasCalled(TargetController target, float distanceCall)
         {
-            target = _target;
-            distanceCall = _distanceCall;
+            _target = target;
+            _distanceCall = distanceCall;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
             int i = 0;
@@ -26,16 +26,16 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
             {
                 if (bt.gameObject == call) continue;
 
-                if (Vector3.Distance(bt.transform.position, call.transform.position) < distanceCall)
+                if (Vector3.Distance(bt.transform.position, call.transform.position) < _distanceCall)
                 {
-                    target.SetTarget(call.transform);
+                    _target.SetTarget(call.transform);
                     i++;
                     if (i == 8)
                     {
-                        target.SetTarget(null);
+                        _target.SetTarget(null);
                         i = 0;
                     }
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

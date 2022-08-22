@@ -16,7 +16,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             Transform npc = bt.transform;
             GameObject[] items = GameObject.FindGameObjectsWithTag(Target);
@@ -26,7 +26,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 if (Vector3.Distance(npc.position, item.transform.position) < Distance)
                 {
                     GameObject.Destroy(item);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;

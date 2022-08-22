@@ -6,29 +6,30 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTRealignWaypoint : BTNode
     {
-        private Transform[] waypoints;
-        public int currentWaypoint;
-        TargetController target;
+        public int _currentWaypoint;
 
-        public BTRealignWaypoint(Transform[] _waypoints, TargetController _target)
+        private TargetController _target;
+        private Transform[] _waypoints;
+
+        public BTRealignWaypoint(Transform[] waypoints, TargetController target)
         {
-            waypoints = _waypoints;
-            target = _target;
+            _waypoints = waypoints;
+            _target = target;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            currentWaypoint++;
+            _currentWaypoint++;
 
-            if (currentWaypoint >= waypoints.Length)
+            if (_currentWaypoint >= _waypoints.Length)
             {
-                currentWaypoint = 0;
+                _currentWaypoint = 0;
             }
 
-            target.SetTarget(waypoints[currentWaypoint]);
-            status = Status.SUCCESS;
+            _target.SetTarget(_waypoints[_currentWaypoint]);
+            CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

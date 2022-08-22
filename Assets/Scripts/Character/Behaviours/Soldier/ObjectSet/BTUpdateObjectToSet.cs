@@ -7,16 +7,16 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateObjectToSet : BTNode
     {
-        private TargetController targetController;
+        private TargetController _targetController;
 
-        public BTUpdateObjectToSet(TargetController _targetController)
+        public BTUpdateObjectToSet(TargetController targetController)
         {
-            targetController = _targetController;
+            _targetController = targetController;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!ObjectSetterManager.Instance)
                 yield break;
@@ -25,8 +25,8 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (objectToSet != null)
             {
-                targetController.SetTarget(objectToSet);
-                status = Status.SUCCESS;
+                _targetController.SetTarget(objectToSet);
+                CurrentStatus = Status.SUCCESS;
             }
 
             yield break;

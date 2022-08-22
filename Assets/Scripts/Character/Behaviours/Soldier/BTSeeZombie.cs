@@ -6,27 +6,27 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTSeeZombie : BTNode
     {
-        private TargetController targetZombie;
-        private float distanceView;
+        private TargetController _targetZombie;
+        private float _distanceView;
 
-        public BTSeeZombie(TargetController _targetZombie, float _distanceView)
+        public BTSeeZombie(TargetController targetZombie, float distanceView)
         {
-            targetZombie = _targetZombie;
-            distanceView = _distanceView;
+            _targetZombie = targetZombie;
+            _distanceView = distanceView;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
             foreach (GameObject zombie in zombies)
             {
                 if (bt.gameObject == zombie) continue;
-                if (Vector3.Distance(bt.transform.position, zombie.transform.position) < distanceView)
+                if (Vector3.Distance(bt.transform.position, zombie.transform.position) < _distanceView)
                 {
-                    targetZombie.SetTarget(zombie.transform);
-                    status = Status.SUCCESS;
+                    _targetZombie.SetTarget(zombie.transform);
+                    CurrentStatus = Status.SUCCESS;
                     break;
                 }
             }

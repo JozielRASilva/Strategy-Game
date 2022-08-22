@@ -13,38 +13,35 @@ namespace ZombieDiorama.Character.Controllers.Regroup
         public LayerMask WhereCanSet;
 
         [Title("Enable")]
-        public bool startActivated = true;
+        public bool StartActivated = true;
         public bool AlwaysActivated = false;
 
         [Title("Observer Events")]
         public List<ObserverEvent> EventsToLock = new List<ObserverEvent>();
         public List<ObserverEvent> EventsToUnLock = new List<ObserverEvent>();
 
-        private bool activated = true;
-        private bool locked = false;
-
-        private RaycastMouse raycastMouse;
-
         [Title("UI Feedback")]
-        public bool hideWithInvalid;
+        public bool HideWithInvalid;
 
-        public Transform rectTransform;
-        public Vector3 rotation = new Vector3(0, 0, 0);
-        public Vector3 positionOffset = new Vector3(0, 0.2f, 0);
-
+        public Transform RectTransform;
+        public Vector3 Rotation = new Vector3(0, 0, 0);
+        public Vector3 PositionOffset = new Vector3(0, 0.2f, 0);
 
         [Title("Events")]
         public UnityEvent OnSet;
         public UnityEvent OnCanNotSet;
         public UnityEvent OnStopSet;
 
-        private Vector3 lastPoint;
+        private Vector3 _lastPoint;
+        private bool _activated = true;
+        private bool _locked = false;
+        private RaycastMouse _raycastMouse;
 
         private void Awake()
         {
-            raycastMouse = GetComponent<RaycastMouse>();
+            _raycastMouse = GetComponent<RaycastMouse>();
 
-            if (startActivated)
+            if (StartActivated)
                 Indicate();
             else
                 StopIndicate();
@@ -52,23 +49,23 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         private void Update()
         {
-            if (locked || (!activated && !AlwaysActivated) || !raycastMouse)
+            if (_locked || (!_activated && !AlwaysActivated) || !_raycastMouse)
                 return;
 
             Vector3 point;
-            if (raycastMouse.ValidPosition(WhereCanSet))
-                point = raycastMouse.GetPosition(WhereCanSet);
-            else point = lastPoint;
+            if (_raycastMouse.ValidPosition(WhereCanSet))
+                point = _raycastMouse.GetPosition(WhereCanSet);
+            else point = _lastPoint;
 
             ShowCanvasFeedback(point);
 
-            if (hideWithInvalid && !raycastMouse.ValidPosition(WhereCanSet))
+            if (HideWithInvalid && !_raycastMouse.ValidPosition(WhereCanSet))
             {
                 HideCanvasFeedback();
                 return;
             }
 
-            lastPoint = point;
+            _lastPoint = point;
 
             IndicatorReadInput();
         }
@@ -77,7 +74,7 @@ namespace ZombieDiorama.Character.Controllers.Regroup
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RegroupController.Instance.SetPoint(lastPoint);
+                RegroupController.Instance.SetPoint(_lastPoint);
 
                 OnSet?.Invoke();
 
@@ -100,27 +97,27 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         private void ShowCanvasFeedback(Vector3 point)
         {
-            rectTransform.gameObject.SetActive(true);
+            RectTransform.gameObject.SetActive(true);
 
-            rectTransform.transform.position = point + positionOffset;
-            rectTransform.LookAt(Camera.main.transform);
-            rectTransform.eulerAngles = new Vector3(90 + rotation.x, rectTransform.eulerAngles.y + rotation.y, rectTransform.eulerAngles.z + rotation.z);
+            RectTransform.transform.position = point + PositionOffset;
+            RectTransform.LookAt(Camera.main.transform);
+            RectTransform.eulerAngles = new Vector3(90 + Rotation.x, RectTransform.eulerAngles.y + Rotation.y, RectTransform.eulerAngles.z + Rotation.z);
         }
 
 
         private void HideCanvasFeedback()
         {
-            rectTransform.gameObject.SetActive(false);
+            RectTransform.gameObject.SetActive(false);
         }
 
         public void Indicate()
         {
-            activated = true;
+            _activated = true;
         }
 
         public void StopIndicate()
         {
-            activated = false;
+            _activated = false;
             HideCanvasFeedback();
         }
 
@@ -148,13 +145,13 @@ namespace ZombieDiorama.Character.Controllers.Regroup
 
         private void UnlockIndicator()
         {
-            locked = false;
+            _locked = false;
             Indicate();
         }
 
         private void LockIndicator()
         {
-            locked = true;
+            _locked = true;
             StopIndicate();
         }
     }

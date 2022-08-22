@@ -6,31 +6,31 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateLeader : BTNode
     {
-        private SquadMember squadMember;
-        private TargetController targetController;
+        private SquadMember _squadMember;
+        private TargetController _targetController;
 
-        public BTUpdateLeader(SquadMember _squadMember, TargetController _targetController)
+        public BTUpdateLeader(SquadMember squadMember, TargetController targetController)
         {
-            squadMember = _squadMember;
-            targetController = _targetController;
+            _squadMember = squadMember;
+            _targetController = targetController;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!TeamController.Instance) yield break;
 
-            Squad.SquadFunction function = TeamController.Instance.GetSquadFunction(squadMember);
+            Squad.SquadFunction function = TeamController.Instance.GetSquadFunction(_squadMember);
 
             if (!function.Equals(Squad.SquadFunction.LEADER) && !function.Equals(Squad.SquadFunction.NONE))
             {
-                SquadMember Leader = TeamController.Instance.GetSquadLeader(squadMember);
+                SquadMember Leader = TeamController.Instance.GetSquadLeader(_squadMember);
 
                 if (Leader)
                 {
-                    targetController?.SetTarget(Leader.transform);
-                    status = Status.SUCCESS;
+                    _targetController?.SetTarget(Leader.transform);
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;
