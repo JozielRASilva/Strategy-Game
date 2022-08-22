@@ -12,8 +12,8 @@ namespace ZombieDiorama.Level.Coins
 {
     public class CoinCounter : Singleton<CoinCounter>
     {
-        public SOInt Counter; 
-        public SOInt InitialValue; 
+        [SerializeField] private SOInt Counter;
+        [SerializeField] private SOInt InitialValue;
 
         public static Action<int> OnUpdateCounter;
 
@@ -22,7 +22,23 @@ namespace ZombieDiorama.Level.Coins
             SetCoin(InitialValue.Value);
         }
 
-        public void AddCoin(int value)
+        public static int GetValue()
+        {
+            if (!Instance)
+                return 0;
+
+            if (!Instance.Counter)
+                return 0;
+
+            return Instance.Counter.Value;
+        }
+
+        public static void Add(int value)
+        {
+            Instance.AddCoin(value);
+        }
+
+        private void AddCoin(int value)
         {
             SetCoin(Counter.Value + value);
         }

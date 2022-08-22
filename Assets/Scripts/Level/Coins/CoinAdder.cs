@@ -12,7 +12,7 @@ namespace ZombieDiorama.Level.Coins
         public void AddCoins()
         {
             if (Amount)
-                CoinCounter.Instance.AddCoin(Amount.Value);
+                CoinCounter.Add(Amount.Value);
         }
     }
 }

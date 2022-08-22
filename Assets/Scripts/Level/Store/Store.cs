@@ -8,8 +8,6 @@ using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level.Store
 {
-    //TODO: trocar o singleton
-    //TODO: Colocar o dinheiro em um scriptable object
     public class Store : Singleton<Store>
     {
         public List<StoreItem> storeItems = new List<StoreItem>();
@@ -25,11 +23,11 @@ namespace ZombieDiorama.Level.Store
         public bool CanBuy(int itemId)
         {
             if (storeItems.Count == 0) return false;
-            if (!CoinCounter.Instance || itemId >= storeItems.Count) return false;
+            if (itemId >= storeItems.Count) return false;
 
             StoreItem item = storeItems[itemId];
 
-            if (CoinCounter.Instance.Counter.Value - item.price >= 0)
+            if (CoinCounter.GetValue() - item.price >= 0)
             {
                 return true;
             }
@@ -40,7 +38,7 @@ namespace ZombieDiorama.Level.Store
         {
             if (currentBought == null) return;
 
-            CoinCounter.Instance.AddCoin(currentBought.price);
+            CoinCounter.Add(currentBought.price);
             OnRefund?.Invoke();
             currentBought = null;
         }
@@ -53,7 +51,7 @@ namespace ZombieDiorama.Level.Store
 
                 OnCanBuy?.Invoke();
                 OnBuy?.Invoke(item.Item);
-                CoinCounter.Instance.AddCoin(-item.price);
+                CoinCounter.Add(-item.price);
                 currentBought = item;
             }
             else
