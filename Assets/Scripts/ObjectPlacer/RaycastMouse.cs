@@ -7,31 +7,30 @@ namespace ZombieDiorama.ObjectPlacer
 {
     public class RaycastMouse : MonoBehaviour
     {
-        private Camera mainCamera;
-        private Vector3 currentPoint; //TODO: remover
+        private Camera _mainCamera;
 
-        private RaycastHit hit;
-        private Ray ray;
+        private RaycastHit _hit;
+        private Ray _ray;
 
-        private int uiLayer;
-        private List<RaycastResult> raycastResults = new List<RaycastResult>();
-        private PointerEventData eventData;
+        private int _uiLayer;
+        private List<RaycastResult> _raycastResults = new List<RaycastResult>();
+        private PointerEventData _eventData;
 
         private void Start()
         {
-            if (!mainCamera)
-                mainCamera = Camera.main;
+            if (!_mainCamera)
+                _mainCamera = Camera.main;
 
-            uiLayer = LayerMask.NameToLayer("UI");
+            _uiLayer = LayerMask.NameToLayer("UI");
         }
 
         public Vector3 GetPosition(LayerMask mask)
         {
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, mask))
             {
-                Vector3 objectHit = hit.point;
+                Vector3 objectHit = _hit.point;
                 return objectHit;
             }
             return Vector2.zero;
@@ -42,9 +41,9 @@ namespace ZombieDiorama.ObjectPlacer
             if (IsPointerOverUIElement())
                 return false;
 
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, mask))
             {
                 return true;
             }
@@ -61,7 +60,7 @@ namespace ZombieDiorama.ObjectPlacer
             for (int index = 0; index < eventSystemRaycastResults.Count; index++)
             {
                 RaycastResult currentRaycastResult = eventSystemRaycastResults[index];
-                if (currentRaycastResult.gameObject.layer == uiLayer)
+                if (currentRaycastResult.gameObject.layer == _uiLayer)
                     return true;
             }
             return false;
@@ -69,10 +68,10 @@ namespace ZombieDiorama.ObjectPlacer
 
         private List<RaycastResult> GetEventSystemRaycastResults()
         {
-            eventData = new PointerEventData(EventSystem.current);
-            eventData.position = Input.mousePosition;
-            EventSystem.current.RaycastAll(eventData, raycastResults);
-            return raycastResults;
+            _eventData = new PointerEventData(EventSystem.current);
+            _eventData.position = Input.mousePosition;
+            EventSystem.current.RaycastAll(_eventData, _raycastResults);
+            return _raycastResults;
         }
 
     }

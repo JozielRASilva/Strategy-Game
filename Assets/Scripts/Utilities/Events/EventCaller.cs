@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,19 +6,19 @@ namespace ZombieDiorama.Utilities.Events
     public class EventCaller : MonoBehaviour
     {
         [SerializeField]
-        private UnityEvent FirstCaller;
+        private UnityEvent _firstCaller;
 
         [SerializeField]
-        private UnityEvent SecondCaller;
+        private UnityEvent _secondCaller;
 
         public void FirstCall()
         {
-            FirstCaller?.Invoke();
+            _firstCaller?.Invoke();
         }
 
         public void SecondCall()
         {
-            SecondCaller?.Invoke();
+            _secondCaller?.Invoke();
         }
     }
 }

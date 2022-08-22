@@ -13,39 +13,35 @@ namespace ZombieDiorama.ObjectPlacer
         public LayerMask WhereCanSet;
 
         [Title("Object Info")]
-        public Vector3 positionOffset = new Vector3(0, 0.2f, 0);
-        public SettableObjectInfo settable;
-
+        public Vector3 PositionOffset = new Vector3(0, 0.2f, 0);
+        public SettableObjectInfo Settable;
 
         [Title("Rotation Feedback")]
-        public RectTransform rectTransform;
-        public Vector3 rotation = new Vector3(0, 0, 0);
-        public Vector3 rotateValue;
-
+        public RectTransform RotationModel;
+        public Vector3 Rotation = new Vector3(0, 0, 0);
+        public Vector3 RotateValue;
 
         [Title("Enable")]
-        public bool startActivated = true;
-
-        private bool activated = true;
-
-        private RaycastMouse raycastMouse;
-        private SettableObjectPreview current;
+        public bool StartActivated = true;
 
         [Title("Observer events")]
         public ObserverEvent SettingEvent;
         public ObserverEvent StopSettingEvent;
-
 
         [Title("Events")]
         public UnityEvent OnSet;
         public UnityEvent OnCanNotSet;
         public UnityEvent OnStopSet;
 
+        private bool _activated = true;
+        private RaycastMouse _raycastMouse;
+        private SettableObjectPreview _current;
+
         private void Awake()
         {
-            raycastMouse = GetComponent<RaycastMouse>();
+            _raycastMouse = GetComponent<RaycastMouse>();
 
-            if (startActivated)
+            if (StartActivated)
                 EnableSetter();
             else
                 DisableSetter();
@@ -53,17 +49,17 @@ namespace ZombieDiorama.ObjectPlacer
 
         private void Update()
         {
-            if (!activated) return;
+            if (!_activated) return;
 
-            if (!settable || !raycastMouse) return;
+            if (!Settable || !_raycastMouse) return;
 
-            Vector3 point = raycastMouse.GetPosition(WhereCanSet);
+            Vector3 point = _raycastMouse.GetPosition(WhereCanSet);
 
             PreviewObjectPosition(point);
 
             SetterActions();
 
-            if (raycastMouse.ValidPosition(WhereCanSet))
+            if (_raycastMouse.ValidPosition(WhereCanSet))
             {
                 ShowCanvasFeedback(point);
             }
@@ -81,9 +77,9 @@ namespace ZombieDiorama.ObjectPlacer
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (current.CanSet() && raycastMouse.ValidPosition(WhereCanSet))
+                if (_current.CanSet() && _raycastMouse.ValidPosition(WhereCanSet))
                 {
-                    ObjectSetterManager.Instance.AddObjectToSet(current.transform, settable);
+                    ObjectSetterManager.Instance.AddObjectToSet(_current.transform, Settable);
 
                     OnSet?.Invoke();
 
@@ -105,35 +101,35 @@ namespace ZombieDiorama.ObjectPlacer
         private void SetterActions()
         {
             float horizontal = Input.GetAxis("Horizontal");
-            current?.Rotate(rotateValue * horizontal);
+            _current?.Rotate(RotateValue * horizontal);
         }
 
         private void ShowCanvasFeedback(Vector3 point)
         {
-            if (!current)
+            if (!_current)
             {
                 HideCanvasFeedback();
                 return;
             }
             else
             {
-                if (!current.canRotate)
+                if (!_current.CanRotate)
                 {
                     HideCanvasFeedback();
                     return;
                 }
             }
 
-            rectTransform.gameObject.SetActive(true);
+            RotationModel.gameObject.SetActive(true);
 
-            rectTransform.transform.position = point + positionOffset;
-            rectTransform.LookAt(Camera.main.transform);
-            rectTransform.eulerAngles = new Vector3(90 + rotation.x, rectTransform.eulerAngles.y + rotation.y, rectTransform.eulerAngles.z + rotation.z);
+            RotationModel.transform.position = point + PositionOffset;
+            RotationModel.LookAt(Camera.main.transform);
+            RotationModel.eulerAngles = new Vector3(90 + Rotation.x, RotationModel.eulerAngles.y + Rotation.y, RotationModel.eulerAngles.z + Rotation.z);
         }
 
         private void HideCanvasFeedback()
         {
-            rectTransform.gameObject.SetActive(false);
+            RotationModel.gameObject.SetActive(false);
         }
 
         private void PreviewObjectPosition(Vector3 point)
@@ -141,33 +137,33 @@ namespace ZombieDiorama.ObjectPlacer
 
             if (!ObjectSetterManager.Instance) return;
 
-            if (!current) current = ObjectSetterManager.Instance?.GetPreviewObject(settable);
+            if (!_current) _current = ObjectSetterManager.Instance?.GetPreviewObject(Settable);
 
-            if (!current) return;
+            if (!_current) return;
 
-            if (!raycastMouse)
+            if (!_raycastMouse)
             {
 
-                current?.gameObject?.SetActive(false);
+                _current?.gameObject?.SetActive(false);
 
                 return;
             }
-            else if (!raycastMouse.ValidPosition(WhereCanSet))
+            else if (!_raycastMouse.ValidPosition(WhereCanSet))
             {
-                current?.gameObject?.SetActive(false);
+                _current?.gameObject?.SetActive(false);
 
                 return;
             }
 
 
-            current?.gameObject?.SetActive(true);
-            current?.ShowPreview(point + positionOffset);
+            _current?.gameObject?.SetActive(true);
+            _current?.ShowPreview(point + PositionOffset);
 
         }
 
         public void IndicateObjectToSet(SettableObjectInfo info)
         {
-            settable = info;
+            Settable = info;
 
             Observer.Notify(SettingEvent);
 
@@ -184,18 +180,18 @@ namespace ZombieDiorama.ObjectPlacer
 
         private void EnableSetter()
         {
-            activated = true;
+            _activated = true;
 
-            current?.EnableObject();
+            _current?.EnableObject();
         }
 
         private void DisableSetter()
         {
-            activated = false;
+            _activated = false;
 
-            current?.DisableObject();
+            _current?.DisableObject();
 
-            current = null;
+            _current = null;
 
             HideCanvasFeedback();
         }

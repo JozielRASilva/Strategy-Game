@@ -9,19 +9,18 @@ namespace ZombieDiorama.ObjectPlacer
     public class ObjectSetterManager : Singleton<ObjectSetterManager>
     {
         public List<SettableObjectInfo> ObjectsAvaliableToSet = new List<SettableObjectInfo>();
-        public int poolSize = 20;
-
-        public List<ManageObject> objectsToSet = new List<ManageObject>();
+        public int PoolSize = 20;
+        public List<ManageObject> ObjectsToSet = new List<ManageObject>();
 
         protected override void Awake()
         {
             base.Awake();
             foreach (var objectAvaliable in ObjectsAvaliableToSet)
             {
-                PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, poolSize);
-                PoolManager.WarmPool(objectAvaliable.ObjectPreviewChecker.gameObject, poolSize);
+                PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, PoolSize);
+                PoolManager.WarmPool(objectAvaliable.ObjectPreviewChecker.gameObject, PoolSize);
             }
-            objectsToSet = new List<ManageObject>();
+            ObjectsToSet = new List<ManageObject>();
         }
 
         public SettableObjectPreview GetPreviewObject(SettableObjectInfo info)
@@ -41,26 +40,26 @@ namespace ZombieDiorama.ObjectPlacer
             ObjectToSet objectTo = new ObjectToSet(transform, info);
             ManageObject manageObject = new ManageObject(objectTo);
 
-            objectsToSet.Add(manageObject);
+            ObjectsToSet.Add(manageObject);
         }
 
         public void SetObject(int id)
         {
-            if (objectsToSet.Count <= id) return;
+            if (ObjectsToSet.Count <= id) return;
 
-            SetObject(objectsToSet[id].objectToSet);
+            SetObject(ObjectsToSet[id].objectToSet);
         }
 
         public void SetObject(ObjectToSet info)
         {
-            ManageObject manageObject = objectsToSet.Find(o => o.objectToSet.Equals(info));
+            ManageObject manageObject = ObjectsToSet.Find(o => o.objectToSet.Equals(info));
             if (manageObject == null) return;
 
             ObjectToSet objectTo = manageObject.objectToSet;
-            PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet.gameObject, objectTo.position, Quaternion.Euler(objectTo.rotation));
+            PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet.gameObject, objectTo.TargetPosition, Quaternion.Euler(objectTo.TargetRotation));
 
             manageObject.settableObjectPreview.DisableObject();
-            objectsToSet.Remove(manageObject);
+            ObjectsToSet.Remove(manageObject);
         }
 
         public void GetObjectCheck(GameObject whoSelect)
@@ -73,10 +72,10 @@ namespace ZombieDiorama.ObjectPlacer
 
         public ObjectToSet GetObjectToSet(GameObject whoSelect)
         {
-            bool alreadySelect = objectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
+            bool alreadySelect = ObjectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
             if (alreadySelect)
-                return objectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).objectToSet;
-            foreach (var objectTo in objectsToSet)
+                return ObjectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).objectToSet;
+            foreach (var objectTo in ObjectsToSet)
             {
                 if (objectTo.objectToSet.CanGet())
                 {
@@ -89,15 +88,15 @@ namespace ZombieDiorama.ObjectPlacer
 
         public Transform GetObjectReference(GameObject whoSelect)
         {
-            bool alreadySelect = objectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
+            bool alreadySelect = ObjectsToSet.Exists(x => x.objectToSet.AlreadySelect(whoSelect));
             if (alreadySelect)
-                return objectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).settableObjectPreview.transform;
+                return ObjectsToSet.Find(x => x.objectToSet.AlreadySelect(whoSelect)).settableObjectPreview.transform;
             return null;
         }
 
         private void CheckObjectsToSet()
         {
-            foreach (var objectTo in objectsToSet)
+            foreach (var objectTo in ObjectsToSet)
             {
                 if (objectTo.objectToSet.InvalidSelection())
                 {
@@ -111,12 +110,12 @@ namespace ZombieDiorama.ObjectPlacer
 
         private void ShowObjectsWaiting()
         {
-            foreach (var objectTo in objectsToSet)
+            foreach (var objectTo in ObjectsToSet)
             {
                 if (!objectTo.settableObjectPreview)
                     objectTo.settableObjectPreview = GetPreviewObject(objectTo.objectToSet.ObjectInfo);
                 if (objectTo.settableObjectPreview)
-                    objectTo.settableObjectPreview.ShowSelected(objectTo.objectToSet.position, objectTo.objectToSet.rotation);
+                    objectTo.settableObjectPreview.ShowSelected(objectTo.objectToSet.TargetPosition, objectTo.objectToSet.TargetRotation);
             }
         }
 
