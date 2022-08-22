@@ -1,24 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using System;
 
 namespace ZombieDiorama.Utilities.Patterns
 {
     public static class Observer
     {
-        private static Action<ObserverEvent, object> _subscriptions;
+        private static Action<ObserverEvent, object> subscriptions;
 
         public static void Subscribe(Action<ObserverEvent, object> method)
         {
-            _subscriptions += method;
+            subscriptions += method;
         }
 
         public static void UnSubscribe(Action<ObserverEvent, object> method)
         {
-            _subscriptions -= method;
+            subscriptions -= method;
         }
 
         public static void Notify(ObserverEvent tag, object value = null)
         {
-            _subscriptions.Invoke(tag, value);
+            subscriptions.Invoke(tag, value);
         }
     }
 }

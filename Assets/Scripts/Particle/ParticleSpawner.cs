@@ -5,19 +5,19 @@ namespace ZombieDiorama.Particles
 {
     public class ParticleSpawner : MonoBehaviour
     {
-        public GameObject Particle;
-        public int PoolSize = 5;
+        public GameObject particle;
+        public int poolSize = 5;
 
         private void Awake()
         {
-            if (Particle)
-                PoolManager.WarmPool(Particle, PoolSize);
+            if (particle)
+                PoolManager.WarmPool(particle, poolSize);
         }
 
         public void Spawn()
         {
-            if (Particle)
-                PoolManager.SpawnObject(Particle, transform.position, transform.rotation);
+            if (particle)
+                PoolManager.SpawnObject(particle, transform.position, transform.rotation);
         }
     }
 }

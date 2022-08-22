@@ -9,42 +9,42 @@ namespace ZombieDiorama.UI
 {
     public class LifeBar : MonoBehaviour
     {
-        public Health Health;
+        public Health health;
 
         public Image FillBar;
 
         public UnityEvent OnBecomeLifeFull;
         public UnityEvent OnNotLifeFull;
 
-        private bool _becomeFull = true;
-        private bool _died = false;
+        private bool becomeFull = true;
+        private bool died = false;
 
         // TODO: Colocar em um action para não executar direto
         private void Update()
         {
-            if (!Health) return;
+            if (!health) return;
 
-            if (Health.GetLife() != Health.maxLife)
+            if (health.GetLife() != health.maxLife)
             {
-                if (_becomeFull)
+                if (becomeFull)
                 {
                     OnNotLifeFull?.Invoke();
-                    _becomeFull = false;
+                    becomeFull = false;
                 }
 
-                if (!Health.IsAlive() && !_died)
+                if (!health.IsAlive() && !died)
                 {
 
                     OnBecomeLifeFull?.Invoke();
-                    _died = true;
+                    died = true;
                 }
             }
             else
             {
-                if (!_becomeFull)
+                if (!becomeFull)
                 {
                     OnBecomeLifeFull?.Invoke();
-                    _becomeFull = true;
+                    becomeFull = true;
                 }
             }
 
@@ -53,9 +53,9 @@ namespace ZombieDiorama.UI
 
         private void UpdateLifeBar()
         {
-            if (!Health) return;
-            float maxLife = Health.maxLife;
-            float currentLife = Health.GetLife();
+            if (!health) return;
+            float maxLife = health.maxLife;
+            float currentLife = health.GetLife();
             float value = Remap(currentLife, 0, maxLife, 0, 1);
 
             if (FillBar)
