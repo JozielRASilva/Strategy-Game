@@ -136,8 +136,6 @@ MonoBehaviour:
   distanceToRegroup: 2
   distanceToLeader: 3
   SquadMember: {fileID: 0}
-  TargetController: {fileID: 0}
-  NavMeshController: {fileID: 0}
   ShootHandler: {fileID: 0}
   muzzle: {fileID: 7626666693945643134}
   bullet: {fileID: 4577716031164410930, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
@@ -707,6 +705,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7133109093739277961, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: Tag
+      value: 
+      objectReference: {fileID: 11400000, guid: bb983ed06d5044c4badf99ff94531aba, type: 2}
     m_RemovedComponents:
     - {fileID: 3675497964422395940, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
     - {fileID: 3675497964422395941, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}

@@ -1610,6 +1610,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3853650095111039989}
     - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
+      propertyPath: ZombieDeathTag
+      value: 
+      objectReference: {fileID: 11400000, guid: d5836ed9afea5e74f82a7de951cfeb15, type: 2}
+    - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
+      propertyPath: SoldierDeathTag
+      value: 
+      objectReference: {fileID: 11400000, guid: bb983ed06d5044c4badf99ff94531aba, type: 2}
+    - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
       propertyPath: EventOnWin.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}

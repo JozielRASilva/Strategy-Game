@@ -11,7 +11,6 @@ using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level
 {
-    // TODO: Usar o observer para melhorar a contagem de mortes
     // TODO: Separar ui em outro script
     public class LevelManager : Singleton<LevelManager>
     {
@@ -26,8 +25,10 @@ namespace ZombieDiorama.Level
         public List<string> enemiesTag = new List<string>();
         public List<string> alliesTag = new List<string>();
 
-        public List<Health> Zombies = new List<Health>();
-        public List<Health> Soldiers = new List<Health>();
+        public ObserverEvent ZombieDeathTag;
+        public ObserverEvent SoldierDeathTag;
+
+        private int soldierCount, zombieCount;
 
         [Title("UI")]
         [Title("Soldier")]
@@ -39,33 +40,50 @@ namespace ZombieDiorama.Level
         public Text ZombieCurrent;
 
         [Button("Check Enemies")]
-        private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {EnemiesAlive()}");
+        private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {zombieCount <= 0}");
 
         [Button("Check Allies")]
-        private void BSoldiersAlive() => Debug.Log($"Allies Alive: {SoldiersAlive()}");
+        private void BSoldiersAlive() => Debug.Log($"Allies Alive: {soldierCount <= 0}");
 
-        [SerializeField]
-        private List<Health> AllCharacters = new List<Health>();
         private bool levelFinished;
 
         protected override void Awake()
         {
             base.Awake();
-            UpdateCharacters();
+            CountCharacters();
             Application.targetFrameRate = targetFrameRate;
         }
 
-        private void Update()
+        private void CountCharacters()
+        {
+            var allCharacters = FindObjectsOfType<Health>().ToList();
+            zombieCount = allCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag)).Count;
+            soldierCount = allCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag)).Count;
+            UpdateUITotal();
+        }
+
+        private void UpdateCountEntities(int zombieNewValue, int soldierNewValue)
+        {
+            zombieCount = zombieNewValue;
+            soldierCount = soldierNewValue;
+
+            UpdateUICurrent(SoldierCurrent, soldierCount);
+            UpdateUICurrent(ZombieCurrent, zombieCount);
+
+            CheckEndGame();
+        }
+
+        private void CheckEndGame()
         {
             if (levelFinished) return;
 
-            if (!EnemiesAlive())
+            if (zombieCount <= 0)
             {
                 OnWin?.Invoke();
                 EventOnWin?.Invoke();
                 levelFinished = true;
             }
-            else if (!SoldiersAlive())
+            else if (soldierCount <= 0)
             {
                 OnLose?.Invoke();
                 EventOnLose?.Invoke();
@@ -82,39 +100,35 @@ namespace ZombieDiorama.Level
         private void UpdateUITotal()
         {
             if (ZombieTotal)
-                ZombieTotal.text = Zombies.Count.ToString();
+                ZombieTotal.text = zombieCount.ToString();
             if (SoldierTotal)
-                SoldierTotal.text = Soldiers.Count.ToString();
+                SoldierTotal.text = soldierCount.ToString();
         }
 
-        private bool EnemiesAlive()
+        private void OnEnable()
         {
-            var enemiesAlive = Zombies.FindAll(zombie => zombie.IsAlive());
-            if (ZombieCurrent)
-                UpdateUICurrent(ZombieCurrent, enemiesAlive.Count);
-            if (enemiesAlive.Count > 0)
-                return true;
-            else
-                return false;
+            Observer.Subscribe(OnEntitiesChange);
         }
 
-        private bool SoldiersAlive()
+        private void OnDisable()
         {
-            var soldiersAlive = Soldiers.FindAll(soldier => soldier.IsAlive());
-            if (SoldierCurrent)
-                UpdateUICurrent(SoldierCurrent, soldiersAlive.Count);
-            if (soldiersAlive.Count > 0)
-                return true;
-            else
-                return false;
+            Observer.UnSubscribe(OnEntitiesChange);
         }
 
-        private void UpdateCharacters()
+        private void OnEntitiesChange(ObserverEvent eventType, object o = null)
         {
-            AllCharacters = FindObjectsOfType<Health>().ToList();
-            Zombies = AllCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag));
-            Soldiers = AllCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag));
-            UpdateUITotal();
+            if (!eventType)
+                return;
+
+            if (eventType.IsValid(ZombieDeathTag))
+            {
+                UpdateCountEntities(zombieCount - 1, soldierCount);
+            }
+            else if (eventType.IsValid(SoldierDeathTag))
+            {
+                UpdateCountEntities(zombieCount, soldierCount - 1);
+            }
         }
+
     }
 }

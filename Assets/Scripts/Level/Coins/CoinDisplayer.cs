@@ -9,7 +9,6 @@ namespace ZombieDiorama.Level.Coins
     public class CoinDisplayer : MonoBehaviour
     {
         public Text CoinText;
-
         public UnityEvent OnUpdate;
 
         private void Awake()
