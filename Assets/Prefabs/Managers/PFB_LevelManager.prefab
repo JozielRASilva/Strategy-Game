@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2572775808439012431}
   - component: {fileID: 2572775808439012430}
+  - component: {fileID: 3565034463143848115}
   m_Layer: 0
   m_Name: PFB_LevelManager
   m_TagString: Untagged
@@ -47,6 +48,18 @@ MonoBehaviour:
   - Zombie
   alliesTag:
   - Soldier
-  Zombies: []
-  Soldiers: []
-  AllCharacters: []
+  ZombieDeathTag: {fileID: 11400000, guid: d5836ed9afea5e74f82a7de951cfeb15, type: 2}
+  SoldierDeathTag: {fileID: 11400000, guid: bb983ed06d5044c4badf99ff94531aba, type: 2}
+--- !u!114 &3565034463143848115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572775808439012424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208f8ff02c03c9d448cf67ae98c7d949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrameRate: 60

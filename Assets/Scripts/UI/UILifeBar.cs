@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace ZombieDiorama.UI
 {
-    public class LifeBar : MonoBehaviour
+    public class UILifeBar : MonoBehaviour
     {
         [FormerlySerializedAs("health")] public Health Health;
 

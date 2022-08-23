@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -11,33 +10,22 @@ using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level
 {
-    // TODO: Separar ui em outro script
     public class LevelManager : Singleton<LevelManager>
     {
-        public int targetFrameRate = 60;
-
-        public Action OnWin;
-        public Action OnLose;
-
-        public UnityEvent EventOnWin;
-        public UnityEvent EventOnLose;
-
         public List<string> enemiesTag = new List<string>();
         public List<string> alliesTag = new List<string>();
 
         public ObserverEvent ZombieDeathTag;
         public ObserverEvent SoldierDeathTag;
 
-        private int soldierCount, zombieCount;
+        public static Action OnWin;
+        public static Action OnLose;
 
-        [Title("UI")]
-        [Title("Soldier")]
-        public Text SoldierTotal;
-        public Text SoldierCurrent;
+        public static Action<int> OnInitZombiesCount;
+        public static Action<int> OnInitSoldiersCount;
 
-        [Title("Zombie")]
-        public Text ZombieTotal;
-        public Text ZombieCurrent;
+        public static Action<int> OnUpdateZombiesCount;
+        public static Action<int> OnUpdateSoldiersCount;
 
         [Button("Check Enemies")]
         private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {zombieCount <= 0}");
@@ -46,12 +34,16 @@ namespace ZombieDiorama.Level
         private void BSoldiersAlive() => Debug.Log($"Allies Alive: {soldierCount <= 0}");
 
         private bool levelFinished;
+        private int soldierCount, zombieCount;
 
         protected override void Awake()
         {
             base.Awake();
+        }
+
+        private void Start()
+        {
             CountCharacters();
-            Application.targetFrameRate = targetFrameRate;
         }
 
         private void CountCharacters()
@@ -59,7 +51,9 @@ namespace ZombieDiorama.Level
             var allCharacters = FindObjectsOfType<Health>().ToList();
             zombieCount = allCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag)).Count;
             soldierCount = allCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag)).Count;
-            UpdateUITotal();
+
+            OnInitZombiesCount?.Invoke(zombieCount);
+            OnInitSoldiersCount?.Invoke(soldierCount);
         }
 
         private void UpdateCountEntities(int zombieNewValue, int soldierNewValue)
@@ -67,8 +61,8 @@ namespace ZombieDiorama.Level
             zombieCount = zombieNewValue;
             soldierCount = soldierNewValue;
 
-            UpdateUICurrent(SoldierCurrent, soldierCount);
-            UpdateUICurrent(ZombieCurrent, zombieCount);
+            OnUpdateZombiesCount?.Invoke(zombieCount);
+            OnUpdateSoldiersCount?.Invoke(soldierCount);
 
             CheckEndGame();
         }
@@ -80,29 +74,13 @@ namespace ZombieDiorama.Level
             if (zombieCount <= 0)
             {
                 OnWin?.Invoke();
-                EventOnWin?.Invoke();
                 levelFinished = true;
             }
             else if (soldierCount <= 0)
             {
                 OnLose?.Invoke();
-                EventOnLose?.Invoke();
                 levelFinished = true;
             }
-        }
-
-        private void UpdateUICurrent(Text text, int value)
-        {
-            if (text)
-                text.text = value.ToString();
-        }
-
-        private void UpdateUITotal()
-        {
-            if (ZombieTotal)
-                ZombieTotal.text = zombieCount.ToString();
-            if (SoldierTotal)
-                SoldierTotal.text = soldierCount.ToString();
         }
 
         private void OnEnable()

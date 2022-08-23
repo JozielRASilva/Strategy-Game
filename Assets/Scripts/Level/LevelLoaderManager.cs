@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using ZombieDiorama.Utilities.Patterns;
+
 namespace ZombieDiorama.Level
 {
-    public class LevelLoader : MonoBehaviour
+    public class LevelLoaderManager : Singleton<LevelLoaderManager>
     {
         public Animator animator;
         public string triggerName = "start";
@@ -15,15 +17,20 @@ namespace ZombieDiorama.Level
 
         public void LoadNextLevel()
         {
-            StartCoroutine(LoadLevel(nextLevel));
+            StartCoroutine(LoadLevelCO(nextLevel));
         }
 
-        public void LoadNextLevel(int levelIndex)
+        public static void Load(int levelIndex)
         {
-            StartCoroutine(LoadLevel(levelIndex));
+            Instance?.LoadLevel(levelIndex);
         }
 
-        IEnumerator LoadLevel(string levelName)
+        public void LoadLevel(int levelIndex)
+        {
+            StartCoroutine(LoadLevelCO(levelIndex));
+        }
+
+        private IEnumerator LoadLevelCO(string levelName)
         {
             animator.SetTrigger(triggerName);
 
@@ -32,7 +39,7 @@ namespace ZombieDiorama.Level
             SceneManager.LoadScene(levelName);
         }
 
-        IEnumerator LoadLevel(int levelIndex)
+        private IEnumerator LoadLevelCO(int levelIndex)
         {
             animator.SetTrigger(triggerName);
 
@@ -41,7 +48,7 @@ namespace ZombieDiorama.Level
             StartCoroutine(LoadAsynchrously(levelIndex));
         }
 
-        IEnumerator LoadAsynchrously(int sceneIndex)
+        private IEnumerator LoadAsynchrously(int sceneIndex)
         {
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
             loadSlider.gameObject.SetActive(true);

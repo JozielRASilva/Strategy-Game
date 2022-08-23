@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2086742012324187994}
   - component: {fileID: 6915874389385876291}
   m_Layer: 5
-  m_Name: Barra
+  m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 8162309277590275333}
   - component: {fileID: 1248740802532391302}
   m_Layer: 5
-  m_Name: Numero total
+  m_Name: TotalValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 8537572419858482224}
   - component: {fileID: 7535575515954156042}
   m_Layer: 5
-  m_Name: Numero Atual
+  m_Name: CurrentValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 214993429033677618}
   - component: {fileID: 4554495682267081253}
   m_Layer: 5
-  m_Name: Face
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

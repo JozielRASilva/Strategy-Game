@@ -730,10 +730,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5361231486427698440}
     m_Modifications:
-    - target: {fileID: 2486481681924647190, guid: d4c4273fb15d41c4680641e47736bd9f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2271932719901274546}
     - target: {fileID: 5169132611685494758, guid: d4c4273fb15d41c4680641e47736bd9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1609,14 +1605,6 @@ PrefabInstance:
       propertyPath: SoldierCurrent
       value: 
       objectReference: {fileID: 3853650095111039989}
-    - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
-      propertyPath: ZombieDeathTag
-      value: 
-      objectReference: {fileID: 11400000, guid: d5836ed9afea5e74f82a7de951cfeb15, type: 2}
-    - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
-      propertyPath: SoldierDeathTag
-      value: 
-      objectReference: {fileID: 11400000, guid: bb983ed06d5044c4badf99ff94531aba, type: 2}
     - target: {fileID: 2572775808439012430, guid: 9a1f4c92350372747bc5fa5d1d5e85da, type: 3}
       propertyPath: EventOnWin.m_PersistentCalls.m_Calls.Array.size
       value: 3

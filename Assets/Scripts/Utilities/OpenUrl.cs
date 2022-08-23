@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZombieDiorama.Level
+namespace ZombieDiorama.Utilities
 {
     public class OpenUrl : MonoBehaviour
     {
