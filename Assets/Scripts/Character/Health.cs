@@ -3,13 +3,14 @@ using Sirenix.OdinInspector;
 using UnityEngine.Events;
 using System;
 using UnityEngine.Serialization;
+using ZombieDiorama.Utilities.Primitives;
 
 namespace ZombieDiorama.Character
 {
     public class Health : KillableObject
     {
         [Title("Life Info")]
-        [FormerlySerializedAs("maxLife")] public int MaxLife = 5;
+        public SOInt MaxLife;
 
         [Title("Damage")]
         [FormerlySerializedAs("invincibilityTime")] public float InvincibilityTime = 0.2f;
@@ -26,7 +27,8 @@ namespace ZombieDiorama.Character
         [OnInspectorGUI]
         private void Nodes()
         {
-            GUILayout.Label($"Life: {_currentLife} / {MaxLife}");
+            int maxLife = MaxLife == null ? 0 : MaxLife.Value;
+            GUILayout.Label($"Life: {_currentLife} / {maxLife}");
         }
 
         [Title("Buttons Actions")]
@@ -38,11 +40,11 @@ namespace ZombieDiorama.Character
         private void BHit() => TakeDamage(1);
 
         [Button("Kill")]
-        private void BKill() => TakeDamage(MaxLife);
+        private void BKill() => TakeDamage(MaxLife.Value);
 
         protected void Awake()
         {
-            _currentLife = MaxLife;
+            _currentLife = MaxLife.Value;
         }
 
         public void TakeDamage(int value)
@@ -69,13 +71,13 @@ namespace ZombieDiorama.Character
 
         public void AddLife(int value)
         {
-            if (_currentLife + value < MaxLife)
+            if (_currentLife + value < MaxLife.Value)
             {
                 _currentLife += value;
             }
             else
             {
-                _currentLife = MaxLife;
+                _currentLife = MaxLife.Value;
             }
             OnChange?.Invoke();
             OnHealed?.Invoke();
@@ -88,7 +90,7 @@ namespace ZombieDiorama.Character
 
         public bool LifeIsCompleted()
         {
-            if (_currentLife == MaxLife) return true;
+            if (_currentLife == MaxLife.Value) return true;
             else return false;
         }
 

@@ -509,8 +509,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: MaxLife
+      value: 
+      objectReference: {fileID: 11400000, guid: 96d3887265795be45ae02dec11b7be70, type: 2}
+    - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: maxLife
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: DelayToDestroy
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: delayToDestroy

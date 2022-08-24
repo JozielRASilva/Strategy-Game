@@ -137,12 +137,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   HasDelayToDestroy: 0
-  delayToDestroy: 0.2
-  Damage: 1
+  DelayToDestroy: 0.2
+  Damage: {fileID: 11400000, guid: ca736a6db161d794c9fa62146f151773, type: 2}
   Damageable:
     serializedVersion: 2
     m_Bits: 256
-  destroyOnDamage: 0
+  DestroyOnDamage: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -311,11 +311,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  GizmosSize: 0.5
   Hitboxes: {fileID: 585380213}
   OnAttackEvent: {fileID: 1105881112}
   CallCounter: {fileID: 371440073}
   OnCallEvent: {fileID: 3923622199825305593}
+  GizmosSize: 0.5
 --- !u!114 &6394551119402832637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,6 +884,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3675497964422395938, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: Animator
+      value: 
+      objectReference: {fileID: 6194675293686199}
+    - target: {fileID: 3675497964422395938, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 6194675293686199}
@@ -934,6 +938,10 @@ PrefabInstance:
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: maxLife
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: DelayToDestroy
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: delayToDestroy

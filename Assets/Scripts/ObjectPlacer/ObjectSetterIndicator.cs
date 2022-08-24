@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace ZombieDiorama.ObjectPlacer
 {
     [RequireComponent(typeof(RaycastMouse))]
-    public class ObjectSetterIndicator : MonoBehaviour
+    public class ObjectSetterIndicator : Singleton<ObjectSetterIndicator>
     {
 
         [Title("Set Conditions")]
@@ -42,8 +42,9 @@ namespace ZombieDiorama.ObjectPlacer
         public UnityEvent OnCanNotSet;
         public UnityEvent OnStopSet;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             RaycastMouse = GetComponent<RaycastMouse>();
 
             if (StartActivated)
@@ -164,6 +165,11 @@ namespace ZombieDiorama.ObjectPlacer
             Current?.gameObject?.SetActive(true);
             Current?.ShowPreview(point + PositionOffset);
 
+        }
+
+        public static void IndicateObject(SettableObjectInfo info)
+        {
+            Instance?.IndicateObjectToSet(info);
         }
 
         public void IndicateObjectToSet(SettableObjectInfo info)

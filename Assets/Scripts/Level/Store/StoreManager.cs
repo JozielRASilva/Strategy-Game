@@ -5,6 +5,8 @@ using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using ZombieDiorama.Level.Coins;
 using ZombieDiorama.Utilities.Patterns;
+using System;
+using ZombieDiorama.ObjectPlacer;
 
 namespace ZombieDiorama.Level.Store
 {
@@ -17,6 +19,11 @@ namespace ZombieDiorama.Level.Store
         public UnityEvent OnCanBuy;
         public UnityEvent OnCanNotBuy;
         public UnityEvent OnRefund;
+
+        public static Action<SettableObjectInfo> OnBuyAction;
+        public static Action OnCanBuyAction;
+        public static Action OnCanNotBuyAction;
+        public static Action OnRefundAction;
 
         private StoreItem currentBought;
 
@@ -40,6 +47,7 @@ namespace ZombieDiorama.Level.Store
 
             CoinCounter.Add(currentBought.Price);
             OnRefund?.Invoke();
+            OnRefundAction?.Invoke();
             currentBought = null;
         }
 
@@ -51,12 +59,17 @@ namespace ZombieDiorama.Level.Store
 
                 OnCanBuy?.Invoke();
                 OnBuy?.Invoke(item.Item);
+
+                OnCanBuyAction?.Invoke();
+                OnBuyAction?.Invoke(item.Item);
+
                 CoinCounter.Add(-item.Price);
                 currentBought = item;
             }
             else
             {
                 OnCanNotBuy?.Invoke();
+                OnCanNotBuyAction?.Invoke();
             }
         }
     }

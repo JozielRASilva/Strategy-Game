@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c889f821d3d63f04291370b0d9936272, type: 3}
-  m_Name: SO_SupportSoldierAttributes
+  m_Script: {fileID: 11500000, guid: 828e78c615b6ae54c8fdfaf9358e10c7, type: 3}
+  m_Name: SO_ZombieDamage
   m_EditorClassIdentifier: 
-  DistanceToSet: 2
-  DelayToSet: 1.5
-  DistanceToHeal: 1
-  DampingToHeal: 10
-  HealCooldown: 3
-  HealRest: 0.2
+  Value: 2
