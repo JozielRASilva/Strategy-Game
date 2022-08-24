@@ -21,7 +21,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             List<GameObject> calls = TagObjectsCacher.GetObjects(callerTag);
             int i = 0;
@@ -39,7 +39,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
                         target.SetTarget(null);
                         i = 0;
                     }
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

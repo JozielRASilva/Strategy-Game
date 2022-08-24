@@ -20,7 +20,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
 
             if (!ObjectSetterManager.Instance)
                 yield break;
@@ -42,11 +42,11 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
                 ObjectSetterManager.Instance.SetObject(objectToSet);
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             else
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

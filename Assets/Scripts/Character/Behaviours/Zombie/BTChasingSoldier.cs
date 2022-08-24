@@ -19,7 +19,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (targetSoldier)
             {
@@ -28,14 +28,14 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
                 if (distance > maxDistance)
                 {
                     targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
 
                 if (distance < minDistance)
                 {
                     targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

@@ -37,7 +37,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
 
             GameObject selectedEnemy = GetTarget(bt.transform);
 
@@ -62,11 +62,11 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                 if (onAttack)
                     onAttack.FirstCall();
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             else
             {
-                status = Status.FAILURE;
+                CurrentStatus = Status.FAILURE;
             }
         }
 

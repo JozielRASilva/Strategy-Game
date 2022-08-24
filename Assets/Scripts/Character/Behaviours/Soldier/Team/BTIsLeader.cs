@@ -14,7 +14,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!TeamHandler.Instance) yield break;
 
@@ -22,7 +22,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (function.Equals(Squad.SquadFunction.LEADER))
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

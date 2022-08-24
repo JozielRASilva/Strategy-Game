@@ -53,7 +53,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             yield return new WaitForSeconds(rest);
 
             hitboxes.SetActive(false);
-            status = Status.SUCCESS;
+            CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

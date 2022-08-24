@@ -8,15 +8,15 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
     {
         private GameObject callCounter;
         private float timeCalling;
-        private EventCaller eventCaller;
+        private EventCaller onCallHorde;
         private float timeToEffectAgain;
         private float timeStamp;
 
-        public BTCallHorde(GameObject _callCounter, float _timeCalling, EventCaller _eventCaller)
+        public BTCallHorde(GameObject _callCounter, float _timeCalling, EventCaller _oncallHorde)
         {
             callCounter = _callCounter;
             timeCalling = _timeCalling;
-            eventCaller = _eventCaller;
+            onCallHorde = _oncallHorde;
             timeToEffectAgain = timeCalling * 100;
         }
 
@@ -26,14 +26,14 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 
             if (timeStamp < Time.time)
             {
-                eventCaller.FirstCall();
+                onCallHorde.FirstCall();
                 timeStamp = timeToEffectAgain + Time.deltaTime;
             }
 
             yield return new WaitForSeconds(timeCalling);
 
             callCounter.SetActive(false);
-            status = Status.SUCCESS;
+            CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

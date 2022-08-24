@@ -17,7 +17,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             Transform target = targetHandler.GetTarget();
 
@@ -26,7 +26,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                 float currentDistance = Vector3.Distance(bt.transform.position, target.position);
                 if (currentDistance < distance)
                 {
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;

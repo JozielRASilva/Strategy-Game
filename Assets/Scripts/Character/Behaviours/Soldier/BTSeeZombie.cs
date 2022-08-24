@@ -21,7 +21,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             List<GameObject> zombies = TagObjectsCacher.GetObjects(zombieTag);
             foreach (GameObject zombie in zombies)
@@ -30,7 +30,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                 if (Vector3.Distance(bt.transform.position, zombie.transform.position) < distanceView)
                 {
                     targetZombie.SetTarget(zombie.transform);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     break;
                 }
             }

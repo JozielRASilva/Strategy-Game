@@ -16,7 +16,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!RegroupHandler.Instance)
                 yield break;
@@ -27,7 +27,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             {
                 targetHandler.SetTarget(regroupPoint);
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }
