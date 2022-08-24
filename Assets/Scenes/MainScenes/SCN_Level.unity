@@ -9180,10 +9180,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1351797705}
     m_Modifications:
-    - target: {fileID: 829626164, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
-      propertyPath: ShowGizmos
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7908078489216045781, guid: e9f79992da8c5174ab1dc72c3ac19102, type: 3}
       propertyPath: m_RootOrder
       value: 0

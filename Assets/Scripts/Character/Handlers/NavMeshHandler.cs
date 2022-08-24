@@ -11,13 +11,10 @@ namespace ZombieDiorama.Character.Handler
         [Header("Animation")]
         [FormerlySerializedAs("xSpeed")] public string XSpeed = "xSpeed";
         [FormerlySerializedAs("animator")] public Animator Animator;
-        public string OnStartMoveTrigger = "OnStartMoveTrigger";
 
         private NavMeshAgent agent;
         private Transform currentTarget;
         private bool canMove;
-
-        private bool isMoving;
 
         private void Awake()
         {
@@ -37,17 +34,6 @@ namespace ZombieDiorama.Character.Handler
         {
             if (Animator)
                 Animator.SetFloat(XSpeed, agent.velocity.magnitude);
-
-            if (agent.velocity.magnitude == 0)
-            {
-                isMoving = false;
-            }
-            else
-            {
-                if (!isMoving)
-                    Animator.SetTrigger(OnStartMoveTrigger);
-                isMoving = true;
-            }
         }
 
         public void SetDestinationToTarget()
