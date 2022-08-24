@@ -5,7 +5,7 @@ using ZombieDiorama.ObjectPlacer;
 using ZombieDiorama.Utilities.Patterns;
 using System.Collections.Generic;
 
-namespace ZombieDiorama.Character.Controllers.Regroup
+namespace ZombieDiorama.Character.Handler.Regroup
 {
     public class RegroupIndicator : MonoBehaviour
     {
@@ -77,7 +77,7 @@ namespace ZombieDiorama.Character.Controllers.Regroup
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RegroupController.Instance.SetPoint(lastPoint);
+                RegroupHandler.Instance.SetPoint(lastPoint);
 
                 OnSet?.Invoke();
 

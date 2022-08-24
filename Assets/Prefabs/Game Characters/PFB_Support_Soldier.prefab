@@ -266,11 +266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldierAttributes: {fileID: 11400000, guid: c3a3bf7dfb2163848a9faddbdc788c59, type: 2}
   Speed: 4
   distanceToRegroup: 2
   distanceToLeader: 3
-  SquadMember: {fileID: 0}
-  ShootHandler: {fileID: 0}
   muzzle: {fileID: 6099054148090206178}
   bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
   shootCooldown: 0.5
@@ -282,6 +281,7 @@ MonoBehaviour:
   ShowGizmos: 0
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
   MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
+  supportAttributes: {fileID: 11400000, guid: b0c50416383632041be2b8b941e850d2, type: 2}
   distanceToSet: 2
   delayToSet: 1.5
   SetObjectEffect: {fileID: 3105253606689490518}

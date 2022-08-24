@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using System.Collections.Generic;
 using ZombieDiorama.Utilities.TagsCacher;
 
@@ -9,9 +9,9 @@ namespace ZombieDiorama.Character.Behaviours.Custom
     public class BTThereIs : BTNode
     {
         public string targetTag;
-        private TargetController targetController;
+        private TargetHandler targetController;
 
-        public BTThereIs(TargetController _targetController, string _target)
+        public BTThereIs(TargetHandler _targetController, string _target)
         {
             targetTag = _target;
             targetController = _targetController;

@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
@@ -8,9 +8,9 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
     {
         private Transform[] waypoints;
         public int currentWaypoint;
-        TargetController target;
+        TargetHandler target;
 
-        public BTRealignWaypoint(Transform[] _waypoints, TargetController _target)
+        public BTRealignWaypoint(Transform[] _waypoints, TargetHandler _target)
         {
             waypoints = _waypoints;
             target = _target;

@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Character.Behaviours;
 
 namespace ZombieDiorama.Character.AIs
 {
     public class AIBase : MonoBehaviour
     {
-        protected TargetController TargetController;
-        protected NavMeshController NavMeshController;
+        protected TargetHandler TargetHandler;
+        protected NavMeshHandler NavMeshHandler;
         protected BehaviourTree behaviourTree;
 
         #region  SETUP
         protected virtual void Awake()
         {
-            TargetController = GetComponent<TargetController>();
-            NavMeshController = GetComponent<NavMeshController>();
+            TargetHandler = GetComponent<TargetHandler>();
+            NavMeshHandler = GetComponent<NavMeshHandler>();
         }
 
         protected virtual void Start()
@@ -33,14 +33,14 @@ namespace ZombieDiorama.Character.AIs
                 behaviourTree = gameObject.AddComponent<BehaviourTree>();
             }
 
-            if (!NavMeshController)
+            if (!NavMeshHandler)
             {
-                NavMeshController = gameObject.AddComponent<NavMeshController>();
+                NavMeshHandler = gameObject.AddComponent<NavMeshHandler>();
             }
 
-            if (!TargetController)
+            if (!TargetHandler)
             {
-                TargetController = gameObject.AddComponent<TargetController>();
+                TargetHandler = gameObject.AddComponent<TargetHandler>();
             }
         }
 

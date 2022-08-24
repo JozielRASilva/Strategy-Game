@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.ObjectPlacer;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateObjectToSet : BTNode
     {
-        private TargetController targetController;
+        private TargetHandler targetController;
 
-        public BTUpdateObjectToSet(TargetController _targetController)
+        public BTUpdateObjectToSet(TargetHandler _targetController)
         {
             targetController = _targetController;
         }

@@ -1,18 +1,18 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveByNavMesh : BTNode
     {
 
-        private TargetController targetController;
+        private TargetHandler targetController;
         private float speed = 1;
         private float distance = 1;
-        private NavMeshController NavMeshController;
+        private NavMeshHandler NavMeshController;
 
-        public BTMoveByNavMesh(NavMeshController _navMeshController, TargetController _targetController, float _speed, float _distance)
+        public BTMoveByNavMesh(NavMeshHandler _navMeshController, TargetHandler _targetController, float _speed, float _distance)
         {
             targetController = _targetController;
             speed = _speed;

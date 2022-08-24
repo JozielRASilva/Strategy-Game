@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Team;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTMemberToHeal : BTNode
     {
         private SquadMember squadMember;
-        private TargetController targetController;
+        private TargetHandler targetController;
 
-        public BTMemberToHeal(SquadMember _squadMember, TargetController _targetController)
+        public BTMemberToHeal(SquadMember _squadMember, TargetHandler _targetController)
         {
             squadMember = _squadMember;
             targetController = _targetController;
@@ -20,9 +20,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         {
             status = Status.FAILURE;
 
-            if (!TeamController.Instance) yield break;
+            if (!TeamHandler.Instance) yield break;
 
-            List<SquadMember> members = TeamController.Instance.GetSquadMembers(squadMember);
+            List<SquadMember> members = TeamHandler.Instance.GetSquadMembers(squadMember);
 
             if (members == null) yield break;
 

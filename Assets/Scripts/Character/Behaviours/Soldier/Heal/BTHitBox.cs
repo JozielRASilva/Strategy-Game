@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.Events;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
@@ -10,11 +10,11 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         private GameObject hitboxes;
         private float coolDown;
         private float rest;
-        private TargetController targetController;
+        private TargetHandler targetController;
         private float damping = 1;
         private EventCaller OnHit;
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetController _targetController, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetController, EventCaller _OnHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;
@@ -23,7 +23,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             OnHit = _OnHit;
         }
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetController _targetController, float _damping, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetController, float _damping, EventCaller _OnHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;

@@ -1,17 +1,17 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Regroup;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Regroup;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTCalledToRegroup : BTNode
     {
         private int currentRegroupId = -1;
-        private TargetController targetController;
+        private TargetHandler targetController;
         private float distance;
 
-        public BTCalledToRegroup(TargetController _targetController, float _distance)
+        public BTCalledToRegroup(TargetHandler _targetController, float _distance)
         {
             targetController = _targetController;
             distance = _distance;
@@ -21,9 +21,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         {
             status = Status.FAILURE;
 
-            if (!RegroupController.Instance) yield break;
+            if (!RegroupHandler.Instance) yield break;
 
-            bool canRegroup = RegroupController.Instance.CanRegroup(currentRegroupId);
+            bool canRegroup = RegroupHandler.Instance.CanRegroup(currentRegroupId);
 
             if (canRegroup)
             {
@@ -35,7 +35,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
                     if (currentDistance < distance)
                     {
-                        currentRegroupId = RegroupController.Instance.GetRegroupId();
+                        currentRegroupId = RegroupHandler.Instance.GetRegroupId();
                     }
                 }
             }

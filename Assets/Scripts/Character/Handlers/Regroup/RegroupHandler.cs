@@ -1,10 +1,9 @@
 using UnityEngine;
 using ZombieDiorama;
-namespace ZombieDiorama.Character.Controllers.Regroup
+namespace ZombieDiorama.Character.Handler.Regroup
 {
-    public class RegroupController : Utilities.Patterns.Singleton<RegroupController>
+    public class RegroupHandler : Utilities.Patterns.Singleton<RegroupHandler>
     {
-
         public Vector3 RegroupPoint;
         public int currentRegroupId = -1;
 

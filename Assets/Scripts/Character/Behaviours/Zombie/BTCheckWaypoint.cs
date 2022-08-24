@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTCheckWaypoint : BTNode
     {
         private float distance = 1;
-        private TargetController targetController;
+        private TargetHandler targetController;
 
-        public BTCheckWaypoint(float _distance, TargetController _targetController)
+        public BTCheckWaypoint(float _distance, TargetHandler _targetController)
         {
             distance = _distance;
             targetController = _targetController;

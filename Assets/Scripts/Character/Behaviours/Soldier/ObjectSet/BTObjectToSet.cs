@@ -1,5 +1,5 @@
 using System.Collections;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler.Team;
 using ZombieDiorama.ObjectPlacer;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier

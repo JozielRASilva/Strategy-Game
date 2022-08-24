@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace ZombieDiorama.Character.Controllers
+namespace ZombieDiorama.Character.Handler
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class NavMeshController : MonoBehaviour
+    public class NavMeshHandler : MonoBehaviour
     {
 
         [Header("Animation")]

@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTSeeSoldier : BTNode
     {
-        private TargetController targetSoldier;
+        private TargetHandler targetSoldier;
         private float distanceView;
         private string soldierTag;
 
-        public BTSeeSoldier(TargetController _targetSoldier, float _distanceView, string _soldierTag)
+        public BTSeeSoldier(TargetHandler _targetSoldier, float _distanceView, string _soldierTag)
         {
             targetSoldier = _targetSoldier;
             distanceView = _distanceView;

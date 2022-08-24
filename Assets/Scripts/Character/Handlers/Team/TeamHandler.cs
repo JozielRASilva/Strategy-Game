@@ -3,9 +3,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
 
-namespace ZombieDiorama.Character.Controllers.Team
+namespace ZombieDiorama.Character.Handler.Team
 {
-    public class TeamController : Utilities.Patterns.Singleton<TeamController>
+    public class TeamHandler : Utilities.Patterns.Singleton<TeamHandler>
     {
         public List<Squad> squads = new List<Squad>();
 

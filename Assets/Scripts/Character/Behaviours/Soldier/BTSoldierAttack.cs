@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.Events;
 using ZombieDiorama.Utilities.TagsCacher;
 
@@ -9,14 +9,14 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTSoldierAttack : BTNode
     {
-        private TargetController targetZombie;
+        private TargetHandler targetZombie;
         private ShootHandler shootHandler;
         private float coolDown;
         private float damping;
         private string targetTag;
         private EventCaller eventCaller;
 
-        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag)
+        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag)
         {
             targetZombie = _targetZombie;
             coolDown = _coolDown;
@@ -25,7 +25,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             damping = _damping;
         }
 
-        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _eventCaller)
+        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _eventCaller)
         {
             targetZombie = _targetZombie;
             coolDown = _coolDown;

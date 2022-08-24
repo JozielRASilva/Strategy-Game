@@ -1,16 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTChasingSoldier : BTNode
     {
-        private TargetController targetSoldier;
+        private TargetHandler targetSoldier;
         private float minDistance;
         private float maxDistance;
 
-        public BTChasingSoldier(TargetController _targetSoldier, float _minDistance, float _maxDistance)
+        public BTChasingSoldier(TargetHandler _targetSoldier, float _minDistance, float _maxDistance)
         {
             targetSoldier = _targetSoldier;
             minDistance = _minDistance;

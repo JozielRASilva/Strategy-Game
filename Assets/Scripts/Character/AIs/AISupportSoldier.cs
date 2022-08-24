@@ -2,33 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Team;
 using ZombieDiorama.Character.Behaviours;
 using ZombieDiorama.Character.Behaviours.Soldier;
 using ZombieDiorama.Character.Behaviours.Custom;
 using ZombieDiorama.Character.Behaviours.Decorators;
 using ZombieDiorama.Utilities.Events;
+using ZombieDiorama.Character.Info;
 
 namespace ZombieDiorama.Character.AIs
 {
     public class AISupportSoldier : Soldier
     {
-        [Title("Set Object")]
-        public float distanceToSet = 0.5f;
-        public float delayToSet = 0.2f;
+        [TitleGroup("Geral Info"), SerializeField]
+        protected SOSupportAttributes supportAttributes;
 
         [Title("AI Set Object Effect")]
         public EventCaller SetObjectEffect;
         public EventCaller SettingObjectEffect;
 
         [Title("Heal")]
-        public float distanceToHeal = 0.7f;
-        public float dampingToHeal = 1f;
-
         public GameObject healHitBox;
-        public float healCooldown = 2f;
-        public float healRest = 1f;
 
         [Title("AI Heal Effect")]
         public EventCaller HealEffect;
@@ -69,21 +64,21 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence_setObject = new BTSequence();
 
             #region Cheking
-            BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
-            BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(TargetController);
+            BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
+            BTUpdateObjectToSet updateObjectToSet = new BTUpdateObjectToSet(TargetHandler);
             #endregion
 
             #region Moving
             BTSequence sequence_1 = new BTSequence();
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTNextToTarget nextToTarget = new BTNextToTarget(TargetController, distanceToSet);
-            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToSet);
+            BTNextToTarget nextToTarget = new BTNextToTarget(TargetHandler, supportAttributes.DistanceToSet);
+            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(NavMeshHandler, TargetHandler, soldierAttributes.Speed, supportAttributes.DistanceToSet);
 
             parallelSelector_1.SetNode(nextToTarget);
             parallelSelector_1.SetNode(moveToSet);
 
-            BTSetObject setObject = new BTSetObject(delayToSet, SettingObjectEffect, SetObjectEffect);
+            BTSetObject setObject = new BTSetObject(supportAttributes.DelayToSet, SettingObjectEffect, SetObjectEffect);
 
             sequence_1.SetNode(parallelSelector_1);
             sequence_1.SetNode(setObject);
@@ -104,11 +99,11 @@ namespace ZombieDiorama.Character.AIs
         {
             BTSequence sequence = new BTSequence();
 
-            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, TargetController);
+            BTMemberToHeal memberToHeal = new BTMemberToHeal(squadMember, TargetHandler);
 
-            BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(NavMeshController, TargetController, Speed, distanceToHeal);
+            BTMoveByNavMesh MoveToHeal = new BTMoveByNavMesh(NavMeshHandler, TargetHandler, soldierAttributes.Speed, supportAttributes.DistanceToHeal);
 
-            BTHitbox hitboxHeal = new BTHitbox(healHitBox, healCooldown, healRest, TargetController, dampingToHeal, HealEffect);
+            BTHitbox hitboxHeal = new BTHitbox(healHitBox, supportAttributes.HealCooldown, supportAttributes.HealRest, TargetHandler, supportAttributes.DampingToHeal, HealEffect);
 
             sequence.SetNode(memberToHeal);
             sequence.SetNode(MoveToHeal);
@@ -122,27 +117,27 @@ namespace ZombieDiorama.Character.AIs
         public override BTNode GetBranchFight()
         {
             BTParallelSelector parallel = new BTParallelSelector();
-            parallel.SetNode(new BTMoveByNavMesh(NavMeshController, TargetController, Speed, rangeToSeeTarget.x));
-            parallel.SetNode(new BTCloseToTarget(TargetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetController, distanceToRegroup);
-            BTMemberToHeal memberToHeal = new BTMemberToHeal(SquadMember, TargetController);
-            BTObjectToSet thereIsObjectToSet = new BTObjectToSet(SquadMember);
+            parallel.SetNode(new BTMoveByNavMesh(NavMeshHandler, TargetHandler, soldierAttributes.Speed, soldierAttributes.RangeToSeeTarget.x));
+            parallel.SetNode(new BTCloseToTarget(TargetHandler, soldierAttributes.RangeToSeeTarget.x, soldierAttributes.RangeToSeeTarget.y));
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(TargetHandler, soldierAttributes.DistanceToRegroup);
+            BTMemberToHeal memberToHeal = new BTMemberToHeal(squadMember, TargetHandler);
+            BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
 
             parallel.SetNode(thereIsObjectToSet);
             parallel.SetNode(calledToRegroup);
             parallel.SetNode(memberToHeal);
 
             BTInverter inverter = new BTInverter();
-            BTSeeZombie seeZombie = new BTSeeZombie(TargetController, rangeToSeeTarget.y, target);
+            BTSeeZombie seeZombie = new BTSeeZombie(TargetHandler, soldierAttributes.RangeToSeeTarget.y, soldierAttributes.TargetTag.Value);
             inverter.SetNode(seeZombie);
             parallel.SetNode(inverter);
 
             BTSequence sequence_1 = new BTSequence();
             sequence_1.SetNode(parallel);
-            sequence_1.SetNode(new BTSoldierAttack(TargetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
+            sequence_1.SetNode(new BTSoldierAttack(TargetHandler, soldierAttributes.ShootCooldown, shootHandler, soldierAttributes.LookAtZombieDamping, soldierAttributes.TargetTag.Value, AttackEventCaller));
 
             BTSequence sequence = new BTSequence();
-            sequence.SetNode(new BTSeeZombie(TargetController, rangeToSeeTarget.y, target));
+            sequence.SetNode(new BTSeeZombie(TargetHandler, soldierAttributes.RangeToSeeTarget.y, soldierAttributes.TargetTag.Value));
             sequence.SetNode(sequence_1);
 
             BTSelector selector = new BTSelector();

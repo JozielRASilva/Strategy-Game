@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace ZombieDiorama.Character.Controllers.Team
+namespace ZombieDiorama.Character.Handler.Team
 {
     [Serializable]
     public class Squad

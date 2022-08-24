@@ -1,16 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTCloseToTarget : BTNode
     {
-        private TargetController targetZombie;
+        private TargetHandler targetZombie;
         private float minDistance;
         private float maxDistance;
 
-        public BTCloseToTarget(TargetController _targetZombie, float _minDistance, float _maxDistance)
+        public BTCloseToTarget(TargetHandler _targetZombie, float _minDistance, float _maxDistance)
         {
             targetZombie = _targetZombie;
             minDistance = _minDistance;

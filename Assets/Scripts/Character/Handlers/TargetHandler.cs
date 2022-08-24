@@ -1,10 +1,9 @@
 using UnityEngine;
 
-namespace ZombieDiorama.Character.Controllers
+namespace ZombieDiorama.Character.Handler
 {
-    public class TargetController : MonoBehaviour
+    public class TargetHandler : MonoBehaviour
     {
-
         private Transform currentTarget;
 
         public Transform GetTarget()

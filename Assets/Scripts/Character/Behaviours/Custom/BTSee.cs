@@ -1,26 +1,26 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTSee : BTNode
     {
-        private TargetController targetController;
+        private TargetHandler targetController;
         public string target;
         public float rangeToCheckEnemy = 5;
         private bool cleanTarget = false;
 
-        public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy)
+        public BTSee(TargetHandler _targetController, string _target, float _rangeToCheckEnemy)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;
             targetController = _targetController;
         }
 
-        public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
+        public BTSee(TargetHandler _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;

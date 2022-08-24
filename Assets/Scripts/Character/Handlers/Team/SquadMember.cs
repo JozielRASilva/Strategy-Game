@@ -1,12 +1,12 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace ZombieDiorama.Character.Controllers.Team
+namespace ZombieDiorama.Character.Handler.Team
 {
     public class SquadMember : MonoBehaviour
     {
         public bool ExtraMember;
-        public Health Health;
+        [HideInInspector] public Health Health;
 
         private void Awake()
         {
@@ -32,7 +32,7 @@ namespace ZombieDiorama.Character.Controllers.Team
         [Button("Get Function")]
         public void CheckSquadFunction()
         {
-            if (!TeamController.Instance) return;
+            if (!TeamHandler.Instance) return;
 
             GetSquadFunction();
         }
@@ -40,15 +40,15 @@ namespace ZombieDiorama.Character.Controllers.Team
         [Button("Remove Function")]
         public void RemoveFromSquad()
         {
-            if (!TeamController.Instance) return;
+            if (!TeamHandler.Instance) return;
 
-            TeamController.Instance.RemoveFromSquad(this);
+            TeamHandler.Instance.RemoveFromSquad(this);
 
         }
 
         public Squad.SquadFunction GetSquadFunction()
         {
-            return TeamController.Instance.GetSquadFunction(this);
+            return TeamHandler.Instance.GetSquadFunction(this);
         }
 
     }
