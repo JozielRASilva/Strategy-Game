@@ -9,7 +9,7 @@ namespace ZombieDiorama.Level.Store
 
         public void Buy()
         {
-            StoreManager.Instance.Buy(StoreItemsIndex);
+            StoreManager.BuyCall(StoreItemsIndex);
         }
     }
 }
