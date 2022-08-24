@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 using ZombieDiorama.Extensions;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character
 {
@@ -10,7 +11,7 @@ namespace ZombieDiorama.Character
         [Title("Damage Info")]
         public int Damage = 1;
         public LayerMask Damageable;
-        public bool destroyOnDamage = false;
+        [FormerlySerializedAs("destroyOnDamage")] public bool DestroyOnDamage = false;
         public UnityEvent OnHit;
 
         private void OnTriggerEnter(Collider other)
@@ -24,7 +25,7 @@ namespace ZombieDiorama.Character
 
                 OnHit?.Invoke();
 
-                if (destroyOnDamage)
+                if (DestroyOnDamage)
                 {
                     Destroy();
                 }

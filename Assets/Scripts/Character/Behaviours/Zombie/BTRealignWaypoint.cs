@@ -1,16 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTRealignWaypoint : BTNode
     {
         private Transform[] waypoints;
-        public int currentWaypoint;
-        TargetController target;
+        private int currentWaypoint;
+        private TargetHandler target;
 
-        public BTRealignWaypoint(Transform[] _waypoints, TargetController _target)
+        public BTRealignWaypoint(Transform[] _waypoints, TargetHandler _target)
         {
             waypoints = _waypoints;
             target = _target;
@@ -18,7 +18,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             currentWaypoint++;
 
@@ -28,7 +28,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
             }
 
             target.SetTarget(waypoints[currentWaypoint]);
-            status = Status.SUCCESS;
+            CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

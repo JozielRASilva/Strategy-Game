@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -7,113 +6,108 @@ using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using ZombieDiorama.Character;
+using ZombieDiorama.Utilities.Patterns;
+using ZombieDiorama.Utilities.Primitives;
 
 namespace ZombieDiorama.Level
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : Singleton<LevelManager>
     {
-        public static LevelManager Instance;
+        public List<SOString> EnemiesTag = new List<SOString>();
+        public List<SOString> alliesTag = new List<SOString>();
 
-        public int targetFrameRate = 60;
+        public ObserverEvent ZombieDeathTag;
+        public ObserverEvent SoldierDeathTag;
 
-        public Action OnWin;
-        public Action OnLose;
+        public static Action OnWin;
+        public static Action OnLose;
 
-        public UnityEvent EventOnWin;
-        public UnityEvent EventOnLose;
+        public static Action<int> OnInitZombiesCount;
+        public static Action<int> OnInitSoldiersCount;
 
-        public List<string> enemiesTag = new List<string>();
-        public List<string> alliesTag = new List<string>();
-
-        public List<Health> Zombies = new List<Health>();
-        public List<Health> Soldiers = new List<Health>();
-
-        [Title("UI")]
-        [Title("Soldier")]
-        public Text SoldierTotal;
-        public Text SoldierCurrent;
-
-        [Title("Zombie")]
-        public Text ZombieTotal;
-        public Text ZombieCurrent;
+        public static Action<int> OnUpdateZombiesCount;
+        public static Action<int> OnUpdateSoldiersCount;
 
         [Button("Check Enemies")]
-        private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {EnemiesAlive()}");
+        private void BEnemiesAlive() => Debug.Log($"Enemies Alive: {zombieCount <= 0}");
 
         [Button("Check Allies")]
-        private void BSoldiersAlive() => Debug.Log($"Allies Alive: {SoldiersAlive()}");
+        private void BSoldiersAlive() => Debug.Log($"Allies Alive: {soldierCount <= 0}");
 
-        [SerializeField]
-        private List<Health> AllCharacters = new List<Health>();
         private bool levelFinished;
+        private int soldierCount, zombieCount;
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = this;
-            UpdateCharacters();
-            Application.targetFrameRate = targetFrameRate;
+            base.Awake();
         }
 
-        private void Update()
+        private void Start()
+        {
+            CountCharacters();
+        }
+
+        private void CountCharacters()
+        {
+            var allCharacters = FindObjectsOfType<Health>().ToList();
+            zombieCount = allCharacters.FindAll(zombie => EnemiesTag.Exists(e => e.Value.Equals(zombie.tag))).Count;
+            soldierCount = allCharacters.FindAll(soldiers => alliesTag.Exists(a => a.Value.Equals(soldiers.tag))).Count;
+
+            OnInitZombiesCount?.Invoke(zombieCount);
+            OnInitSoldiersCount?.Invoke(soldierCount);
+        }
+
+        private void UpdateCountEntities(int zombieNewValue, int soldierNewValue)
+        {
+            zombieCount = zombieNewValue;
+            soldierCount = soldierNewValue;
+
+            OnUpdateZombiesCount?.Invoke(zombieCount);
+            OnUpdateSoldiersCount?.Invoke(soldierCount);
+
+            CheckEndGame();
+        }
+
+        private void CheckEndGame()
         {
             if (levelFinished) return;
 
-            if (!EnemiesAlive())
+            if (zombieCount <= 0)
             {
                 OnWin?.Invoke();
-                EventOnWin?.Invoke();
                 levelFinished = true;
             }
-            else if (!SoldiersAlive())
+            else if (soldierCount <= 0)
             {
                 OnLose?.Invoke();
-                EventOnLose?.Invoke();
                 levelFinished = true;
             }
         }
 
-        private void UpdateUICurrent(Text text, int value)
+        private void OnEnable()
         {
-            if (text)
-                text.text = value.ToString();
+            Observer.Subscribe(OnEntitiesChange);
         }
 
-        private void UpdateUITotal()
+        private void OnDisable()
         {
-            if (ZombieTotal)
-                ZombieTotal.text = Zombies.Count.ToString();
-            if (SoldierTotal)
-                SoldierTotal.text = Soldiers.Count.ToString();
+            Observer.UnSubscribe(OnEntitiesChange);
         }
 
-        private bool EnemiesAlive()
+        private void OnEntitiesChange(ObserverEvent eventType, object o = null)
         {
-            var enemiesAlive = Zombies.FindAll(zombie => zombie.IsAlive());
-            if (ZombieCurrent)
-                UpdateUICurrent(ZombieCurrent, enemiesAlive.Count);
-            if (enemiesAlive.Count > 0)
-                return true;
-            else
-                return false;
+            if (!eventType)
+                return;
+
+            if (eventType.IsValid(ZombieDeathTag))
+            {
+                UpdateCountEntities(zombieCount - 1, soldierCount);
+            }
+            else if (eventType.IsValid(SoldierDeathTag))
+            {
+                UpdateCountEntities(zombieCount, soldierCount - 1);
+            }
         }
 
-        private bool SoldiersAlive()
-        {
-            var soldiersAlive = Soldiers.FindAll(soldier => soldier.IsAlive());
-            if (SoldierCurrent)
-                UpdateUICurrent(SoldierCurrent, soldiersAlive.Count);
-            if (soldiersAlive.Count > 0)
-                return true;
-            else
-                return false;
-        }
-
-        private void UpdateCharacters()
-        {
-            AllCharacters = FindObjectsOfType<Health>(true).ToList();
-            Zombies = AllCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag));
-            Soldiers = AllCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag));
-            UpdateUITotal();
-        }
     }
 }

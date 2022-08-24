@@ -1,20 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Cameras
 {
     public class CameraZoom : MonoBehaviour
     {
-        public CameraController cameraController;
+        [FormerlySerializedAs("cameraController")] public CameraController CameraController;
         public float ZoomSpeed = 5;
         public Vector2 ZoomRange = new Vector2(-25, -50);
 
         void LateUpdate()
         {
-            if (!cameraController) return;
+            if (!CameraController) return;
 
-            cameraController.CameraDistance += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
+            CameraController.CameraDistance += Input.mouseScrollDelta.y * ZoomSpeed * Time.deltaTime;
 
-            cameraController.CameraDistance = Mathf.Clamp(cameraController.CameraDistance, ZoomRange.x, ZoomRange.y);
+            CameraController.CameraDistance = Mathf.Clamp(CameraController.CameraDistance, ZoomRange.x, ZoomRange.y);
         }
     }
 }

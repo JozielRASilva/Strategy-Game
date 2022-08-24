@@ -1,41 +1,41 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Regroup;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Regroup;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTCalledToRegroup : BTNode
     {
         private int currentRegroupId = -1;
-        private TargetController targetController;
+        private TargetHandler targetHandler;
         private float distance;
 
-        public BTCalledToRegroup(TargetController _targetController, float _distance)
+        public BTCalledToRegroup(TargetHandler _targetHandler, float _distance)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             distance = _distance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (!RegroupController.Instance) yield break;
+            if (!RegroupHandler.Instance) yield break;
 
-            bool canRegroup = RegroupController.Instance.CanRegroup(currentRegroupId);
+            bool canRegroup = RegroupHandler.Instance.CanRegroup(currentRegroupId);
 
             if (canRegroup)
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
 
-                if (targetController.GetTarget())
+                if (targetHandler.GetTarget())
                 {
-                    float currentDistance = Vector3.Distance(bt.transform.position, targetController.GetTarget().position);
+                    float currentDistance = Vector3.Distance(bt.transform.position, targetHandler.GetTarget().position);
 
                     if (currentDistance < distance)
                     {
-                        currentRegroupId = RegroupController.Instance.GetRegroupId();
+                        currentRegroupId = RegroupHandler.Instance.GetRegroupId();
                     }
                 }
             }

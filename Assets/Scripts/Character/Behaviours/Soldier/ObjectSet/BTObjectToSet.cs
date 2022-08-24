@@ -1,12 +1,12 @@
 using System.Collections;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler.Team;
 using ZombieDiorama.ObjectPlacer;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTObjectToSet : BTNode
     {
-        SquadMember member;
+        private SquadMember member;
      
         public BTObjectToSet(SquadMember _member)
         {
@@ -15,7 +15,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!ObjectSetterManager.Instance || !member.ExtraMember)
                 yield break;
@@ -24,7 +24,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (objectToSet != null)
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

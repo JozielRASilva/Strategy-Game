@@ -18,7 +18,6 @@ namespace ZombieDiorama.Cameras
         public float AngleX = 180;
         public bool moveAxisY = true;
         public float AngleY = 180;
-
         public float AngleZ = 0;
 
         private void Update()
@@ -29,16 +28,16 @@ namespace ZombieDiorama.Cameras
             }
             if (Input.GetMouseButton(mouseButtom))
             {
-                Vector3 direcao = LastPosition - Cam.ScreenToViewportPoint(Input.mousePosition);
+                Vector3 direction = LastPosition - Cam.ScreenToViewportPoint(Input.mousePosition);
                 Cam.transform.position = Target.position;
 
                 if (moveAxisY)
-                    Cam.transform.Rotate(new Vector3(1, 0, 0), direcao.y * AngleY);
+                    Cam.transform.Rotate(new Vector3(1, 0, 0), direction.y * AngleY);
                 else
                     Cam.transform.eulerAngles = new Vector3(AngleY, Cam.transform.eulerAngles.y, AngleZ);
 
                 if (moveAxisX)
-                    Cam.transform.Rotate(new Vector3(0, 1, 0), -direcao.x * AngleX, Space.World);
+                    Cam.transform.Rotate(new Vector3(0, 1, 0), -direction.x * AngleX, Space.World);
                 else
                     Cam.transform.eulerAngles = new Vector3(Cam.transform.eulerAngles.x, AngleX, AngleZ);
 

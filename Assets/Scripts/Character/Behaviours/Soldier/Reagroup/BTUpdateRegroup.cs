@@ -1,33 +1,33 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Regroup;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Regroup;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateRegroup : BTNode
     {
-        private TargetController targetController;
+        private TargetHandler targetHandler;
 
-        public BTUpdateRegroup(TargetController _targetController)
+        public BTUpdateRegroup(TargetHandler _targetHandler)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (!RegroupController.Instance)
+            if (!RegroupHandler.Instance)
                 yield break;
 
-            Transform regroupPoint = RegroupController.Instance.GetRegroupPoint();
+            Transform regroupPoint = RegroupHandler.Instance.GetRegroupPoint();
 
             if (regroupPoint != null)
             {
-                targetController.SetTarget(regroupPoint);
+                targetHandler.SetTarget(regroupPoint);
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

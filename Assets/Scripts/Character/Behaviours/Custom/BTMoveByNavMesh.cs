@@ -1,53 +1,53 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveByNavMesh : BTNode
     {
 
-        private TargetController targetController;
+        private TargetHandler targetHandler;
         private float speed = 1;
         private float distance = 1;
-        private NavMeshController NavMeshController;
+        private NavMeshHandler navMeshHandler;
 
-        public BTMoveByNavMesh(NavMeshController _navMeshController, TargetController _targetController, float _speed, float _distance)
+        public BTMoveByNavMesh(NavMeshHandler _navMeshHandler, TargetHandler _targetHandler, float _speed, float _distance)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             speed = _speed;
             distance = _distance;
-            NavMeshController = _navMeshController;
+            navMeshHandler = _navMeshHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
 
             Transform npc = bt.transform;
             Transform target = null;
 
             while (true)
             {
-                target = targetController.GetTarget();
+                target = targetHandler.GetTarget();
 
-                if (!target || !NavMeshController)
+                if (!target || !navMeshHandler)
                 {
-                    status = Status.FAILURE;
+                    CurrentStatus = Status.FAILURE;
                     break;
                 }
 
                 if (Vector3.Distance(npc.position, target.position) < distance) break;
 
-                NavMeshController.SetTarget(target, speed, distance);
+                navMeshHandler.SetTarget(target, speed, distance);
 
                 yield return null;
             }
 
-            NavMeshController.StopMove();
+            navMeshHandler.StopMove();
 
-            if (status.Equals(Status.RUNNING))
-                status = Status.SUCCESS;
+            if (CurrentStatus.Equals(Status.RUNNING))
+                CurrentStatus = Status.SUCCESS;
         }
     }
 }

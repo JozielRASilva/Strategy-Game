@@ -8,19 +8,19 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
     public class BTSetObject : BTNode
     {
         private float delayToSet;
-        private EventCaller OnSetting;
-        private EventCaller OnSet;
+        private EventCaller onSetting;
+        private EventCaller onSet;
 
-        public BTSetObject(float _delayToSet, EventCaller _OnSetting, EventCaller _OnSet)
+        public BTSetObject(float _delayToSet, EventCaller _onSetting, EventCaller _onSet)
         {
             delayToSet = _delayToSet;
-            OnSetting = _OnSetting;
-            OnSet = _OnSet;
+            onSetting = _onSetting;
+            onSet = _onSet;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
 
             if (!ObjectSetterManager.Instance)
                 yield break;
@@ -29,24 +29,24 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (objectToSet != null)
             {
-                if (OnSetting)
-                    OnSetting.FirstCall();
+                if (onSetting)
+                    onSetting.FirstCall();
 
                 yield return new WaitForSeconds(delayToSet);
 
-                if (OnSetting)
-                    OnSetting.SecondCall();
+                if (onSetting)
+                    onSetting.SecondCall();
 
-                if (OnSet)
-                    OnSet.FirstCall();
+                if (onSet)
+                    onSet.FirstCall();
 
                 ObjectSetterManager.Instance.SetObject(objectToSet);
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             else
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

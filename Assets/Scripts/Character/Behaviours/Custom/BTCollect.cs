@@ -1,12 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTCollect : BTNode
     {
-        public string target;
-        public float distance = 1;
+        private string target;
+        private float distance = 1;
 
         public BTCollect(string _target, float _distance)
         {
@@ -16,17 +18,17 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             Transform npc = bt.transform;
-            GameObject[] items = GameObject.FindGameObjectsWithTag(target);
+            List<GameObject> items = TagObjectsCacher.GetObjects(target);
 
             foreach (GameObject item in items)
             {
                 if (Vector3.Distance(npc.position, item.transform.position) < distance)
                 {
                     GameObject.Destroy(item);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;

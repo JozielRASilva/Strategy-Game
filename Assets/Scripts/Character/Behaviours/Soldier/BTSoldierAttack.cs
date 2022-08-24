@@ -1,45 +1,44 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.Events;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTSoldierAttack : BTNode
     {
-        private TargetController targetZombie;
+        private TargetHandler targetZombie;
+        private ShootHandler shootHandler;
         private float coolDown;
-        private GameObject prefab;
-        private GameObject muzzle;
         private float damping;
         private string targetTag;
-        private EventCaller eventCaller;
+        private EventCaller onAttack;
 
-        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle, float _damping, string _targetTag)
+        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag)
         {
             targetZombie = _targetZombie;
             coolDown = _coolDown;
-            prefab = projectile;
-            muzzle = _muzzle;
+            shootHandler = _shootHandler;
             targetTag = _targetTag;
             damping = _damping;
         }
 
-        public BTSoldierAttack(TargetController _targetZombie, float _coolDown, GameObject projectile, GameObject _muzzle, float _damping, string _targetTag, EventCaller _eventCaller)
+        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _onAttack)
         {
             targetZombie = _targetZombie;
             coolDown = _coolDown;
-            prefab = projectile;
-            muzzle = _muzzle;
+            shootHandler = _shootHandler;
             targetTag = _targetTag;
             damping = _damping;
-            eventCaller = _eventCaller;
+            onAttack = _onAttack;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
-            
+            CurrentStatus = Status.RUNNING;
+
             GameObject selectedEnemy = GetTarget(bt.transform);
 
             if (selectedEnemy)
@@ -52,30 +51,29 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                     var rotation = Quaternion.LookRotation(lookPos);
                     bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
 
+                    if (!selectedEnemy.activeInHierarchy)
+                        yield break;
+
                     yield return null;
                 }
 
-                //TODO Mudar para modulo separado
-                Vector3 position = muzzle.transform.position;
-                GameObject shoot = GameObject.Instantiate(prefab, position, Quaternion.identity);
-                shoot.GetComponent<Rigidbody>().AddForce(bt.transform.forward * 400);
-                GameObject.Destroy(shoot, 5);
+                shootHandler.Execute();
 
-                if (eventCaller)
-                    eventCaller.FirstCall();
+                if (onAttack)
+                    onAttack.FirstCall();
 
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             else
             {
-                status = Status.FAILURE;
+                CurrentStatus = Status.FAILURE;
             }
         }
 
         public GameObject GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
+            List<GameObject> targets = TagObjectsCacher.GetObjects(targetTag);
             float lastDistance = 0;
 
             foreach (var _target in targets)

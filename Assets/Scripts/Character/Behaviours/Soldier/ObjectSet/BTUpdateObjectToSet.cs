@@ -1,22 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 using ZombieDiorama.ObjectPlacer;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTUpdateObjectToSet : BTNode
     {
-        private TargetController targetController;
+        private TargetHandler targetHandler;
 
-        public BTUpdateObjectToSet(TargetController _targetController)
+        public BTUpdateObjectToSet(TargetHandler _targetHandler)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (!ObjectSetterManager.Instance)
                 yield break;
@@ -25,8 +25,8 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             if (objectToSet != null)
             {
-                targetController.SetTarget(objectToSet);
-                status = Status.SUCCESS;
+                targetHandler.SetTarget(objectToSet);
+                CurrentStatus = Status.SUCCESS;
             }
 
             yield break;

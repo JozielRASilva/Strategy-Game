@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c889f821d3d63f04291370b0d9936272, type: 3}
+  m_Name: SO_SupportSoldierAttributes
+  m_EditorClassIdentifier: 
+  Speed: 4
+  TargetTag: {fileID: 11400000, guid: 908c97478af72084783c24e365af8cab, type: 2}
+  DistanceToTarget: 8
+  DistanceToRegroup: 2
+  DistanceToLeader: 3
+  ShootCooldown: 0.5
+  LookAtZombieDamping: 15
+  RangeToSeeTarget: {x: 8, y: 10}
+  DistanceToSet: 2
+  DelayToSet: 1.5
+  DistanceToHeal: 1.2
+  DampingToHeal: 10
+  HealCooldown: 3
+  HealRest: 0.5
