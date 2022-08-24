@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character.Handler.Team
 {
     public class TeamHandler : Utilities.Patterns.Singleton<TeamHandler>
     {
-        public List<Squad> squads = new List<Squad>();
+        [FormerlySerializedAs("squads")] public List<Squad> Squads = new List<Squad>();
 
         [Title("Squad Info")]
         public int MembersForSquad = 4;
@@ -24,7 +25,7 @@ namespace ZombieDiorama.Character.Handler.Team
 
             ValidateMembersOnSquads();
 
-            foreach (var squad in squads)
+            foreach (var squad in Squads)
             {
                 if (squad.ContainsMember(member))
                     return squad.GetFunction(member);
@@ -35,7 +36,7 @@ namespace ZombieDiorama.Character.Handler.Team
 
         public SquadMember GetSquadLeader(SquadMember member)
         {
-            foreach (var squad in squads)
+            foreach (var squad in Squads)
             {
                 if (squad.ContainsMember(member))
                 {
@@ -51,7 +52,7 @@ namespace ZombieDiorama.Character.Handler.Team
 
         public List<SquadMember> GetSquadMembers(SquadMember member)
         {
-            foreach (var squad in squads)
+            foreach (var squad in Squads)
             {
                 if (squad.ContainsMember(member))
                 {
@@ -63,7 +64,7 @@ namespace ZombieDiorama.Character.Handler.Team
 
         public void RemoveFromSquad(SquadMember member)
         {
-            foreach (var squad in squads)
+            foreach (var squad in Squads)
             {
                 if (squad.ContainsMember(member))
                 {
@@ -77,11 +78,11 @@ namespace ZombieDiorama.Character.Handler.Team
 
         private void OrganizeMemberOnSquads(SquadMember member)
         {
-            bool hasSquad = squads.Exists(s => !s.GetFunction(member).Equals(Squad.SquadFunction.NONE));
+            bool hasSquad = Squads.Exists(s => !s.GetFunction(member).Equals(Squad.SquadFunction.NONE));
 
             if (hasSquad) return;
 
-            List<Squad> squadsWithSpace = squads.FindAll(s => s.CanAddMember(CheckDefaultFunction(member), MembersForSquad, member)).ToList();
+            List<Squad> squadsWithSpace = Squads.FindAll(s => s.CanAddMember(CheckDefaultFunction(member), MembersForSquad, member)).ToList();
 
             Squad.SquadFunction function = CheckDefaultFunction(member);
 
@@ -137,11 +138,11 @@ namespace ZombieDiorama.Character.Handler.Team
 
         private void ValidateMembersOnSquads()
         {
-            if (squads.Count == 0) return;
+            if (Squads.Count == 0) return;
 
             List<Squad> squadsOneLeader = new List<Squad>();
 
-            foreach (var squad in squads)
+            foreach (var squad in Squads)
             {
                 if (!squad.IsValid())
                 {
@@ -154,15 +155,15 @@ namespace ZombieDiorama.Character.Handler.Team
                 }
             }
 
-            bool existFreeSquad = squads.Exists(s => !s.Full(MembersForSquad) && !squadsOneLeader.Contains(s));
+            bool existFreeSquad = Squads.Exists(s => !s.Full(MembersForSquad) && !squadsOneLeader.Contains(s));
 
             if (existFreeSquad)
             {
-                squads.RemoveAll(s => squadsOneLeader.Contains(s));
+                Squads.RemoveAll(s => squadsOneLeader.Contains(s));
             }
 
             // Delete squad
-            squads.RemoveAll(s => !s.Leader && s.Members.Count == 0);
+            Squads.RemoveAll(s => !s.Leader && s.Members.Count == 0);
         }
 
 
@@ -173,7 +174,7 @@ namespace ZombieDiorama.Character.Handler.Team
             Squad squad = new Squad();
             squad.Leader = member;
 
-            squads.Add(squad);
+            Squads.Add(squad);
         }
 
     }

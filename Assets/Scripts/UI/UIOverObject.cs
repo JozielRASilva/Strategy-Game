@@ -13,8 +13,7 @@ namespace ZombieDiorama.UI
         public UnityEvent OnExitOver;
 
         private bool isOver;
-
-        PointerEventData pointerEventData;
+        private PointerEventData pointerEventData;
 
         private void Start()
         {

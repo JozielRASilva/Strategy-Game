@@ -27,7 +27,7 @@ namespace ZombieDiorama.Level.Store
 
             StoreItem item = storeItems[itemId];
 
-            if (CoinCounter.GetValue() - item.price >= 0)
+            if (CoinCounter.GetValue() - item.Price >= 0)
             {
                 return true;
             }
@@ -38,7 +38,7 @@ namespace ZombieDiorama.Level.Store
         {
             if (currentBought == null) return;
 
-            CoinCounter.Add(currentBought.price);
+            CoinCounter.Add(currentBought.Price);
             OnRefund?.Invoke();
             currentBought = null;
         }
@@ -51,7 +51,7 @@ namespace ZombieDiorama.Level.Store
 
                 OnCanBuy?.Invoke();
                 OnBuy?.Invoke(item.Item);
-                CoinCounter.Add(-item.price);
+                CoinCounter.Add(-item.Price);
                 currentBought = item;
             }
             else

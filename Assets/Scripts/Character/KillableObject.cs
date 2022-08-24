@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.Events;
 using System;
 using MonsterLove.Pooller;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character
 {
@@ -28,7 +29,7 @@ namespace ZombieDiorama.Character
 
         public bool HasDelayToDestroy = false;
         [ShowIf("HasDelayToDestroy", true)]
-        public float delayToDestroy = 0.2f;
+        [FormerlySerializedAs("delayToDestroy")] public float DelayToDestroy = 0.2f;
 
         private void OnEnable()
         {
@@ -54,7 +55,7 @@ namespace ZombieDiorama.Character
 
         public IEnumerator DestroyCO()
         {
-            yield return new WaitForSeconds(delayToDestroy);
+            yield return new WaitForSeconds(DelayToDestroy);
             Kill();
         }
 

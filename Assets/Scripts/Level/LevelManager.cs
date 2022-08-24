@@ -7,13 +7,14 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using ZombieDiorama.Character;
 using ZombieDiorama.Utilities.Patterns;
+using ZombieDiorama.Utilities.Primitives;
 
 namespace ZombieDiorama.Level
 {
     public class LevelManager : Singleton<LevelManager>
     {
-        public List<string> enemiesTag = new List<string>();
-        public List<string> alliesTag = new List<string>();
+        public List<SOString> EnemiesTag = new List<SOString>();
+        public List<SOString> alliesTag = new List<SOString>();
 
         public ObserverEvent ZombieDeathTag;
         public ObserverEvent SoldierDeathTag;
@@ -49,8 +50,8 @@ namespace ZombieDiorama.Level
         private void CountCharacters()
         {
             var allCharacters = FindObjectsOfType<Health>().ToList();
-            zombieCount = allCharacters.FindAll(zombie => enemiesTag.Contains(zombie.tag)).Count;
-            soldierCount = allCharacters.FindAll(soldiers => alliesTag.Contains(soldiers.tag)).Count;
+            zombieCount = allCharacters.FindAll(zombie => EnemiesTag.Exists(e => e.Value.Equals(zombie.tag))).Count;
+            soldierCount = allCharacters.FindAll(soldiers => alliesTag.Exists(a => a.Value.Equals(soldiers.tag))).Count;
 
             OnInitZombiesCount?.Invoke(zombieCount);
             OnInitSoldiersCount?.Invoke(soldierCount);

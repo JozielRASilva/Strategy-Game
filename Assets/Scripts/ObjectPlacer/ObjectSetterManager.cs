@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MonsterLove.Pooller;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.ObjectPlacer
@@ -9,7 +10,7 @@ namespace ZombieDiorama.ObjectPlacer
     public class ObjectSetterManager : Singleton<ObjectSetterManager>
     {
         public List<SettableObjectInfo> ObjectsAvaliableToSet = new List<SettableObjectInfo>();
-        public int poolSize = 20;
+        [FormerlySerializedAs("poolSize")] public int PoolSize = 20;
 
         public List<ManageObject> objectsToSet = new List<ManageObject>();
 
@@ -18,8 +19,8 @@ namespace ZombieDiorama.ObjectPlacer
             base.Awake();
             foreach (var objectAvaliable in ObjectsAvaliableToSet)
             {
-                PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, poolSize);
-                PoolManager.WarmPool(objectAvaliable.ObjectPreviewChecker.gameObject, poolSize);
+                PoolManager.WarmPool(objectAvaliable.ObjectToSet.gameObject, PoolSize);
+                PoolManager.WarmPool(objectAvaliable.ObjectPreviewChecker.gameObject, PoolSize);
             }
             objectsToSet = new List<ManageObject>();
         }
@@ -57,7 +58,7 @@ namespace ZombieDiorama.ObjectPlacer
             if (manageObject == null) return;
 
             ObjectToSet objectTo = manageObject.objectToSet;
-            PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet.gameObject, objectTo.position, Quaternion.Euler(objectTo.rotation));
+            PoolManager.SpawnObject(objectTo.ObjectInfo.ObjectToSet.gameObject, objectTo.TargetPosition, Quaternion.Euler(objectTo.TargetRotation));
 
             manageObject.settableObjectPreview.DisableObject();
             objectsToSet.Remove(manageObject);
@@ -116,7 +117,7 @@ namespace ZombieDiorama.ObjectPlacer
                 if (!objectTo.settableObjectPreview)
                     objectTo.settableObjectPreview = GetPreviewObject(objectTo.objectToSet.ObjectInfo);
                 if (objectTo.settableObjectPreview)
-                    objectTo.settableObjectPreview.ShowSelected(objectTo.objectToSet.position, objectTo.objectToSet.rotation);
+                    objectTo.settableObjectPreview.ShowSelected(objectTo.objectToSet.TargetPosition, objectTo.objectToSet.TargetRotation);
             }
         }
 

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using Sirenix.OdinInspector;
 using ZombieDiorama.ObjectPlacer;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Level.Store
 {
@@ -11,6 +7,6 @@ namespace ZombieDiorama.Level.Store
     public class StoreItem
     {
         public SettableObjectInfo Item;
-        public int price = 1;
+       [FormerlySerializedAs("price")] public int Price = 1;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using ZombieDiorama.Utilities.Patterns;
 
@@ -9,15 +10,15 @@ namespace ZombieDiorama.Level
 {
     public class LevelLoaderManager : Singleton<LevelLoaderManager>
     {
-        public Animator animator;
-        public string triggerName = "start";
-        public float transitionTime = 2;
-        public string nextLevel;
-        public Slider loadSlider;
+        [FormerlySerializedAs("animator")] public Animator Animator;
+        [FormerlySerializedAs("triggerName")] public string TriggerName = "start";
+        [FormerlySerializedAs("transitionTime")] public float TransitionTime = 2;
+        [FormerlySerializedAs("nextLevel")] public string NextLevel;
+        [FormerlySerializedAs("loadSlider")] public Slider LoadSlider;
 
         public void LoadNextLevel()
         {
-            StartCoroutine(LoadLevelCO(nextLevel));
+            StartCoroutine(LoadLevelCO(NextLevel));
         }
 
         public static void Load(int levelIndex)
@@ -32,18 +33,18 @@ namespace ZombieDiorama.Level
 
         private IEnumerator LoadLevelCO(string levelName)
         {
-            animator.SetTrigger(triggerName);
+            Animator.SetTrigger(TriggerName);
 
-            yield return new WaitForSeconds(transitionTime);
+            yield return new WaitForSeconds(TransitionTime);
 
             SceneManager.LoadScene(levelName);
         }
 
         private IEnumerator LoadLevelCO(int levelIndex)
         {
-            animator.SetTrigger(triggerName);
+            Animator.SetTrigger(TriggerName);
 
-            yield return new WaitForSeconds(transitionTime);
+            yield return new WaitForSeconds(TransitionTime);
 
             StartCoroutine(LoadAsynchrously(levelIndex));
         }
@@ -51,12 +52,12 @@ namespace ZombieDiorama.Level
         private IEnumerator LoadAsynchrously(int sceneIndex)
         {
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-            loadSlider.gameObject.SetActive(true);
+            LoadSlider.gameObject.SetActive(true);
 
             while (!operation.isDone)
             {
                 float progress = Mathf.Clamp01(operation.progress / .9f);
-                loadSlider.value = progress;
+                LoadSlider.value = progress;
                 yield return null;
             }
         }

@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e504f4f0a6ee7d14b913a957526363a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesTag:
-  - Zombie
+  EnemiesTag:
+  - {fileID: 11400000, guid: 908c97478af72084783c24e365af8cab, type: 2}
   alliesTag:
-  - Soldier
+  - {fileID: 11400000, guid: 724eea1db742c1249a6f0beea403ec5c, type: 2}
   ZombieDeathTag: {fileID: 11400000, guid: d5836ed9afea5e74f82a7de951cfeb15, type: 2}
   SoldierDeathTag: {fileID: 11400000, guid: bb983ed06d5044c4badf99ff94531aba, type: 2}
 --- !u!114 &3565034463143848115

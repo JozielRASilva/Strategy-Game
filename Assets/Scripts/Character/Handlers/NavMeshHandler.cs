@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character.Handler
 {
@@ -8,8 +9,8 @@ namespace ZombieDiorama.Character.Handler
     {
 
         [Header("Animation")]
-        public string xSpeed = "xSpeed";
-        public Animator animator;
+        [FormerlySerializedAs("xSpeed")] public string XSpeed = "xSpeed";
+        [FormerlySerializedAs("animator")] public Animator Animator;
 
         private NavMeshAgent agent;
         private Transform currentTarget;
@@ -19,7 +20,7 @@ namespace ZombieDiorama.Character.Handler
         {
             agent = GetComponent<NavMeshAgent>();
 
-            if (!animator) animator = GetComponent<Animator>();
+            if (!Animator) Animator = GetComponent<Animator>();
         }
 
         private void Update()
@@ -31,8 +32,8 @@ namespace ZombieDiorama.Character.Handler
 
         private void SetAnimationValues()
         {
-            if (animator)
-                animator.SetFloat(xSpeed, agent.velocity.magnitude);
+            if (Animator)
+                Animator.SetFloat(XSpeed, agent.velocity.magnitude);
         }
 
         public void SetDestinationToTarget()
@@ -74,7 +75,7 @@ namespace ZombieDiorama.Character.Handler
         {
             canMove = false;
             agent.SetDestination(transform.position);
-            animator.SetFloat(xSpeed, 0);
+            Animator.SetFloat(XSpeed, 0);
         }
 
     }

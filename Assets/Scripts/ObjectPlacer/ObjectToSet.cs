@@ -1,14 +1,15 @@
 using UnityEngine;
 using System;
 using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.ObjectPlacer
 {
     [System.Serializable]
     public class ObjectToSet
     {
-        public Vector3 position;
-        public Vector3 rotation;
+        [FormerlySerializedAs("position")] public Vector3 TargetPosition;
+        [FormerlySerializedAs("rotation")] public Vector3 TargetRotation;
 
         [Title("Private values")]
 
@@ -20,8 +21,8 @@ namespace ZombieDiorama.ObjectPlacer
 
         public ObjectToSet(Transform transform, SettableObjectInfo info)
         {
-            position = transform.position;
-            rotation = transform.eulerAngles;
+            TargetPosition = transform.position;
+            TargetRotation = transform.eulerAngles;
             ObjectInfo = info;
         }
 

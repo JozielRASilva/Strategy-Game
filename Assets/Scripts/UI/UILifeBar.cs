@@ -30,7 +30,7 @@ namespace ZombieDiorama.UI
         {
             if (!Health) return;
 
-            if (Health.GetLife() != Health.maxLife)
+            if (Health.GetLife() != Health.MaxLife)
             {
                 if (becomeFull)
                 {
@@ -57,7 +57,7 @@ namespace ZombieDiorama.UI
 
         private void UpdateLifeBar()
         {
-            float maxLife = Health.maxLife;
+            float maxLife = Health.MaxLife;
             float currentLife = Health.GetLife();
             float value = Remap(currentLife, 0, maxLife, 0, 1);
 

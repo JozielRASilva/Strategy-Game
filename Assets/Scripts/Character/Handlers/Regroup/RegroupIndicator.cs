@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using ZombieDiorama.ObjectPlacer;
 using ZombieDiorama.Utilities.Patterns;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character.Handler.Regroup
 {
@@ -13,30 +14,30 @@ namespace ZombieDiorama.Character.Handler.Regroup
         public LayerMask WhereCanSet;
 
         [Title("Enable")]
-        public bool startActivated = true;
+        [FormerlySerializedAs("startActivated")] public bool StartActivated = true;
         public bool AlwaysActivated = false;
 
         [Title("Observer Events")]
         public List<ObserverEvent> EventsToLock = new List<ObserverEvent>();
         public List<ObserverEvent> EventsToUnLock = new List<ObserverEvent>();
 
-        private bool activated = true;
-        private bool locked = false;
-
-        private RaycastMouse raycastMouse;
-
         [Title("UI Feedback")]
-        public bool hideWithInvalid;
-
-        public Transform rectTransform;
-        public Vector3 rotation = new Vector3(0, 0, 0);
-        public Vector3 positionOffset = new Vector3(0, 0.2f, 0);
-
+        [FormerlySerializedAs("hideWithInvalid")] public bool HideWithInvalid;
 
         [Title("Events")]
         public UnityEvent OnSet;
         public UnityEvent OnCanNotSet;
         public UnityEvent OnStopSet;
+
+        private bool activated = true;
+        private bool locked = false;
+
+        private RaycastMouse raycastMouse;
+
+        public Transform rectTransform;
+        public Vector3 rotation = new Vector3(0, 0, 0);
+        public Vector3 positionOffset = new Vector3(0, 0.2f, 0);
+
 
         private Vector3 lastPoint;
 
@@ -44,7 +45,7 @@ namespace ZombieDiorama.Character.Handler.Regroup
         {
             raycastMouse = GetComponent<RaycastMouse>();
 
-            if (startActivated)
+            if (StartActivated)
                 Indicate();
             else
                 StopIndicate();
@@ -62,7 +63,7 @@ namespace ZombieDiorama.Character.Handler.Regroup
 
             ShowCanvasFeedback(point);
 
-            if (hideWithInvalid && !raycastMouse.ValidPosition(WhereCanSet))
+            if (HideWithInvalid && !raycastMouse.ValidPosition(WhereCanSet))
             {
                 HideCanvasFeedback();
                 return;

@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character
 {
     public class CharacterAnimation : MonoBehaviour
     {
         [Header("Animation")]
-        public string xSpeed = "xSpeed";
-        public string shootTrigger = "Shoot";
+        [FormerlySerializedAs("xSpeed")] public string XSpeed = "xSpeed";
+        [FormerlySerializedAs("shootTrigger")] public string ShootTrigger = "Shoot";
 
         [Header("IK")]
         public float WeightToLookToMouse = 0.5f;
@@ -27,11 +28,11 @@ namespace ZombieDiorama.Character
 
             Debug.DrawRay(transform.position, movement * 2, Color.cyan);
 
-            animator.SetFloat(xSpeed, movement.magnitude);
+            animator.SetFloat(XSpeed, movement.magnitude);
 
             if (Input.GetButtonDown("Fire1"))
             {
-                animator.SetTrigger(shootTrigger);
+                animator.SetTrigger(ShootTrigger);
             }
         }
 
