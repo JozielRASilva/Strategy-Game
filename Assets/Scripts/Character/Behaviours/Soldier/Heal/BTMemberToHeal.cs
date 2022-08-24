@@ -8,12 +8,12 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
     public class BTMemberToHeal : BTNode
     {
         private SquadMember squadMember;
-        private TargetHandler targetController;
+        private TargetHandler targetHandler;
 
-        public BTMemberToHeal(SquadMember _squadMember, TargetHandler _targetController)
+        public BTMemberToHeal(SquadMember _squadMember, TargetHandler _targetHandler)
         {
             squadMember = _squadMember;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
@@ -51,7 +51,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                     selected = member;
                 }
             }
-            targetController.SetTarget(selected.transform);
+            targetHandler.SetTarget(selected.transform);
             status = Status.SUCCESS;
 
             yield break;

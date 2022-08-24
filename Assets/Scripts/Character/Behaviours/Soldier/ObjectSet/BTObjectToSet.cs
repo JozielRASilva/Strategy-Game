@@ -6,7 +6,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTObjectToSet : BTNode
     {
-        SquadMember member;
+        private SquadMember member;
      
         public BTObjectToSet(SquadMember _member)
         {

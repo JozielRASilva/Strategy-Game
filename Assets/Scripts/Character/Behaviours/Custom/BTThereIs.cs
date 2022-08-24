@@ -8,30 +8,30 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTThereIs : BTNode
     {
-        public string targetTag;
-        private TargetHandler targetController;
+        public string TargetTag;
+        private TargetHandler targetHandler;
 
-        public BTThereIs(TargetHandler _targetController, string _target)
+        public BTThereIs(TargetHandler _targetHandler, string _target)
         {
-            targetTag = _target;
-            targetController = _targetController;
+            TargetTag = _target;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             status = Status.RUNNING;
-            if (targetTag == "")
+            if (TargetTag == "")
             {
                 status = Status.FAILURE;
                 yield break;
             }
 
-            if (GameObject.FindGameObjectWithTag(targetTag))
+            if (GameObject.FindGameObjectWithTag(TargetTag))
             {
                 Transform target = GetTarget(bt.transform);
                 if (target)
                 {
-                    targetController.SetTarget(target);
+                    targetHandler.SetTarget(target);
                 }
                 status = Status.SUCCESS;
             }
@@ -46,7 +46,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
         public Transform GetTarget(Transform current)
         {
             GameObject selected = null;
-            List<GameObject> targets = TagObjectsCacher.GetObjects(targetTag);
+            List<GameObject> targets = TagObjectsCacher.GetObjects(TargetTag);
             float lastDistance = 0;
 
             foreach (var _target in targets)

@@ -14,7 +14,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         private float coolDown;
         private float damping;
         private string targetTag;
-        private EventCaller eventCaller;
+        private EventCaller onAttack;
 
         public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag)
         {
@@ -25,14 +25,14 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             damping = _damping;
         }
 
-        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _eventCaller)
+        public BTSoldierAttack(TargetHandler _targetZombie, float _coolDown, ShootHandler _shootHandler, float _damping, string _targetTag, EventCaller _onAttack)
         {
             targetZombie = _targetZombie;
             coolDown = _coolDown;
             shootHandler = _shootHandler;
             targetTag = _targetTag;
             damping = _damping;
-            eventCaller = _eventCaller;
+            onAttack = _onAttack;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
@@ -59,8 +59,8 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
                 shootHandler.Execute();
 
-                if (eventCaller)
-                    eventCaller.FirstCall();
+                if (onAttack)
+                    onAttack.FirstCall();
 
                 status = Status.SUCCESS;
             }

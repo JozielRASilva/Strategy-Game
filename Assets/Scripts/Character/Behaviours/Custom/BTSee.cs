@@ -8,23 +8,23 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTSee : BTNode
     {
-        private TargetHandler targetController;
-        public string target;
-        public float rangeToCheckEnemy = 5;
+        private string target;
+        private float rangeToCheckEnemy = 5;
+        private TargetHandler targetHandler;
         private bool cleanTarget = false;
 
-        public BTSee(TargetHandler _targetController, string _target, float _rangeToCheckEnemy)
+        public BTSee(TargetHandler _targetHandler, string _target, float _rangeToCheckEnemy)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
-        public BTSee(TargetHandler _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
+        public BTSee(TargetHandler _targetHandler, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             cleanTarget = _cleanTarget;
         }
 
@@ -48,16 +48,16 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
             if (status.Equals(Status.SUCCESS))
             {
-                if (targetController)
+                if (targetHandler)
                     if (!cleanTarget)
                     {
                         Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
                         if (selectedTarget)
-                            targetController.SetTarget(selectedTarget);
+                            targetHandler.SetTarget(selectedTarget);
                     }
                     else
                     {
-                        targetController.SetTarget(null);
+                        targetHandler.SetTarget(null);
                     }
             }
 

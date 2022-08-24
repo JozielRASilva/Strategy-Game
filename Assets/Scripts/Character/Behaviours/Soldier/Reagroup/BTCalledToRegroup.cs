@@ -8,12 +8,12 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
     public class BTCalledToRegroup : BTNode
     {
         private int currentRegroupId = -1;
-        private TargetHandler targetController;
+        private TargetHandler targetHandler;
         private float distance;
 
-        public BTCalledToRegroup(TargetHandler _targetController, float _distance)
+        public BTCalledToRegroup(TargetHandler _targetHandler, float _distance)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             distance = _distance;
         }
 
@@ -29,9 +29,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             {
                 status = Status.SUCCESS;
 
-                if (targetController.GetTarget())
+                if (targetHandler.GetTarget())
                 {
-                    float currentDistance = Vector3.Distance(bt.transform.position, targetController.GetTarget().position);
+                    float currentDistance = Vector3.Distance(bt.transform.position, targetHandler.GetTarget().position);
 
                     if (currentDistance < distance)
                     {

@@ -7,9 +7,9 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveTo : BTNode
     {
-        public string target;
-        public float speed = 1;
-        public float distance = 1;
+        private string target;
+        private float speed = 1;
+        private float distance = 1;
 
         public BTMoveTo(string _target, float _speed, float _distance)
         {

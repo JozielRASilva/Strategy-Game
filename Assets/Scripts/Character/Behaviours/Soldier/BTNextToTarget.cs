@@ -6,12 +6,12 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTNextToTarget : BTNode
     {
-        private TargetHandler targetController;
+        private TargetHandler targetHandler;
         private float distance;
 
-        public BTNextToTarget(TargetHandler _targetController, float _distance)
+        public BTNextToTarget(TargetHandler _targetHandler, float _distance)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             distance = _distance;
         }
 
@@ -19,7 +19,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         {
             status = Status.FAILURE;
 
-            Transform target = targetController.GetTarget();
+            Transform target = targetHandler.GetTarget();
 
             if (target)
             {

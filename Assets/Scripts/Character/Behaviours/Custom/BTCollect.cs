@@ -7,8 +7,8 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTCollect : BTNode
     {
-        public string target;
-        public float distance = 1;
+        private string target;
+        private float distance = 1;
 
         public BTCollect(string _target, float _distance)
         {

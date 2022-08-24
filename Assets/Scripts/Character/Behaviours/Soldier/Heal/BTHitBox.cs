@@ -10,24 +10,24 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         private GameObject hitboxes;
         private float coolDown;
         private float rest;
-        private TargetHandler targetController;
+        private TargetHandler targetHandler;
         private float damping = 1;
         private EventCaller OnHit;
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetController, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, EventCaller _OnHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             rest = _rest;
             OnHit = _OnHit;
         }
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetController, float _damping, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, float _damping, EventCaller _OnHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             rest = _rest;
             damping = _damping;
             OnHit = _OnHit;
@@ -39,7 +39,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
             while (timeStamp > Time.time)
             {
-                var lookPos = targetController.GetTarget().position - bt.transform.position;
+                var lookPos = targetHandler.GetTarget().position - bt.transform.position;
                 lookPos.y = 0;
                 var rotation = Quaternion.LookRotation(lookPos);
                 bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
