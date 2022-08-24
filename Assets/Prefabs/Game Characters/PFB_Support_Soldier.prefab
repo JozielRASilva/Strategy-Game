@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac80fa95dc0e4f54bbf20bee94078655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Heal: 1
+  Heal: {fileID: 11400000, guid: 1ca76327a6e8fd44faddb6906f7e702d, type: 2}
   Healable:
     serializedVersion: 2
     m_Bits: 256
@@ -276,7 +276,7 @@ MonoBehaviour:
   SupportAttributes: {fileID: 11400000, guid: b0c50416383632041be2b8b941e850d2, type: 2}
   SetObjectEffect: {fileID: 3105253606689490518}
   SettingObjectEffect: {fileID: 6339521736952954446}
-  healHitBox: {fileID: 475056069}
+  HealHitBox: {fileID: 475056069}
   HealEffect: {fileID: 8745678455274301854}
 --- !u!114 &1304290663
 MonoBehaviour:
@@ -700,8 +700,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: MaxLife
+      value: 
+      objectReference: {fileID: 11400000, guid: 08e99e2d1c15c75419ff7bc14155dbea, type: 2}
+    - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: maxLife
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
+      propertyPath: DelayToDestroy
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5070140945433140215, guid: bff014d143e1ef8468c5d79a3a9b01ed, type: 3}
       propertyPath: delayToDestroy

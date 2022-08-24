@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 using ZombieDiorama.Extensions;
+using ZombieDiorama.Utilities.Primitives;
 
 namespace ZombieDiorama.Character
 {
     public class HealOnTouch : MonoBehaviour
     {
-        public int Heal = 1;
+        public SOInt Heal;
         public LayerMask Healable;
         public UnityEvent OnHeal;
         private Health health;
@@ -24,7 +25,7 @@ namespace ZombieDiorama.Character
             {
                 Health _health = other.GetComponent<Health>();
                 if (!_health.IsAlive()) return;
-                _health.AddLife(Heal);
+                _health.AddLife(Heal.Value);
                 OnHeal?.Invoke();
             }
         }

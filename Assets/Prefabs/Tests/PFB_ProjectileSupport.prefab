@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4577716031164410930, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
       propertyPath: m_Name
-      value: Projectile_Support
+      value: PFB_ProjectileSupport
       objectReference: {fileID: 0}
     - target: {fileID: 4577716031164410934, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
       propertyPath: m_RootOrder
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6257925693733723966, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
       propertyPath: Damage
-      value: 1
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: e0072b430c12f2f44800938ac785aedf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}

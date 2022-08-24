@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4444766149784956682}
   - component: {fileID: 3060643568724903763}
+  - component: {fileID: 7830091429333483853}
   m_Layer: 0
   m_Name: PFB_StoreManager
   m_TagString: Untagged
@@ -45,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storeItems:
   - Item: {fileID: 11400000, guid: a425628d18a3b944bbaa76561b0913c5, type: 2}
-    price: 5
+    Price: 5
   - Item: {fileID: 11400000, guid: c2e1b310a7b891a4f96e68ca907f509b, type: 2}
-    price: 5
+    Price: 5
   OnBuy:
     m_PersistentCalls:
       m_Calls:
@@ -69,3 +70,18 @@ MonoBehaviour:
   OnCanNotBuy:
     m_PersistentCalls:
       m_Calls: []
+  OnRefund:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7830091429333483853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5921790718097570225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0381c9ad45e1f4ba0350299ed856eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

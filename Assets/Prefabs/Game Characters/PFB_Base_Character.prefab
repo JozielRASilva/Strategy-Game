@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   HasDelayToDestroy: 0
   DelayToDestroy: 0.2
-  MaxLife: 5
+  MaxLife: {fileID: 11400000, guid: 064cbf342b806514ca16b2e7428ae24f, type: 2}
   InvincibilityTime: 0.2
   OnDamaged:
     m_PersistentCalls:

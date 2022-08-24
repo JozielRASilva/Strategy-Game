@@ -91,7 +91,7 @@ MonoBehaviour:
       m_Calls: []
   HasDelayToDestroy: 0
   DelayToDestroy: 0.2
-  Damage: 2
+  Damage: {fileID: 11400000, guid: 03decb4313642454db448d396ba7f915, type: 2}
   Damageable:
     serializedVersion: 2
     m_Bits: 128
