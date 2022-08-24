@@ -4,7 +4,7 @@ namespace ZombieDiorama.Character.Handler
 {
     public class TargetHandler : MonoBehaviour
     {
-        private Transform currentTarget;
+        [SerializeField] private Transform currentTarget;
 
         public Transform GetTarget()
         {
