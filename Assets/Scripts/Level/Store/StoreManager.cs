@@ -27,7 +27,7 @@ namespace ZombieDiorama.Level.Store
 
         private StoreItem currentBought;
 
-        public bool CanBuy(int itemId)
+        private bool CanBuy(int itemId)
         {
             if (storeItems.Count == 0) return false;
             if (itemId >= storeItems.Count) return false;
@@ -39,6 +39,15 @@ namespace ZombieDiorama.Level.Store
                 return true;
             }
             return false;
+        }
+        public static void RefundCall()
+        {
+            Instance?.Refund();
+        }
+
+        public static void BuyCall(int itemId)
+        {
+            Instance?.Buy(itemId);
         }
 
         public void Refund()
