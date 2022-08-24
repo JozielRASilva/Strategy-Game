@@ -762,8 +762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7910065883574782781, guid: 3eef631e58032954b9f585dd8ec5270f, type: 3}
       propertyPath: m_Text
-      value: "DIOGO SAKAGAWA, 21195534\r\r\nISABELLA RUIZ, 21177315\r\nJOZIEL SILVA,
-        21202797\r\r\nWENDELL SANTOS, 21031927\r"
+      value: "DIOGO SAKAGAWA\r\r\nISABELLA RUIZ\r\nJOZIEL SILVA\r\r\nWENDELL SANTOS\r"
       objectReference: {fileID: 0}
     - target: {fileID: 7910065883574782781, guid: 3eef631e58032954b9f585dd8ec5270f, type: 3}
       propertyPath: m_FontData.m_Font

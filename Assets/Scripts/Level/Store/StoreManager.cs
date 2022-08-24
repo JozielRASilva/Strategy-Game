@@ -8,7 +8,7 @@ using ZombieDiorama.Utilities.Patterns;
 
 namespace ZombieDiorama.Level.Store
 {
-    public class Store : Singleton<Store>
+    public class StoreManager : Singleton<StoreManager>
     {
         public List<StoreItem> storeItems = new List<StoreItem>();
 
