@@ -4,36 +4,49 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using ZombieDiorama.Utilities.Patterns;
+using ZombieDiorama.Utilities.Primitives;
+using System;
 
 namespace ZombieDiorama.Level.Coins
 {
-    public class CoinCounter : MonoBehaviour
+    public class CoinCounter : Singleton<CoinCounter>
     {
-        [FormerlySerializedAs("moedaTxt")] public Text CoinText;
-        [FormerlySerializedAs("moeda")] public int CoinsCount;
-        [FormerlySerializedAs("valorMoeda")] public int CoinValue = 1;
-        [FormerlySerializedAs("moedas")] public static CoinCounter Instance;
+        [SerializeField] private SOInt Counter;
+        [SerializeField] private SOInt InitialValue;
 
-        public UnityEvent OnGetCash;
+        public static Action<int> OnUpdateCounter;
 
-        void Start()
+        private void Start()
         {
-            Instance = this;
-            CoinText.text = CoinsCount.ToString();
+            SetCoin(InitialValue.Value);
         }
 
-        public void AddCoin()
+        public static int GetValue()
         {
-            CoinsCount += CoinValue;
-            CoinText.text = CoinsCount.ToString();
-            OnGetCash?.Invoke();
+            if (!Instance)
+                return 0;
+
+            if (!Instance.Counter)
+                return 0;
+
+            return Instance.Counter.Value;
         }
 
-        public void AddCoin(int value)
+        public static void Add(int value)
         {
-            CoinsCount += value;
-            CoinText.text = CoinsCount.ToString();
-            OnGetCash?.Invoke();
+            Instance.AddCoin(value);
+        }
+
+        private void AddCoin(int value)
+        {
+            SetCoin(Counter.Value + value);
+        }
+
+        private void SetCoin(int value)
+        {
+            Counter.Value = value;
+            OnUpdateCounter.Invoke(Counter.Value);
         }
     }
 }

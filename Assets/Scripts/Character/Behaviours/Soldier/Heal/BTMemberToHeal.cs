@@ -1,33 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Team;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTMemberToHeal : BTNode
     {
         private SquadMember squadMember;
-        private TargetController targetController;
+        private TargetHandler targetHandler;
 
-        public BTMemberToHeal(SquadMember _squadMember, TargetController _targetController)
+        public BTMemberToHeal(SquadMember _squadMember, TargetHandler _targetHandler)
         {
             squadMember = _squadMember;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (!TeamManager.Instance) yield break;
+            if (!TeamHandler.Instance) yield break;
 
-            List<SquadMember> members = TeamManager.Instance.GetSquadMembers(squadMember);
+            List<SquadMember> members = TeamHandler.Instance.GetSquadMembers(squadMember);
 
             if (members == null) yield break;
 
-            List<SquadMember> damagedMembers = members.FindAll(m => !m.health.LifeIsCompleted()
-            && m.health.IsAlive());
+            List<SquadMember> damagedMembers = members.FindAll(m => !m.Health.LifeIsCompleted()
+            && m.Health.IsAlive());
 
             damagedMembers.RemoveAll(m => m.GetSquadFunction().Equals(Squad.SquadFunction.EXTRA));
 
@@ -43,7 +43,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
             {
                 if (selected)
                 {
-                    if (selected.health.GetLife() < member.health.GetLife())
+                    if (selected.Health.GetLife() < member.Health.GetLife())
                         selected = member;
                 }
                 else
@@ -51,8 +51,8 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                     selected = member;
                 }
             }
-            targetController.SetTarget(selected.transform);
-            status = Status.SUCCESS;
+            targetHandler.SetTarget(selected.transform);
+            CurrentStatus = Status.SUCCESS;
 
             yield break;
         }

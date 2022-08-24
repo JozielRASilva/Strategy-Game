@@ -7,19 +7,19 @@ namespace ZombieDiorama.Utilities.Patterns
 {
     public static class Observer
     {
-        private static Action<EventType, object> subscriptions;
+        private static Action<ObserverEvent, object> subscriptions;
 
-        public static void Subscribe(Action<EventType, object> method)
+        public static void Subscribe(Action<ObserverEvent, object> method)
         {
             subscriptions += method;
         }
 
-        public static void UnSubscribe(Action<EventType, object> method)
+        public static void UnSubscribe(Action<ObserverEvent, object> method)
         {
             subscriptions -= method;
         }
 
-        public static void Notify(EventType tag, object value = null)
+        public static void Notify(ObserverEvent tag, object value = null)
         {
             subscriptions.Invoke(tag, value);
         }

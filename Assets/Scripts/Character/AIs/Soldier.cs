@@ -3,43 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Sirenix.OdinInspector;
-using ZombieDiorama.Character.Controllers;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Character.Handler.Team;
 using ZombieDiorama.Character.Behaviours;
 using ZombieDiorama.Character.Behaviours.Soldier;
 using ZombieDiorama.Character.Behaviours.Custom;
 using ZombieDiorama.Character.Behaviours.Decorators;
 using ZombieDiorama.Utilities.Events;
+using ZombieDiorama.Character.Info;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character.AIs
 {
-    public class Soldier : MonoBehaviour, AIBase
+    public class Soldier : AIBase
     {
-        [Title("Geral Info")]
-        public float Speed = 6;
-
-        [Title("Regroup")]
-        public float distanceToRegroup = 1;
-
-        [Title("Team")]
-        public float distanceToLeader = 1;
-
-        [Title("Geral Controllers")]
-        public SquadMember squadMember;
-        public TargetController targetController;
-        public NavMeshController navMeshController;
-        protected BehaviourTree behaviourTree;
+        [TitleGroup("Geral Info")]
+        public SOSoldierAttributes SoldierAttributes;
 
         [Title("Fight")]
-        public GameObject muzzle;
-        public GameObject bullet;
-        public float shootCooldown = 0.5f;
-        public float lookAtZombieDamping = 15f;
-
-        [Title("Combat")]
-        public string target = "Zombie";
-        public float distanceToTarget = 1;
-        public Vector2 rangeToSeeTarget = new Vector2(5, 20);
+        [FormerlySerializedAs("muzzle")] public GameObject Muzzle;
+        [FormerlySerializedAs("bullet")] public GameObject Bullet;
 
         [Title("AI Attack Events")]
         public EventCaller AttackEventCaller;
@@ -49,36 +32,19 @@ namespace ZombieDiorama.Character.AIs
         public Color MaxRangeToSee = Color.blue;
         public Color MinRangeToSee = Color.cyan;
 
+        protected SquadMember squadMember;
+        protected ShootHandler shootHandler;
+
         #region  SETUP
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            targetController = GetComponent<TargetController>();
-            navMeshController = GetComponent<NavMeshController>();
+            base.Awake();
             squadMember = GetComponent<SquadMember>();
+            shootHandler = GetComponent<ShootHandler>();
         }
 
-        protected virtual void Start()
+        public override void SetBehaviour()
         {
-            SetBehaviour();
-        }
-
-        public virtual void SetBehaviour()
-        {
-            if (!behaviourTree)
-            {
-                behaviourTree = gameObject.AddComponent<BehaviourTree>();
-            }
-
-            if (!navMeshController)
-            {
-                navMeshController = gameObject.AddComponent<NavMeshController>();
-            }
-
-            if (!targetController)
-            {
-                targetController = gameObject.AddComponent<TargetController>();
-            }
-
             BTSelector root = new BTSelector();
             // REGROUP
             BTNode branchRegroup = GetBranchRegroup();
@@ -94,47 +60,28 @@ namespace ZombieDiorama.Character.AIs
             behaviourTree.Build(root);
         }
 
-        public virtual void RestartBehaviour()
-        {
-            SetBehaviour();
-            if (behaviourTree)
-            {
-                behaviourTree.enabled = true;
-                behaviourTree.Initialize();
-            }
-        }
-
-        public virtual void StopBehaviour()
-        {
-            if (behaviourTree)
-            {
-                behaviourTree.Stop();
-                behaviourTree.enabled = false;
-                behaviourTree.StopAllCoroutines();
-            }
-        }
         #endregion
 
         #region FIGHT
         public virtual BTNode GetBranchFight()
         {
             BTParallelSelector parallel = new BTParallelSelector();
-            parallel.SetNode(new BTMoveByNavMesh(navMeshController, targetController, Speed, rangeToSeeTarget.x));
-            parallel.SetNode(new BTCloseToTarget(targetController, rangeToSeeTarget.x, rangeToSeeTarget.y));
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+            parallel.SetNode(new BTMoveByNavMesh(navMeshHandler, targetHandler, SoldierAttributes.Speed, SoldierAttributes.RangeToSeeTarget.x));
+            parallel.SetNode(new BTCloseToTarget(targetHandler, SoldierAttributes.RangeToSeeTarget.x, SoldierAttributes.RangeToSeeTarget.y));
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetHandler, SoldierAttributes.DistanceToRegroup);
             parallel.SetNode(calledToRegroup);
 
             BTInverter inverter = new BTInverter();
-            BTSeeZombie seeZombie = new BTSeeZombie(targetController, rangeToSeeTarget.y);
+            BTSeeZombie seeZombie = new BTSeeZombie(targetHandler, SoldierAttributes.RangeToSeeTarget.y, SoldierAttributes.TargetTag.Value);
             inverter.SetNode(seeZombie);
             parallel.SetNode(inverter);
 
             BTSequence sequence_1 = new BTSequence();
             sequence_1.SetNode(parallel);
-            sequence_1.SetNode(new BTSoldierAttack(targetController, shootCooldown, bullet, muzzle, lookAtZombieDamping, target, AttackEventCaller));
+            sequence_1.SetNode(new BTSoldierAttack(targetHandler, SoldierAttributes.ShootCooldown, shootHandler, SoldierAttributes.LookAtZombieDamping, SoldierAttributes.TargetTag.Value, AttackEventCaller));
 
             BTSequence sequence = new BTSequence();
-            sequence.SetNode(new BTSeeZombie(targetController, rangeToSeeTarget.y));
+            sequence.SetNode(new BTSeeZombie(targetHandler, SoldierAttributes.RangeToSeeTarget.y, SoldierAttributes.TargetTag.Value));
             sequence.SetNode(sequence_1);
 
             BTSelector selector = new BTSelector();
@@ -150,15 +97,15 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence_regroup = new BTSequence();
 
             #region Cheking
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
-            BTUpdateRegroup updateRegroup = new BTUpdateRegroup(targetController);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetHandler, SoldierAttributes.DistanceToRegroup);
+            BTUpdateRegroup updateRegroup = new BTUpdateRegroup(targetHandler);
             #endregion
 
             #region Moving
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTNextToTarget nextToTarget = new BTNextToTarget(targetController, distanceToRegroup);
-            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToRegroup);
+            BTNextToTarget nextToTarget = new BTNextToTarget(targetHandler, SoldierAttributes.DistanceToRegroup);
+            BTMoveByNavMesh moveToSet = new BTMoveByNavMesh(navMeshHandler, targetHandler, SoldierAttributes.Speed, SoldierAttributes.DistanceToRegroup);
 
             parallelSelector_1.SetNode(nextToTarget);
             parallelSelector_1.SetNode(moveToSet);
@@ -207,18 +154,18 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence = new BTSequence();
 
             BTIsLeader isLeader = new BTIsLeader(squadMember);
-            BTThereIs thereIs = new BTThereIs(targetController, target);
+            BTThereIs thereIs = new BTThereIs(targetHandler, SoldierAttributes.TargetTag.Value);
 
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTSee see = new BTSee(targetController, target, rangeToSeeTarget.y);
-            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, rangeToSeeTarget.x);
+            BTSee see = new BTSee(targetHandler, SoldierAttributes.TargetTag.Value, SoldierAttributes.RangeToSeeTarget.y);
+            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshHandler, targetHandler, SoldierAttributes.Speed, SoldierAttributes.RangeToSeeTarget.x);
 
             parallelSelector_1.SetNode(see);
             parallelSelector_1.SetNode(moveTo);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetHandler, SoldierAttributes.DistanceToRegroup);
             parallelSelector_1.SetNode(thereIsObjectToSet);
             parallelSelector_1.SetNode(calledToRegroup);
 
@@ -237,21 +184,21 @@ namespace ZombieDiorama.Character.AIs
             BTSequence sequence_2 = new BTSequence();
 
             BTHasLeader hasLeader = new BTHasLeader(squadMember);
-            BTUpdateLeader updateLeader = new BTUpdateLeader(squadMember, targetController);
+            BTUpdateLeader updateLeader = new BTUpdateLeader(squadMember, targetHandler);
             sequence_2.SetNode(hasLeader);
             sequence_2.SetNode(updateLeader);
 
             BTParallelSelector parallelSelector_2 = new BTParallelSelector();
             sequence_2.SetNode(parallelSelector_2);
 
-            BTSee see_2 = new BTSee(targetController, target, distanceToTarget, true);
-            BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshController, targetController, Speed, distanceToLeader);
+            BTSee see_2 = new BTSee(targetHandler, SoldierAttributes.TargetTag.Value, SoldierAttributes.DistanceToTarget, true);
+            BTMoveByNavMesh moveLeader = new BTMoveByNavMesh(navMeshHandler, targetHandler, SoldierAttributes.Speed, SoldierAttributes.DistanceToLeader);
 
             parallelSelector_2.SetNode(see_2);
             parallelSelector_2.SetNode(moveLeader);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetHandler, SoldierAttributes.DistanceToRegroup);
             parallelSelector_2.SetNode(thereIsObjectToSet);
             parallelSelector_2.SetNode(calledToRegroup);
 
@@ -265,18 +212,18 @@ namespace ZombieDiorama.Character.AIs
         public BTNode GetBranchWithoutLeader()
         {
             BTSequence sequence = new BTSequence();
-            BTThereIs thereIs = new BTThereIs(targetController, target);
+            BTThereIs thereIs = new BTThereIs(targetHandler, SoldierAttributes.TargetTag.Value);
 
             BTParallelSelector parallelSelector_1 = new BTParallelSelector();
 
-            BTSee see = new BTSee(targetController, target, rangeToSeeTarget.y);
-            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshController, targetController, Speed, rangeToSeeTarget.x);
+            BTSee see = new BTSee(targetHandler, SoldierAttributes.TargetTag.Value, SoldierAttributes.RangeToSeeTarget.y);
+            BTMoveByNavMesh moveTo = new BTMoveByNavMesh(navMeshHandler, targetHandler, SoldierAttributes.Speed, SoldierAttributes.RangeToSeeTarget.x);
 
             parallelSelector_1.SetNode(see);
             parallelSelector_1.SetNode(moveTo);
 
             BTObjectToSet thereIsObjectToSet = new BTObjectToSet(squadMember);
-            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetController, distanceToRegroup);
+            BTCalledToRegroup calledToRegroup = new BTCalledToRegroup(targetHandler, SoldierAttributes.DistanceToRegroup);
             parallelSelector_1.SetNode(thereIsObjectToSet);
             parallelSelector_1.SetNode(calledToRegroup);
 
@@ -292,9 +239,9 @@ namespace ZombieDiorama.Character.AIs
             if (!ShowGizmos) return;
 
             Gizmos.color = MaxRangeToSee;
-            Gizmos.DrawWireSphere(transform.position, rangeToSeeTarget.y);
+            Gizmos.DrawWireSphere(transform.position, SoldierAttributes.RangeToSeeTarget.y);
             Gizmos.color = MinRangeToSee;
-            Gizmos.DrawWireSphere(transform.position, rangeToSeeTarget.x);
+            Gizmos.DrawWireSphere(transform.position, SoldierAttributes.RangeToSeeTarget.x);
         }
     }
 }

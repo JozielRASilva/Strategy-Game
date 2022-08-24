@@ -1,20 +1,24 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
+using System;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character
 {
     public class Health : KillableObject
     {
         [Title("Life Info")]
-        public int maxLife = 5;
+        [FormerlySerializedAs("maxLife")] public int MaxLife = 5;
 
         [Title("Damage")]
-        public float invincibilityTime = 0.2f;
+        [FormerlySerializedAs("invincibilityTime")] public float InvincibilityTime = 0.2f;
         public UnityEvent OnDamaged;
 
         [Title("Heal")]
         public UnityEvent OnHealed;
+
+        public Action OnChange;
 
         private int _currentLife;
         private float invincibilityTimeStamp;
@@ -22,7 +26,7 @@ namespace ZombieDiorama.Character
         [OnInspectorGUI]
         private void Nodes()
         {
-            GUILayout.Label($"Life: {_currentLife} / {maxLife}");
+            GUILayout.Label($"Life: {_currentLife} / {MaxLife}");
         }
 
         [Title("Buttons Actions")]
@@ -34,12 +38,11 @@ namespace ZombieDiorama.Character
         private void BHit() => TakeDamage(1);
 
         [Button("Kill")]
-        private void BKill() => TakeDamage(maxLife);
+        private void BKill() => TakeDamage(MaxLife);
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-            _currentLife = maxLife;
+            _currentLife = MaxLife;
         }
 
         public void TakeDamage(int value)
@@ -49,27 +52,32 @@ namespace ZombieDiorama.Character
             if (_currentLife - value > 0)
             {
                 _currentLife -= value;
-                invincibilityTimeStamp = Time.time + invincibilityTime;
+                invincibilityTimeStamp = Time.time + InvincibilityTime;
+
                 OnDamaged?.Invoke();
+                OnChange?.Invoke();
             }
             else
             {
-                invincibilityTimeStamp = Time.time + delayToDestroy;
+                invincibilityTimeStamp = Time.time + DelayToDestroy;
                 _currentLife = 0;
+
+                OnChange?.Invoke();
                 Destroy();
             }
         }
 
         public void AddLife(int value)
         {
-            if (_currentLife + value < maxLife)
+            if (_currentLife + value < MaxLife)
             {
                 _currentLife += value;
             }
             else
             {
-                _currentLife = maxLife;
+                _currentLife = MaxLife;
             }
+            OnChange?.Invoke();
             OnHealed?.Invoke();
         }
 
@@ -80,9 +88,8 @@ namespace ZombieDiorama.Character
 
         public bool LifeIsCompleted()
         {
-            if (_currentLife == maxLife) return true;
+            if (_currentLife == MaxLife) return true;
             else return false;
-
         }
 
         public bool IsAlive()

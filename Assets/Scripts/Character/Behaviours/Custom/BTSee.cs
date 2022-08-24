@@ -1,36 +1,37 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTSee : BTNode
     {
-        private TargetController targetController;
-        public string target;
-        public float rangeToCheckEnemy = 5;
+        private string target;
+        private float rangeToCheckEnemy = 5;
+        private TargetHandler targetHandler;
         private bool cleanTarget = false;
 
-        public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy)
+        public BTSee(TargetHandler _targetHandler, string _target, float _rangeToCheckEnemy)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
-        public BTSee(TargetController _targetController, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
+        public BTSee(TargetHandler _targetHandler, string _target, float _rangeToCheckEnemy, bool _cleanTarget)
         {
             target = _target;
             rangeToCheckEnemy = _rangeToCheckEnemy;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             cleanTarget = _cleanTarget;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(target);
+            CurrentStatus = Status.RUNNING;
+            List<GameObject> enemies = TagObjectsCacher.GetObjects(target);
             List<GameObject> enemiesThatCanSee = new List<GameObject>();
 
             foreach (var enemy in enemies)
@@ -41,27 +42,27 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 if (distance < rangeToCheckEnemy)
                 {
                     enemiesThatCanSee.Add(enemy);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
 
-            if (status.Equals(Status.SUCCESS))
+            if (CurrentStatus.Equals(Status.SUCCESS))
             {
-                if (targetController)
+                if (targetHandler)
                     if (!cleanTarget)
                     {
                         Transform selectedTarget = GetTarget(bt.transform, enemiesThatCanSee);
                         if (selectedTarget)
-                            targetController.SetTarget(selectedTarget);
+                            targetHandler.SetTarget(selectedTarget);
                     }
                     else
                     {
-                        targetController.SetTarget(null);
+                        targetHandler.SetTarget(null);
                     }
             }
 
-            if (status.Equals(Status.RUNNING))
-                status = Status.FAILURE;
+            if (CurrentStatus.Equals(Status.RUNNING))
+                CurrentStatus = Status.FAILURE;
 
             yield break;
         }

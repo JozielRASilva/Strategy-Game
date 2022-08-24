@@ -1,5 +1,5 @@
 using System.Collections;
-using ZombieDiorama.Character.Controllers.Team;
+using ZombieDiorama.Character.Handler.Team;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
@@ -14,15 +14,15 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            if (!TeamManager.Instance) yield break;
+            if (!TeamHandler.Instance) yield break;
 
-            Squad.SquadFunction function = TeamManager.Instance.GetSquadFunction(squadMember);
+            Squad.SquadFunction function = TeamHandler.Instance.GetSquadFunction(squadMember);
 
             if (function.Equals(Squad.SquadFunction.LEADER))
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
             }
             yield break;
         }

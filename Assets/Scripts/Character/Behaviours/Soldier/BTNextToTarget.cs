@@ -1,32 +1,32 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
     public class BTNextToTarget : BTNode
     {
-        private TargetController targetController;
+        private TargetHandler targetHandler;
         private float distance;
 
-        public BTNextToTarget(TargetController _targetController, float _distance)
+        public BTNextToTarget(TargetHandler _targetHandler, float _distance)
         {
-            targetController = _targetController;
+            targetHandler = _targetHandler;
             distance = _distance;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
-            Transform target = targetController.GetTarget();
+            Transform target = targetHandler.GetTarget();
 
             if (target)
             {
                 float currentDistance = Vector3.Distance(bt.transform.position, target.position);
                 if (currentDistance < distance)
                 {
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                 }
             }
             yield break;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZombieDiorama.Utilities.Patterns
 {
-    [CreateAssetMenu(fileName = "Patterns", menuName = "Observer/ObserverEvent", order = 1)]
+    [CreateAssetMenu(fileName = "SO_ObserverEvent", menuName = "Observer/ObserverEvent", order = 1)]
     public class ObserverEvent : ScriptableObject
     {
         public string Tag = "Default";

@@ -1,3 +1,4 @@
+using MonsterLove.Pooller;
 using UnityEngine;
 
 namespace ZombieDiorama.Particles

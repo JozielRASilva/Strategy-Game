@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
     public class BTMoveTo : BTNode
     {
-        public string target;
-        public float speed = 1;
-        public float distance = 1;
+        private string target;
+        private float speed = 1;
+        private float distance = 1;
 
         public BTMoveTo(string _target, float _speed, float _distance)
         {
@@ -18,7 +20,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.RUNNING;
+            CurrentStatus = Status.RUNNING;
             Transform npc = bt.transform;
             Transform target = GetTarget(npc);
 
@@ -26,7 +28,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
             {
                 if (!target)
                 {
-                    status = Status.FAILURE;
+                    CurrentStatus = Status.FAILURE;
                     break;
                 }
 
@@ -36,14 +38,14 @@ namespace ZombieDiorama.Character.Behaviours.Custom
                 npc.position += npc.forward * Time.deltaTime * speed;
                 yield return null;
             }
-            if (status.Equals(Status.RUNNING))
-                status = Status.SUCCESS;
+            if (CurrentStatus.Equals(Status.RUNNING))
+                CurrentStatus = Status.SUCCESS;
         }
 
         public Transform GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(target);
+            List<GameObject> targets = TagObjectsCacher.GetObjects(target);
             float lastDistance = 0;
 
             foreach (var _target in targets)

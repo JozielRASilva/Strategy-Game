@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48612977b376394da1d1ae9e0502940, type: 3}
+  m_Name: SO_Zombie
+  m_EditorClassIdentifier: 
+  Speed: 2
+  TargetTag: {fileID: 11400000, guid: 724eea1db742c1249a6f0beea403ec5c, type: 2}
+  DistanceToTarget: 8
+  DistanceToPatrolTarget: 1
+  DistanceToWaypoint: 3
+  CoolDown: 0.2
+  ListeningField: 10
+  DistanceToZombie: 3
+  TimeCalling: 0.2
+  CallCounterTag: {fileID: 11400000, guid: 3e71f6774b1e4f549b30cf0283738b29, type: 2}
+  MinDistance: 2
+  MaxDistance: 15

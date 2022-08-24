@@ -1,16 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Character.Handler;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
     public class BTChasingSoldier : BTNode
     {
-        private TargetController targetSoldier;
+        private TargetHandler targetSoldier;
         private float minDistance;
         private float maxDistance;
 
-        public BTChasingSoldier(TargetController _targetSoldier, float _minDistance, float _maxDistance)
+        public BTChasingSoldier(TargetHandler _targetSoldier, float _minDistance, float _maxDistance)
         {
             targetSoldier = _targetSoldier;
             minDistance = _minDistance;
@@ -19,7 +19,7 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
 
         public override IEnumerator Run(BehaviourTree bt)
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
 
             if (targetSoldier)
             {
@@ -28,14 +28,14 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
                 if (distance > maxDistance)
                 {
                     targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
 
                 if (distance < minDistance)
                 {
                     targetSoldier.SetTarget(null);
-                    status = Status.SUCCESS;
+                    CurrentStatus = Status.SUCCESS;
                     yield break;
                 }
             }

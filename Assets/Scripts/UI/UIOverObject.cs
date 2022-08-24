@@ -4,51 +4,53 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class UIOverObject : MonoBehaviour
+namespace ZombieDiorama.UI
 {
-    public UnityEvent OnEnterOver;
-    public UnityEvent OnStayOver;
-    public UnityEvent OnExitOver;
-
-    private bool isOver;
-
-    PointerEventData pointerEventData;
-    
-    private void Start()
+    public class UIOverObject : MonoBehaviour
     {
-        pointerEventData = new PointerEventData(EventSystem.current);
-    }
+        public UnityEvent OnEnterOver;
+        public UnityEvent OnStayOver;
+        public UnityEvent OnExitOver;
 
-    private void Update()
-    {
-        if (IsMouseOverThis())
+        private bool isOver;
+        private PointerEventData pointerEventData;
+
+        private void Start()
         {
-            if (!isOver)
-            {
-                OnEnterOver?.Invoke();
-                isOver = true;
-            }
-            OnStayOver?.Invoke();
+            pointerEventData = new PointerEventData(EventSystem.current);
         }
-        else
+
+        private void Update()
         {
-            if (isOver)
+            if (IsMouseOverThis())
             {
-                OnExitOver?.Invoke();
-                isOver = false;
+                if (!isOver)
+                {
+                    OnEnterOver?.Invoke();
+                    isOver = true;
+                }
+                OnStayOver?.Invoke();
+            }
+            else
+            {
+                if (isOver)
+                {
+                    OnExitOver?.Invoke();
+                    isOver = false;
+                }
             }
         }
-    }
 
-    private bool IsMouseOverThis()
-    {
-        pointerEventData.position = Input.mousePosition;
+        private bool IsMouseOverThis()
+        {
+            pointerEventData.position = Input.mousePosition;
 
-        List<RaycastResult> raycastResultsList = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, raycastResultsList);
+            List<RaycastResult> raycastResultsList = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerEventData, raycastResultsList);
 
-        bool value = raycastResultsList.Exists(r => r.gameObject.Equals(this.gameObject));
+            bool value = raycastResultsList.Exists(r => r.gameObject.Equals(this.gameObject));
 
-        return value;
+            return value;
+        }
     }
 }

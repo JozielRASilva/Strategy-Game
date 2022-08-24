@@ -15,11 +15,11 @@ namespace ZombieDiorama.Character.Behaviours
             GUILayout.Label($"{nodes}");
         }
 
-        private bool debug;
+        public bool Debug;
         private BTNode root;
         public Coroutine execution;
 
-        void Start()
+        private void Start()
         {
             Initialize();
         }
@@ -40,7 +40,7 @@ namespace ZombieDiorama.Character.Behaviours
             root = _root;
         }
 
-        IEnumerator Execute()
+        private IEnumerator Execute()
         {
             while (true)
             {
@@ -52,7 +52,7 @@ namespace ZombieDiorama.Character.Behaviours
         private void LateUpdate()
         {
 #if UNITY_EDITOR
-            if (debug)
+            if (Debug)
                 nodes = GetNodes();
 #endif
         }
@@ -64,8 +64,8 @@ namespace ZombieDiorama.Character.Behaviours
 
         private string GetWriteNode(BTNode node)
         {
-            string value = $"{node.ToString()} : {node.status.ToString()}";
-            foreach (var _node in node.children)
+            string value = $"{node.ToString()} : {node.CurrentStatus.ToString()}";
+            foreach (var _node in node.Children)
             {
                 value += $"\n {GetWriteNode(_node)}";
             }

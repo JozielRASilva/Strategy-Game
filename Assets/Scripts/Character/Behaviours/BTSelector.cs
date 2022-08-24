@@ -6,22 +6,22 @@ public class BTSelector : BTNode
 {
     public override IEnumerator Run(BehaviourTree bt)
     {
-        status = Status.RUNNING;
+        CurrentStatus = Status.RUNNING;
 
-        foreach (var node in children)
+        foreach (var node in Children)
         {
             yield return bt.StartCoroutine(node.Run(bt));
 
-            if (node.status.Equals(Status.SUCCESS))
+            if (node.CurrentStatus.Equals(Status.SUCCESS))
             {
-                status = Status.SUCCESS;
+                CurrentStatus = Status.SUCCESS;
                 break;
             }
         }
 
-        if (status.Equals(Status.RUNNING))
+        if (CurrentStatus.Equals(Status.RUNNING))
         {
-            status = Status.FAILURE;
+            CurrentStatus = Status.FAILURE;
         }
     }
 }
