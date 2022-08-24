@@ -3,46 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using MonsterLove.Pooller;
-using UnityEngine.Serialization;
 
 namespace ZombieDiorama.ObjectPlacer
 {
     public class SettableObjectPreview : MonoBehaviour
     {
-        [FormerlySerializedAs("animator")] public GameObject Preview;
-        [FormerlySerializedAs("animator")] public MeshRenderer Mesh;
-        [FormerlySerializedAs("animator")] public GameObject SpaceBloker;
+        public GameObject preview;
+        public MeshRenderer mesh;
+        public GameObject spaceBloker;
 
         [Title("Over Position")]
         public LayerMask WhereCanNotSet;
 
         [Title("Bottom Ground")]
-        [FormerlySerializedAs("animator")] public Vector3 UnderOffset;
-        [FormerlySerializedAs("animator")] public float CollisionFactor = 0.2f;
+        public Vector3 underOffset;
+        public float collisionFactor = 0.2f;
         public LayerMask WhereCanSetOver;
 
         [Title("Material")]
-        [FormerlySerializedAs("animator")] public Material CanSetMaterial;
-        [FormerlySerializedAs("animator")] public Material CanNotSetMaterial;
-        [FormerlySerializedAs("animator")] public Material SelectedMaterial;
+        public Material canSetMaterial;
+        public Material canNotSetMaterial;
+        public Material selectedMaterial;
 
         [Title("Options to Set")]
-        [FormerlySerializedAs("animator")] public bool CanRotate;
+        public bool canRotate;
         private BoxCollider boxCollider;
 
         private void Awake()
         {
             boxCollider = GetComponent<BoxCollider>();
-            if (!Mesh)
-                Mesh = Preview.GetComponent<MeshRenderer>();
+            if (!mesh)
+                mesh = preview.GetComponent<MeshRenderer>();
         }
 
         private void OnEnable()
         {
             if (!boxCollider)
                 boxCollider = GetComponent<BoxCollider>();
-            if (!Mesh)
-                Mesh = Preview.GetComponent<MeshRenderer>();
+            if (!mesh)
+                mesh = preview.GetComponent<MeshRenderer>();
         }
 
         public bool CanSet()
@@ -56,83 +55,83 @@ namespace ZombieDiorama.ObjectPlacer
 
         public void ShowPreview(Vector3 position)
         {
-            if (SpaceBloker) SpaceBloker.SetActive(false);
+            if (spaceBloker) spaceBloker.SetActive(false);
             transform.position = position;
 
-            if (!CanNotSetMaterial || !Mesh || !CanSetMaterial) return;
+            if (!canNotSetMaterial || !mesh || !canSetMaterial) return;
             if (CanSet())
             {
-                for (int i = 0; i < Mesh.sharedMaterials.Length; i++)
+                for (int i = 0; i < mesh.sharedMaterials.Length; i++)
                 {
-                    Mesh.sharedMaterials[i] = CanSetMaterial;
+                    mesh.sharedMaterials[i] = canSetMaterial;
                 }
-                Mesh.material = CanSetMaterial;
+                mesh.material = canSetMaterial;
             }
             else
             {
-                for (int i = 0; i < Mesh.sharedMaterials.Length; i++)
+                for (int i = 0; i < mesh.sharedMaterials.Length; i++)
                 {
-                    Mesh.sharedMaterials[i] = CanNotSetMaterial;
+                    mesh.sharedMaterials[i] = canNotSetMaterial;
                 }
-                Mesh.material = CanNotSetMaterial;
+                mesh.material = canNotSetMaterial;
             }
         }
 
         public void ShowSelected(Vector3 position, Vector3 rotation)
         {
-            if (SpaceBloker) SpaceBloker.SetActive(true);
+            if (spaceBloker) spaceBloker.SetActive(true);
 
             transform.position = position;
             FillRotation(rotation);
 
-            if (!SelectedMaterial || !Mesh) return;
+            if (!selectedMaterial || !mesh) return;
 
-            for (int i = 0; i < Mesh.sharedMaterials.Length; i++)
+            for (int i = 0; i < mesh.sharedMaterials.Length; i++)
             {
-                Mesh.sharedMaterials[i] = SelectedMaterial;
+                mesh.sharedMaterials[i] = selectedMaterial;
             }
-            Mesh.material = SelectedMaterial;
+            mesh.material = selectedMaterial;
         }
 
         public void Rotate(Vector3 value)
         {
-            if (CanRotate)
+            if (canRotate)
                 transform.Rotate(value.x * Time.deltaTime, value.y * Time.deltaTime, value.z * Time.deltaTime, Space.Self);
         }
 
         public void FillRotation(Vector3 value)
         {
-            if (CanRotate)
+            if (canRotate)
                 transform.eulerAngles = value;
         }
 
         public bool CheckCollision(LayerMask mask)
         {
-            if (!Preview || !boxCollider) return false;
-            return Physics.CheckBox(transform.position + Preview.transform.localPosition, boxCollider.size / 2, transform.rotation, mask);
+            if (!preview || !boxCollider) return false;
+            return Physics.CheckBox(transform.position + preview.transform.localPosition, boxCollider.size / 2, transform.rotation, mask);
         }
 
         public bool CheckUnder(LayerMask mask)
         {
-            if (!Preview || !boxCollider) return false;
+            if (!preview || !boxCollider) return false;
             Vector3 factor = boxCollider.size;
-            factor.y *= CollisionFactor;
-            return Physics.CheckBox(transform.position + UnderOffset, factor / 2, transform.rotation, mask);
+            factor.y *= collisionFactor;
+            return Physics.CheckBox(transform.position + underOffset, factor / 2, transform.rotation, mask);
         }
 
         private void OnDrawGizmos()
         {
-            if (Preview && boxCollider)
+            if (preview && boxCollider)
             {
                 if (CanSet()) Gizmos.color = Color.green;
                 else Gizmos.color = Color.red;
 
                 Gizmos.matrix = this.transform.localToWorldMatrix;
-                Gizmos.DrawWireCube(Preview.transform.localPosition, boxCollider.size);
+                Gizmos.DrawWireCube(preview.transform.localPosition, boxCollider.size);
 
                 Vector3 factor = boxCollider.size;
-                factor.y *= CollisionFactor;
-                Gizmos.DrawWireCube(UnderOffset, factor);
+                factor.y *= collisionFactor;
+                Gizmos.DrawWireCube(underOffset, factor);
             }
         }
 

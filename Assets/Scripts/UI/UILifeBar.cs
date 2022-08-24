@@ -10,7 +10,7 @@ namespace ZombieDiorama.UI
 {
     public class UILifeBar : MonoBehaviour
     {
-        [FormerlySerializedAs("health")] public Health Health;
+        public Health Health;
 
         public Image FillBar;
 

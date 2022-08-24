@@ -7,12 +7,12 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
     public class BTUpdateLeader : BTNode
     {
         private SquadMember squadMember;
-        private TargetHandler targetController;
+        private TargetHandler targetHandler;
 
-        public BTUpdateLeader(SquadMember _squadMember, TargetHandler _targetController)
+        public BTUpdateLeader(SquadMember _squadMember, TargetHandler _targetHandler)
         {
             squadMember = _squadMember;
-            targetController = _targetController;
+            targetHandler = _targetHandler;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
@@ -29,7 +29,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
 
                 if (Leader)
                 {
-                    targetController?.SetTarget(Leader.transform);
+                    targetHandler?.SetTarget(Leader.transform);
                     CurrentStatus = Status.SUCCESS;
                 }
             }

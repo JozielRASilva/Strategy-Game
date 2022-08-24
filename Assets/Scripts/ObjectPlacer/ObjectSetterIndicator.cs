@@ -118,7 +118,7 @@ namespace ZombieDiorama.ObjectPlacer
             }
             else
             {
-                if (!Current.CanRotate)
+                if (!Current.canRotate)
                 {
                     HideCanvasFeedback();
                     return;
