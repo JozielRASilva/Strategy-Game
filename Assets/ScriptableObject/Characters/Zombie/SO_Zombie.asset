@@ -22,5 +22,5 @@ MonoBehaviour:
   DistanceToZombie: 3
   TimeCalling: 0.2
   CallCounterTag: {fileID: 11400000, guid: 3e71f6774b1e4f549b30cf0283738b29, type: 2}
-  MinDistance: 1.5
+  MinDistance: 2
   MaxDistance: 15
