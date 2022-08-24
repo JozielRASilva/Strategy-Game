@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TT_demo_zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 100166, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400166, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -465,6 +469,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3223489947772980008, guid: 45933bd38551829408ff89af093c2294, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 866e669af8a1f1845a12dde2d570f0d8, type: 2}
     - target: {fileID: 3223489947782341998, guid: 45933bd38551829408ff89af093c2294, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -515,7 +523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3223489947782379790, guid: 45933bd38551829408ff89af093c2294, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45933bd38551829408ff89af093c2294, type: 3}
