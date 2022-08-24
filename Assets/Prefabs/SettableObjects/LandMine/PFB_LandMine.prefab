@@ -411,12 +411,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   HasDelayToDestroy: 1
-  delayToDestroy: 0.5
-  Damage: 100
+  DelayToDestroy: 0.5
+  Damage: {fileID: 11400000, guid: 5f4e0dfebdc2b1c4f860d0ac3440b99d, type: 2}
   Damageable:
     serializedVersion: 2
     m_Bits: 384
-  destroyOnDamage: 1
+  DestroyOnDamage: 1
   OnHit:
     m_PersistentCalls:
       m_Calls: []
