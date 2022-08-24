@@ -8,79 +8,67 @@ using ZombieDiorama.Character.Behaviours.Zombie;
 using ZombieDiorama.Character.Behaviours.Decorators;
 using ZombieDiorama.Character.Handler;
 using ZombieDiorama.Utilities.Events;
+using Sirenix.OdinInspector;
+using ZombieDiorama.Character.Info;
+using UnityEngine.Serialization;
 
 namespace ZombieDiorama.Character.AIs
 {
     public class Zombie : AIBase
     {
+        [TitleGroup("Geral Info")]
+        public SOZombieAttributes ZombieAttributes;
 
         [Header("Patrol")]
-        public Transform[] waypoints;
-        public float gizmoSize;
-        public float speed;
-        public float distanceToTarget;
-        public float distanceToWaypoint;
+        public Transform[] Waypoints;
 
         [Header("Attack")]
-        public GameObject hitboxes;
-        public float coolDown;
-
-        [Header("Attack Events")]
+        public GameObject Hitboxes;
         public EventCaller OnAttackEvent;
 
         [Header("Call Zombies")]
-        public GameObject callCounter;
-        public float listeningField;
-        public float distanceToZombie;
-        public float timeCalling;
-        public string CallCounterTag = "CallCounter";
-
-        [Header("Call Events")]
+        public GameObject CallCounter;
         public EventCaller OnCallEvent;
 
-        [Header("Zombie Field of View")]
-        public float distanceView;
-        public string SoldierTag = "Soldier";// Target
+        [TitleGroup("Gizmos")]
+        public float GizmosSize;
 
-        [Header("Chasing Soldier FOV")]
-        public float minDistance;
-        public float maxDistance;
 
         public override void SetBehaviour()
         {
             BTParallelSelector parallelSelectorCheckingMove = new BTParallelSelector();
-            parallelSelectorCheckingMove.SetNode(new BTMoveByNavMesh(NavMeshHandler, TargetHandler, speed, distanceToTarget));
-            parallelSelectorCheckingMove.SetNode(new BTChasingSoldier(TargetHandler, minDistance, maxDistance));
+            parallelSelectorCheckingMove.SetNode(new BTMoveByNavMesh(navMeshHandler, targetHandler, ZombieAttributes.Speed, ZombieAttributes.DistanceToPatrolTarget));
+            parallelSelectorCheckingMove.SetNode(new BTChasingSoldier(targetHandler, ZombieAttributes.MinDistance, ZombieAttributes.MaxDistance));
 
             BTSequence sequenceChasing = new BTSequence();
             sequenceChasing.SetNode(parallelSelectorCheckingMove);
-            sequenceChasing.SetNode(new BTZombieAttack(hitboxes, coolDown, OnAttackEvent));
+            sequenceChasing.SetNode(new BTZombieAttack(Hitboxes, ZombieAttributes.CoolDown, OnAttackEvent));
 
             BTSequence sequenceSeeTarget = new BTSequence();
-            sequenceSeeTarget.SetNode(new BTSeeSoldier(TargetHandler, distanceView, SoldierTag));
-            sequenceSeeTarget.SetNode(new BTCallHorde(callCounter, timeCalling, OnCallEvent));
+            sequenceSeeTarget.SetNode(new BTSeeSoldier(targetHandler, ZombieAttributes.DistanceToTarget, ZombieAttributes.TargetTag.Value));
+            sequenceSeeTarget.SetNode(new BTCallHorde(CallCounter, ZombieAttributes.TimeCalling, OnCallEvent));
             sequenceSeeTarget.SetNode(sequenceChasing);
 
             BTInverter inverter = new BTInverter();
-            inverter.SetNode(new BTWasCalled(TargetHandler, listeningField, CallCounterTag));
+            inverter.SetNode(new BTWasCalled(targetHandler, ZombieAttributes.ListeningField, ZombieAttributes.CallCounterTag.Value));
 
             BTParallelSelector parallelSelectorUpdateTarget = new BTParallelSelector();
             parallelSelectorUpdateTarget.SetNode(inverter);
-            parallelSelectorUpdateTarget.SetNode(new BTSeeSoldier(TargetHandler, distanceView, SoldierTag));
-            parallelSelectorUpdateTarget.SetNode(new BTMoveByNavMesh(NavMeshHandler, TargetHandler, speed, distanceToZombie));
+            parallelSelectorUpdateTarget.SetNode(new BTSeeSoldier(targetHandler, ZombieAttributes.DistanceToTarget, ZombieAttributes.TargetTag.Value));
+            parallelSelectorUpdateTarget.SetNode(new BTMoveByNavMesh(navMeshHandler, targetHandler, ZombieAttributes.Speed, ZombieAttributes.DistanceToTarget));
 
             BTSequence sequenceCalled = new BTSequence();
-            sequenceCalled.SetNode(new BTWasCalled(TargetHandler, listeningField, CallCounterTag));
+            sequenceCalled.SetNode(new BTWasCalled(targetHandler, ZombieAttributes.ListeningField, ZombieAttributes.CallCounterTag.Value));
             sequenceCalled.SetNode(parallelSelectorUpdateTarget);
 
             BTSequence sequencePatrol = new BTSequence();
-            sequencePatrol.SetNode(new BTCheckWaypoint(distanceToWaypoint, TargetHandler));
-            sequencePatrol.SetNode(new BTRealignWaypoint(waypoints, TargetHandler));
+            sequencePatrol.SetNode(new BTCheckWaypoint(ZombieAttributes.DistanceToWaypoint, targetHandler));
+            sequencePatrol.SetNode(new BTRealignWaypoint(Waypoints, targetHandler));
 
             BTParallelSelector parallelSelectorChecking = new BTParallelSelector();
-            parallelSelectorChecking.SetNode(new BTSeeSoldier(TargetHandler, distanceView, SoldierTag));
-            parallelSelectorChecking.SetNode(new BTWasCalled(TargetHandler, listeningField, CallCounterTag));
-            parallelSelectorChecking.SetNode(new BTMoveByNavMesh(NavMeshHandler, TargetHandler, speed, distanceToTarget));
+            parallelSelectorChecking.SetNode(new BTSeeSoldier(targetHandler, ZombieAttributes.DistanceToTarget, ZombieAttributes.TargetTag.Value));
+            parallelSelectorChecking.SetNode(new BTWasCalled(targetHandler, ZombieAttributes.ListeningField, ZombieAttributes.CallCounterTag.Value));
+            parallelSelectorChecking.SetNode(new BTMoveByNavMesh(navMeshHandler, targetHandler, ZombieAttributes.Speed, ZombieAttributes.DistanceToPatrolTarget));
 
             BTSelector selectorRoutine = new BTSelector();
             selectorRoutine.SetNode(sequencePatrol);
@@ -96,19 +84,19 @@ namespace ZombieDiorama.Character.AIs
 
         private void OnDrawGizmos()
         {
-            if (waypoints != null)
+            if (Waypoints != null)
             {
-                for (int i = 0; i < waypoints.Length; i++)
+                for (int i = 0; i < Waypoints.Length; i++)
                 {
-                    if (!waypoints[i])
+                    if (!Waypoints[i])
                         continue;
-                    if (i + 1 < waypoints.Length)
-                        Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+                    if (i + 1 < Waypoints.Length)
+                        Gizmos.DrawLine(Waypoints[i].position, Waypoints[i + 1].position);
                     else
-                        Gizmos.DrawLine(waypoints[i].position, waypoints[0].position);
+                        Gizmos.DrawLine(Waypoints[i].position, Waypoints[0].position);
 
                     Gizmos.color = Color.blue;
-                    Gizmos.DrawWireSphere(waypoints[i].position, gizmoSize);
+                    Gizmos.DrawWireSphere(Waypoints[i].position, GizmosSize);
                 }
             }
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48612977b376394da1d1ae9e0502940, type: 3}
   m_Name: SO_Zombie
   m_EditorClassIdentifier: 
-  Speed: 6
+  Speed: 2
   TargetTag: {fileID: 11400000, guid: 724eea1db742c1249a6f0beea403ec5c, type: 2}
   DistanceToTarget: 8
   DistanceToPatrolTarget: 1

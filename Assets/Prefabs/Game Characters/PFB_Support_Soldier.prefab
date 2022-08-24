@@ -266,31 +266,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be72251bb3d0ae8448234d24f73f3854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierAttributes: {fileID: 11400000, guid: c3a3bf7dfb2163848a9faddbdc788c59, type: 2}
-  Speed: 4
-  distanceToRegroup: 2
-  distanceToLeader: 3
-  muzzle: {fileID: 6099054148090206178}
-  bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
-  shootCooldown: 0.5
-  lookAtZombieDamping: 15
-  target: Zombie
-  distanceToTarget: 8
-  rangeToSeeTarget: {x: 8, y: 10}
+  SoldierAttributes: {fileID: 11400000, guid: c3a3bf7dfb2163848a9faddbdc788c59, type: 2}
+  Muzzle: {fileID: 6099054148090206178}
+  Bullet: {fileID: 2018838426949237063, guid: ff2b37189ce7eed47bec99ceb80b0e4d, type: 3}
   AttackEventCaller: {fileID: 899358430901405663}
   ShowGizmos: 0
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}
   MinRangeToSee: {r: 0, g: 1, b: 1, a: 1}
-  supportAttributes: {fileID: 11400000, guid: b0c50416383632041be2b8b941e850d2, type: 2}
-  distanceToSet: 2
-  delayToSet: 1.5
+  SupportAttributes: {fileID: 11400000, guid: b0c50416383632041be2b8b941e850d2, type: 2}
   SetObjectEffect: {fileID: 3105253606689490518}
   SettingObjectEffect: {fileID: 6339521736952954446}
-  distanceToHeal: 1.2
-  dampingToHeal: 10
   healHitBox: {fileID: 475056069}
-  healCooldown: 3
-  healRest: 0.5
   HealEffect: {fileID: 8745678455274301854}
 --- !u!114 &1304290663
 MonoBehaviour:

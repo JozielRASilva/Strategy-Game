@@ -132,9 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab1ec4e4d82444fa8feffe13b50664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierAttributes: {fileID: 11400000, guid: e14c300fb8b73454da693749d92c2fd1, type: 2}
-  muzzle: {fileID: 7626666693945643134}
-  bullet: {fileID: 4577716031164410930, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
+  SoldierAttributes: {fileID: 11400000, guid: e14c300fb8b73454da693749d92c2fd1, type: 2}
+  Muzzle: {fileID: 7626666693945643134}
+  Bullet: {fileID: 4577716031164410930, guid: ddf6b1f9f3c57ac4dbb2fc2c67fd1da6, type: 3}
   AttackEventCaller: {fileID: 486255174}
   ShowGizmos: 0
   MaxRangeToSee: {r: 0, g: 0, b: 1, a: 1}

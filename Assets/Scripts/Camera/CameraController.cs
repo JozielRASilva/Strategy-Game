@@ -18,7 +18,6 @@ namespace ZombieDiorama.Cameras
         public float AngleX = 180;
         public bool moveAxisY = true;
         public float AngleY = 180;
-
         public float AngleZ = 0;
 
         private void Update()

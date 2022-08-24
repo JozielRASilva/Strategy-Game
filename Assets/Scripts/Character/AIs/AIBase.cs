@@ -9,15 +9,15 @@ namespace ZombieDiorama.Character.AIs
 {
     public class AIBase : MonoBehaviour
     {
-        protected TargetHandler TargetHandler;
-        protected NavMeshHandler NavMeshHandler;
+        protected TargetHandler targetHandler;
+        protected NavMeshHandler navMeshHandler;
         protected BehaviourTree behaviourTree;
 
         #region  SETUP
         protected virtual void Awake()
         {
-            TargetHandler = GetComponent<TargetHandler>();
-            NavMeshHandler = GetComponent<NavMeshHandler>();
+            targetHandler = GetComponent<TargetHandler>();
+            navMeshHandler = GetComponent<NavMeshHandler>();
         }
 
         protected virtual void Start()
@@ -33,14 +33,14 @@ namespace ZombieDiorama.Character.AIs
                 behaviourTree = gameObject.AddComponent<BehaviourTree>();
             }
 
-            if (!NavMeshHandler)
+            if (!navMeshHandler)
             {
-                NavMeshHandler = gameObject.AddComponent<NavMeshHandler>();
+                navMeshHandler = gameObject.AddComponent<NavMeshHandler>();
             }
 
-            if (!TargetHandler)
+            if (!targetHandler)
             {
-                TargetHandler = gameObject.AddComponent<TargetHandler>();
+                targetHandler = gameObject.AddComponent<TargetHandler>();
             }
         }
 
