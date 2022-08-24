@@ -12,31 +12,32 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         private float rest;
         private TargetHandler targetHandler;
         private float damping = 1;
-        private EventCaller OnHit;
+        private EventCaller onHit;
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, EventCaller _onHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;
             targetHandler = _targetHandler;
             rest = _rest;
-            OnHit = _OnHit;
+            onHit = _onHit;
         }
 
-        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, float _damping, EventCaller _OnHit)
+        public BTHitbox(GameObject _hitboxes, float _coolDown, float _rest, TargetHandler _targetHandler, float _damping, EventCaller _onHit)
         {
             hitboxes = _hitboxes;
             coolDown = _coolDown;
             targetHandler = _targetHandler;
             rest = _rest;
             damping = _damping;
-            OnHit = _OnHit;
+            onHit = _onHit;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             float timeStamp = Time.time + coolDown;
-
+            if (onHit)
+                onHit.SecondCall();
             while (timeStamp > Time.time)
             {
                 var lookPos = targetHandler.GetTarget().position - bt.transform.position;
@@ -46,8 +47,8 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                 yield return null;
             }
 
-            if (OnHit)
-                OnHit.FirstCall();
+            if (onHit)
+                onHit.FirstCall();
             hitboxes.SetActive(true);
 
             yield return new WaitForSeconds(rest);
