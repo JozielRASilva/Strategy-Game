@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 1708270624216670514}
   - component: {fileID: 1891167608817749773}
   - component: {fileID: 2656188607129854480}
+  - component: {fileID: 851415287080875891}
   m_Layer: 8
   m_Name: PFB_Barricade
   m_TagString: Soldier
@@ -230,7 +231,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 1.25}
+  m_Extents: {x: 0.25, y: 0.5, z: 1}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -285,9 +286,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   HasDelayToDestroy: 0
-  delayToDestroy: 0.2
-  maxLife: 10
-  invincibilityTime: 0.2
+  DelayToDestroy: 0.2
+  MaxLife: {fileID: 11400000, guid: 72444aba1bfa59f4ea70e8ecad123285, type: 2}
+  InvincibilityTime: 0.2
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -306,6 +307,18 @@ MonoBehaviour:
   OnHealed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &851415287080875891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708270624216670517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4f2a9f0df8b0249946ba5dbf4061e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &480102271
 PrefabInstance:
   m_ObjectHideFlags: 0
