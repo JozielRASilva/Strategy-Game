@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
@@ -19,7 +21,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
             status = Status.FAILURE;
 
             Transform npc = bt.transform;
-            GameObject[] items = GameObject.FindGameObjectsWithTag(target);
+            List<GameObject> items = TagObjectsCacher.GetObjects(target);
 
             foreach (GameObject item in items)
             {

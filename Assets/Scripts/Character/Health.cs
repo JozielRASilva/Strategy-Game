@@ -39,9 +39,8 @@ namespace ZombieDiorama.Character
         [Button("Kill")]
         private void BKill() => TakeDamage(maxLife);
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _currentLife = maxLife;
         }
 

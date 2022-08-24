@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
@@ -30,7 +31,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
         public override IEnumerator Run(BehaviourTree bt)
         {
             status = Status.RUNNING;
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(target);
+            List<GameObject> enemies = TagObjectsCacher.GetObjects(target);
             List<GameObject> enemiesThatCanSee = new List<GameObject>();
 
             foreach (var enemy in enemies)

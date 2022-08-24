@@ -5,16 +5,16 @@ namespace ZombieDiorama.Character.Controllers
     public class TargetController : MonoBehaviour
     {
 
-        public Transform _currentTarget;
+        private Transform currentTarget;
 
         public Transform GetTarget()
         {
-            return _currentTarget;
+            return currentTarget;
         }
 
         public void SetTarget(Transform target)
         {
-            _currentTarget = target;
+            currentTarget = target;
         }
 
     }

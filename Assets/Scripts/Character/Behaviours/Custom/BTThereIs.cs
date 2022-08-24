@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using ZombieDiorama.Character.Controllers;
+using System.Collections.Generic;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Custom
 {
@@ -44,7 +46,7 @@ namespace ZombieDiorama.Character.Behaviours.Custom
         public Transform GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
+            List<GameObject> targets = TagObjectsCacher.GetObjects(targetTag);
             float lastDistance = 0;
 
             foreach (var _target in targets)

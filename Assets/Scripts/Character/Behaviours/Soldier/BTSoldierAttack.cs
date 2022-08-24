@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using ZombieDiorama.Character.Controllers;
 using ZombieDiorama.Utilities.Events;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Soldier
 {
@@ -49,6 +51,9 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
                     var rotation = Quaternion.LookRotation(lookPos);
                     bt.transform.rotation = Quaternion.Slerp(bt.transform.rotation, rotation, Time.deltaTime * damping);
 
+                    if (!selectedEnemy.activeInHierarchy)
+                        yield break;
+
                     yield return null;
                 }
 
@@ -68,7 +73,7 @@ namespace ZombieDiorama.Character.Behaviours.Soldier
         public GameObject GetTarget(Transform current)
         {
             GameObject selected = null;
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
+            List<GameObject> targets = TagObjectsCacher.GetObjects(targetTag);
             float lastDistance = 0;
 
             foreach (var _target in targets)

@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
@@ -8,20 +10,22 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
     {
         private TargetController target;
         private float distanceCall;
+        private string callerTag;
 
-        public BTWasCalled(TargetController _target, float _distanceCall)
+        public BTWasCalled(TargetController _target, float _distanceCall, string _callerTag)
         {
             target = _target;
             distanceCall = _distanceCall;
+            callerTag = _callerTag;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             status = Status.FAILURE;
 
-            GameObject[] calls = GameObject.FindGameObjectsWithTag("CallCounter");
+            List<GameObject> calls = TagObjectsCacher.GetObjects(callerTag);
             int i = 0;
-
+            
             foreach (GameObject call in calls)
             {
                 if (bt.gameObject == call) continue;

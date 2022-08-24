@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3675497964422395939}
   - component: {fileID: 3675497964422395940}
   - component: {fileID: 3675497964422395942}
+  - component: {fileID: 2537898318919212721}
+  - component: {fileID: 8221732620576855917}
   m_Layer: 0
   m_Name: PFB_Base_Character
   m_TagString: NPC
@@ -182,7 +184,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2007ef63a5c9734c968f5394c59a90b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentTarget: {fileID: 0}
+--- !u!114 &2537898318919212721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070140945433140221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4f2a9f0df8b0249946ba5dbf4061e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8221732620576855917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070140945433140221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e069fea902242428c54f62bab5c884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!225 &6824380117968330391
 CanvasGroup:
   m_ObjectHideFlags: 0

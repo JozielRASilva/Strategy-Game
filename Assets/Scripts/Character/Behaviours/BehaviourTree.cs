@@ -15,7 +15,7 @@ namespace ZombieDiorama.Character.Behaviours
             GUILayout.Label($"{nodes}");
         }
 
-        private bool debug;
+        public bool debug;
         private BTNode root;
         public Coroutine execution;
 

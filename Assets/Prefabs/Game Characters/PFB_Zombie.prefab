@@ -46,6 +46,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 371440074}
+  - component: {fileID: 6880975895623153166}
   m_Layer: 7
   m_Name: CallCounter
   m_TagString: CallCounter
@@ -67,6 +68,18 @@ Transform:
   m_Father: {fileID: 2759292864728444535}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6880975895623153166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371440073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4f2a9f0df8b0249946ba5dbf4061e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &585380213
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,8 +321,10 @@ MonoBehaviour:
   listeningField: 10
   distanceToZombie: 3
   timeCalling: 0.2
+  CallCounterTag: CallCounter
   OnCallEvent: {fileID: 3923622199825305593}
   distanceView: 8
+  SoldierTag: Soldier
   minDistance: 2
   maxDistance: 15
 --- !u!114 &6394551119402832637
@@ -542,14 +557,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
---- !u!82 &2990296887559515606 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2990296888127076206, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
-  m_PrefabInstance: {fileID: 641063608}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2990296887559515601 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2990296888127076201, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
+  m_PrefabInstance: {fileID: 641063608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2990296887559515606 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2990296888127076206, guid: cc72e49c3e654774b9eaa11188162d15, type: 3}
   m_PrefabInstance: {fileID: 641063608}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &657206674

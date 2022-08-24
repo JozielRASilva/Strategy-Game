@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using ZombieDiorama.Character.Controllers;
+using ZombieDiorama.Utilities.TagsCacher;
 
 namespace ZombieDiorama.Character.Behaviours.Zombie
 {
@@ -8,18 +10,20 @@ namespace ZombieDiorama.Character.Behaviours.Zombie
     {
         private TargetController targetSoldier;
         private float distanceView;
+        private string soldierTag;
 
-        public BTSeeSoldier(TargetController _targetSoldier, float _distanceView)
+        public BTSeeSoldier(TargetController _targetSoldier, float _distanceView, string _soldierTag)
         {
             targetSoldier = _targetSoldier;
             distanceView = _distanceView;
+            soldierTag = _soldierTag;
         }
 
         public override IEnumerator Run(BehaviourTree bt)
         {
             status = Status.FAILURE;
 
-            GameObject[] soldiers = GameObject.FindGameObjectsWithTag("Soldier");
+            List<GameObject> soldiers = TagObjectsCacher.GetObjects(soldierTag);
 
             foreach (GameObject soldier in soldiers)
             {

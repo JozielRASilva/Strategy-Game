@@ -30,13 +30,6 @@ namespace ZombieDiorama.Character
         [ShowIf("HasDelayToDestroy", true)]
         public float delayToDestroy = 0.2f;
 
-        private string defaultTag;
-
-        protected virtual void Awake()
-        {
-            defaultTag = gameObject.tag;
-        }
-
         private void OnEnable()
         {
             EventOnRespawn?.Invoke();
@@ -61,9 +54,7 @@ namespace ZombieDiorama.Character
 
         public IEnumerator DestroyCO()
         {
-            gameObject.tag = "Untagged";
             yield return new WaitForSeconds(delayToDestroy);
-            gameObject.tag = defaultTag;
             Kill();
         }
 

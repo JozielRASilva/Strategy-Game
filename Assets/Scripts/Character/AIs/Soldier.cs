@@ -84,7 +84,7 @@ namespace ZombieDiorama.Character.AIs
             parallel.SetNode(calledToRegroup);
 
             BTInverter inverter = new BTInverter();
-            BTSeeZombie seeZombie = new BTSeeZombie(TargetController, rangeToSeeTarget.y);
+            BTSeeZombie seeZombie = new BTSeeZombie(TargetController, rangeToSeeTarget.y, target);
             inverter.SetNode(seeZombie);
             parallel.SetNode(inverter);
 
@@ -93,7 +93,7 @@ namespace ZombieDiorama.Character.AIs
             sequence_1.SetNode(new BTSoldierAttack(TargetController, shootCooldown, ShootHandler, lookAtZombieDamping, target, AttackEventCaller));
 
             BTSequence sequence = new BTSequence();
-            sequence.SetNode(new BTSeeZombie(TargetController, rangeToSeeTarget.y));
+            sequence.SetNode(new BTSeeZombie(TargetController, rangeToSeeTarget.y, target));
             sequence.SetNode(sequence_1);
 
             BTSelector selector = new BTSelector();
