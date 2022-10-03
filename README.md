@@ -1,3 +1,3 @@
 # Zombie Diorama 
 
-https://youtu.be/sptWlJXd_c4
+https://www.youtube.com/watch?v=sptWlJXd_c4
